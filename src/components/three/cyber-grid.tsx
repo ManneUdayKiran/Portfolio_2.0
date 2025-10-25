@@ -51,6 +51,10 @@ export default function CyberGrid() {
           <bufferGeometry>
             <bufferAttribute
               attach="attributes-position"
+              args={[
+                new Float32Array(points.flatMap((p) => [p.x, p.y, p.z])),
+                3
+              ]}
               count={points.length}
               array={new Float32Array(points.flatMap((p) => [p.x, p.y, p.z]))}
               itemSize={3}
@@ -72,6 +76,10 @@ export default function CyberGrid() {
             <bufferGeometry>
               <bufferAttribute
                 attach="attributes-position"
+                args={[
+                  new Float32Array(points.flatMap((p) => [p.x, p.y, p.z])),
+                  3
+                ]}
                 count={points.length}
                 array={new Float32Array(points.flatMap((p) => [p.x, p.y, p.z]))}
                 itemSize={3}

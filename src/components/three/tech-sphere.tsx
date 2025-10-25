@@ -228,6 +228,16 @@ export default function TechSphere({
           <bufferGeometry>
             <bufferAttribute
               attach="attributes-position"
+              args={[
+                new Float32Array(
+                  Array.from({ length: 150 }, () => [
+                    (Math.random() - 0.5) * 30,
+                    (Math.random() - 0.5) * 30,
+                    (Math.random() - 0.5) * 30,
+                  ]).flat()
+                ),
+                3
+              ]}
               array={
                 new Float32Array(
                   Array.from({ length: 150 }, () => [

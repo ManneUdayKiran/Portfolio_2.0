@@ -107,6 +107,7 @@ export default function ParticleNetwork({
             count={count}
             array={particlePositions}
             itemSize={3}
+            args={[particlePositions, 3]}
           />
         </bufferGeometry>
         <pointsMaterial
