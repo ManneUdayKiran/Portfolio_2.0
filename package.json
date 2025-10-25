@@ -9,10 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-  "@react-three/drei": "9.122.0",
-  "@react-three/fiber": "8.18.0",
-  "@react-three/postprocessing": "^3.0.4",
-  "three": "^0.160.0",
+    "@react-three/drei": "9.122.0",
+    "@react-three/fiber": "8.18.0",
+    "@react-three/postprocessing": "^3.0.4",
     "autoprefixer": "^10.4.21",
     "framer-motion": "^11.0.24",
     "gsap": "^3.13.0",
@@ -23,7 +22,8 @@
     "react-countup": "^6.5.3",
     "react-dom": "^18",
     "react-hook-form": "^7.51.2",
-    "react-intersection-observer": "^9.8.2"
+    "react-intersection-observer": "^9.8.2",
+    "three": "^0.160.0"
   },
   "devDependencies": {
     "@types/node": "^20",
