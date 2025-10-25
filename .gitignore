@@ -1,0 +1,54 @@
+# Node modules
+node_modules/
+
+# Build output
+.next/
+out/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Env files
+.env*
+
+# VS Code
+.vscode/
+
+# Coverage
+coverage/
+
+# Misc
+*.swp
+*.swo
+
+# TypeScript
+*.tsbuildinfo
+
+# Others
+.idea/
+*.log
+*.lock
+
+# Mac system files
+*.DS_Store
+
+# Windows system files
+*.Thumbs.db
+
+# Test snapshots
+__snapshots__/
+
+# Storybook
+.storybook/
+
+# JetBrains IDEs
+*.iml
+
+# Optional: ignore local dev files
+local.env

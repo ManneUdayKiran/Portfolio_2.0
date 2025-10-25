@@ -1,0 +1,208 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Inter, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hologram Card Custom Styles */
+.hologram-glass {
+  background: rgba(255, 255, 255, 0.05);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hologram-scan-lines {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 255, 0.1) 2px,
+    rgba(0, 255, 255, 0.1) 4px
+  );
+  background-size: 100% 20px;
+  animation: scanLines 3s linear infinite;
+}
+
+.hologram-grid {
+  background-image: linear-gradient(rgba(0, 255, 255, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.3) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+@keyframes scanLines {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+/* Custom animations for hologram effects */
+@keyframes hologramFlicker {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes hologramGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(0, 255, 255, 0.6);
+  }
+}
+
+/* Aurora Borealis Animations */
+@keyframes aurora-flow {
+  0%,
+  100% {
+    transform: translateX(-20%) translateY(-10%) rotate(-5deg) scale(1);
+  }
+  25% {
+    transform: translateX(-10%) translateY(-5%) rotate(0deg) scale(1.05);
+  }
+  50% {
+    transform: translateX(0%) translateY(0%) rotate(2deg) scale(1.1);
+  }
+  75% {
+    transform: translateX(-5%) translateY(-2%) rotate(-1deg) scale(1.05);
+  }
+}
+
+@keyframes aurora-flow-reverse {
+  0%,
+  100% {
+    transform: translateX(10%) translateY(5%) rotate(3deg) scale(1);
+  }
+  25% {
+    transform: translateX(5%) translateY(0%) rotate(1deg) scale(1.08);
+  }
+  50% {
+    transform: translateX(-5%) translateY(-5%) rotate(-2deg) scale(1.12);
+  }
+  75% {
+    transform: translateX(0%) translateY(-2%) rotate(0deg) scale(1.06);
+  }
+}
+
+@keyframes aurora-pulse {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1.15) rotate(1deg);
+    opacity: 0.35;
+  }
+}
+
+@keyframes aurora-drift {
+  0% {
+    transform: translateX(-30%) translateY(0%) rotate(-2deg);
+  }
+  33% {
+    transform: translateX(-10%) translateY(-10%) rotate(1deg);
+  }
+  66% {
+    transform: translateX(10%) translateY(5%) rotate(-1deg);
+  }
+  100% {
+    transform: translateX(-30%) translateY(0%) rotate(-2deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-aurora-flow {
+  animation: aurora-flow 20s ease-in-out infinite;
+}
+
+.animate-aurora-flow-reverse {
+  animation: aurora-flow-reverse 25s ease-in-out infinite;
+}
+
+.animate-aurora-pulse {
+  animation: aurora-pulse 15s ease-in-out infinite;
+}
+
+.animate-aurora-drift {
+  animation: aurora-drift 30s linear infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 8s linear infinite;
+}
+
+/* Interactive Ripple Cursor Effect */
+.cursor-ripple {
+  cursor: none;
+  position: relative;
+}
+
+.cursor-ripple::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(
+    circle,
+    rgba(147, 51, 234, 0.6) 0%,
+    rgba(59, 130, 246, 0.4) 50%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: all 0.1s ease;
+}
+
+@keyframes cursor-pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+}
+
+.cursor-ripple:active::before {
+  animation: cursor-pulse 0.3s ease-out;
+  background: radial-gradient(
+    circle,
+    rgba(147, 51, 234, 0.9) 0%,
+    rgba(59, 130, 246, 0.7) 50%,
+    rgba(16, 185, 129, 0.3) 80%,
+    transparent 100%
+  );
+}
