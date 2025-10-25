@@ -457,7 +457,7 @@ export default function Starfield({ count = 3000 }: StarfieldProps) {
             glow1: "#ff6b35", // Orange glow
             glow2: "#4285f4", // Blue glow
             glow3: "#ff4757", // Red glow
-            // Tail gradient (fallback color plus gradient stops)
+            tail: "#a259ff", // Added tail color (purple/blue)
             tailGlow: "#e5edf0ff", // Purple tail glow
           };
 

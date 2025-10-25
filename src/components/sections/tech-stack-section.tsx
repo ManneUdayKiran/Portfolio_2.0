@@ -344,7 +344,7 @@ export default function TechStackSection() {
           <p className="text-gray-400 max-w-2xl mx-auto">
             This interactive skill tree represents my journey as a developer.
             Each connection shows how technologies relate to each other, and the
-            level system indicates my expertise depth. Like in RPGs, I'm
+            level system indicates my expertise depth. Like in RPGs, I&apos;m
             constantly leveling up and unlocking new abilities! 🎮
           </p>
         </motion.div>

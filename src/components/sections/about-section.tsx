@@ -74,7 +74,6 @@ export default function AboutSection() {
       color: "#a855f7",
     },
   ];
-
   return (
     <section
       id="about"
@@ -227,13 +226,13 @@ export default function AboutSection() {
                       Today, I focus on creating immersive digital experiences
                       using React, Three.js, and modern web technologies. I
                       believe in writing clean, maintainable code while pushing
-                      the boundaries of what's possible on the web.
+                      the boundaries of what&apos;s possible on the web.
                     </p>
-                    <p className="text-gray-300 text-lg leading-relaxed">
-                      When I'm not coding, you'll find me exploring new
-                      technologies, contributing to open-source projects, or
-                      sharing knowledge with the developer community.
-                    </p>
+                      <p className="text-gray-300 text-lg leading-relaxed">
+                        When I&apos;m not coding, you&apos;ll find me exploring
+                        new technologies, contributing to open-source projects, or
+                        sharing knowledge with the developer community.
+                      </p>
                   </div>
 
                   {/* Education Timeline */}
@@ -255,7 +254,8 @@ export default function AboutSection() {
                           {
                             year: "2024-2027",
                             degree: "Bachelor's in Computer Science",
-                            institution: "Chaitanya Bharathiya Institute of Technology",
+                            institution:
+                              "Chaitanya Bharathiya Institute of Technology",
                             description:
                               "Specialized in computer science and Engineering",
                             color: "from-cyan-400 to-blue-500",
@@ -275,14 +275,12 @@ export default function AboutSection() {
                           {
                             year: "2020",
                             degree: "St.isaac Advent High School",
-                            
-                            description:
-                              "",
+
+                            description: "",
                             color: "from-pink-400 to-rose-500",
                             orbColor: "bg-pink-400",
                             glowColor: "shadow-pink-400/50",
                           },
-                          
                         ].map((item, index) => (
                           <motion.div
                             key={index}
@@ -343,61 +341,49 @@ export default function AboutSection() {
                                 }`,
                               }}
                             >
-                              <div className="flex items-start justify-between mb-3">
-                                <div
-                                  className={`inline-block px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${item.color} text-white`}
-                                >
-                                  {item.year}
-                                </div>
+                              <div className={`inline-block px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${item.color} text-white`}>
+                                {item.year}
                               </div>
-
-                              <h4
-                                className={`text-xl font-bold mb-2 bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}
-                              >
-                                {item.degree}
+                              <h4 className={`text-xl font-bold mb-2 bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}>
+                                {item.degree.replace("'", "&apos;")}
                               </h4>
-
                               <p className="text-gray-300 font-medium mb-2 flex items-center gap-2">
                                 <span className="text-lg">🎓</span>
                                 {item.institution}
                               </p>
-
                               <p className="text-gray-400 text-sm">
                                 {item.description}
                               </p>
-
                               {/* Decorative Corner */}
-                              <div
-                                className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${item.color} opacity-5 rounded-bl-full`}
-                              />
+                              <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${item.color} opacity-5 rounded-bl-full`} />
                             </motion.div>
                           </motion.div>
                         ))}
+                    </div>
+                        
+                    {/* Timeline End Indicator */}
+                    <motion.div
+                      className="relative pl-12 mt-8"
+                      initial={{ opacity: 0 }}
+                      animate={inView ? { opacity: 1 } : {}}
+                      transition={{ delay: 1, duration: 0.6 }}
+                    >
+                      <div className="absolute left-0 w-8 h-8 bg-gradient-to-br from-cyan-400 via-purple-400 to-pink-400 rounded-full shadow-lg shadow-purple-500/50 flex items-center justify-center">
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            ease: "linear",
+                          }}
+                        >
+                          ✨
+                        </motion.div>
                       </div>
-
-                      {/* Timeline End Indicator */}
-                      <motion.div
-                        className="relative pl-12 mt-8"
-                        initial={{ opacity: 0 }}
-                        animate={inView ? { opacity: 1 } : {}}
-                        transition={{ delay: 1, duration: 0.6 }}
-                      >
-                        <div className="absolute left-0 w-8 h-8 bg-gradient-to-br from-cyan-400 via-purple-400 to-pink-400 rounded-full shadow-lg shadow-purple-500/50 flex items-center justify-center">
-                          <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{
-                              duration: 3,
-                              repeat: Infinity,
-                              ease: "linear",
-                            }}
-                          >
-                            ✨
-                          </motion.div>
-                        </div>
-                        <div className="text-gray-500 italic">
-                          Journey continues...
-                        </div>
-                      </motion.div>
+                      <div className="text-gray-500 italic">
+                        Journey continues...
+                      </div>
+                    </motion.div>
                     </div>
                   </div>
                 </div>
@@ -419,7 +405,7 @@ export default function AboutSection() {
                         </div>
                         <div>
                           <h4 className="text-xl font-semibold text-white mb-2 group-hover:text-cyan-400 transition-colors">
-                            {item.title}
+                            {item.title.replace("'", "&apos;")}
                           </h4>
                           <p className="text-gray-400 leading-relaxed">
                             {item.description}

@@ -28,14 +28,18 @@ export default function NeonGrid() {
       const glowIntensity = 1 - distanceFromCenter / (size / 2);
 
       lines.push(
-        <line key={`v-${i}`} geometry={geometry}>
-          <lineBasicMaterial
-            color={new THREE.Color().setHSL(0.5 + glowIntensity * 0.2, 1, 0.5)}
-            transparent
-            opacity={0.3 + glowIntensity * 0.3}
-            blending={THREE.AdditiveBlending}
-          />
-        </line>
+        <primitive
+          key={`v-${i}`}
+          object={new THREE.Line(
+            geometry,
+            new THREE.LineBasicMaterial({
+              color: new THREE.Color().setHSL(0.5 + glowIntensity * 0.2, 1, 0.5),
+              transparent: true,
+              opacity: 0.3 + glowIntensity * 0.3,
+              blending: THREE.AdditiveBlending,
+            })
+          )}
+        />
       );
     }
 
@@ -48,18 +52,23 @@ export default function NeonGrid() {
       }
       const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
+      // Glow intensity based on distance from center (for horizontal lines)
       const distanceFromCenter = Math.abs(z);
       const glowIntensity = 1 - distanceFromCenter / (size / 2);
 
       lines.push(
-        <line key={`h-${i}`} geometry={geometry}>
-          <lineBasicMaterial
-            color={new THREE.Color().setHSL(0.5 + glowIntensity * 0.2, 1, 0.5)}
-            transparent
-            opacity={0.3 + glowIntensity * 0.3}
-            blending={THREE.AdditiveBlending}
-          />
-        </line>
+        <primitive
+          key={`h-${i}`}
+          object={new THREE.Line(
+            geometry,
+            new THREE.LineBasicMaterial({
+              color: new THREE.Color().setHSL(0.5 + glowIntensity * 0.2, 1, 0.5),
+              transparent: true,
+              opacity: 0.3 + glowIntensity * 0.3,
+              blending: THREE.AdditiveBlending,
+            })
+          )}
+        />
       );
     }
 

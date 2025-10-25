@@ -43,15 +43,15 @@ export default function GalleryRoom({ children }: GalleryRoomProps) {
       ];
       const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
+      const material = new THREE.LineBasicMaterial({
+        color: "#00ffff",
+        transparent: true,
+        opacity: 0.2,
+        blending: THREE.AdditiveBlending,
+      });
+      const line = new THREE.Line(geometry, material);
       lines.push(
-        <line key={`floor-v-${i}`} geometry={geometry}>
-          <lineBasicMaterial
-            color="#00ffff"
-            transparent
-            opacity={0.2}
-            blending={THREE.AdditiveBlending}
-          />
-        </line>
+        <primitive object={line} key={`floor-v-${i}`} />
       );
     }
 
@@ -64,15 +64,15 @@ export default function GalleryRoom({ children }: GalleryRoomProps) {
       ];
       const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
+      const material = new THREE.LineBasicMaterial({
+        color: "#00ffff",
+        transparent: true,
+        opacity: 0.2,
+        blending: THREE.AdditiveBlending,
+      });
+      const line = new THREE.Line(geometry, material);
       lines.push(
-        <line key={`floor-h-${i}`} geometry={geometry}>
-          <lineBasicMaterial
-            color="#00ffff"
-            transparent
-            opacity={0.2}
-            blending={THREE.AdditiveBlending}
-          />
-        </line>
+        <primitive object={line} key={`floor-h-${i}`} />
       );
     }
 

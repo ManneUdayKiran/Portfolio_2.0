@@ -41,11 +41,6 @@ export default function HeroSection() {
   });
 
   // Local looping profession typing (starts only after showProfession === true)
-  const professions = [
-    "Full Stack Developer",
-    "Creative Coder",
-    "UI/UX Enthusiast",
-  ];
   const [professionText, setProfessionText] = useState("");
   const profRef = useRef({ index: 0, text: "", isDeleting: false });
   const profTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -60,6 +55,11 @@ export default function HeroSection() {
   useEffect(() => {
     if (!showProfession) return;
 
+    const professions = [
+      "Full Stack Developer",
+      "Creative Coder",
+      "UI/UX Enthusiast",
+    ];
     const typeSpeed = 120;
     const deleteSpeed = 80;
     const delayBetween = 2500;
@@ -108,7 +108,7 @@ export default function HeroSection() {
       mounted = false;
       if (profTimeout.current) clearTimeout(profTimeout.current);
     };
-    // only re-run if showProfession toggles (we want the loop to run continuously after start)
+    // only re-run if showProfession toggles
   }, [showProfession]);
 
   const containerVariants = {
