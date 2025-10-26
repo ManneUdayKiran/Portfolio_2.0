@@ -3,8 +3,8 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import AnimatedBackground from "./animated-background";
-import TechSphere from "./tech-sphere";
+import AnimatedBackground from "./three/animated-background";
+import TechSphere from "./three/tech-sphere";
 
 export default function Scene() {
   const groupRef = useRef<THREE.Group>(null);

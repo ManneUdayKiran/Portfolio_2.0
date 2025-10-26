@@ -11,7 +11,7 @@
   "dependencies": {
     "@react-three/drei": "9.122.0",
     "@react-three/fiber": "8.18.0",
-    "@react-three/postprocessing": "^3.0.4",
+    "@react-three/postprocessing": "^2.15.10",
     "autoprefixer": "^10.4.21",
     "framer-motion": "^11.0.24",
     "gsap": "^3.13.0",
@@ -35,5 +35,11 @@
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"
+  },
+  "resolutions": {
+    "overrides": {
+      "react": "18.3.1",
+      "react-dom": "18.3.1"
+    }
   }
 }

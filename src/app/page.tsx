@@ -1,5 +1,7 @@
 "use client";
 
+import dynamic from "next/dynamic";
+
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import HeroSection from "@/components/sections/hero-section";
@@ -10,8 +12,16 @@ import TechStackSection from "@/components/sections/tech-stack-section";
 import ContactSection from "@/components/sections/contact-section";
 import Navigation from "@/components/navigation";
 import LoadingSpinner from "@/components/ui/loading-spinner";
-import Scene from "@/components/three/scene";
+// import Scene from "@/components/scene"; // Removed to fix import conflict
 import ScrollProgress from "@/components/scroll-progress";
+
+// const ThreeCanvasClient = dynamic(
+//   () => import("@/components/scene/"),
+//   { ssr: false }
+// );
+const Scene = dynamic(() => import("@/components/scene"), {
+  ssr: false, // Important: disable server-side rendering
+});
 
 export default function Home() {
   return (
@@ -22,16 +32,12 @@ export default function Home() {
       {/* Scroll Progress Indicator */}
       <ScrollProgress />
 
-      {/* 3D Canvas Background */}
+      {/* ✅ Render 3D Canvas Client-side only */}
+      {/* <ThreeCanvasClient /> */}
+
+      {/* 3D Canvas Background (client-only) */}
       <div className="fixed inset-0 -z-10">
-        <Canvas
-          camera={{ position: [0, 0, 8], fov: 60 }}
-          gl={{ alpha: true, antialias: true }}
-        >
-          <Suspense fallback={null}>
-            <Scene />
-          </Suspense>
-        </Canvas>
+        <Scene />
       </div>
 
       {/* Content Sections */}

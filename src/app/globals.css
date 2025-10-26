@@ -2,9 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: Inter, system-ui, sans-serif;
-}
+/* font-family removed, now set in styles.css */
 
 html {
   scroll-behavior: smooth;
