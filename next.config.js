@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  turbopack: {},
   transpilePackages: ['three', 'troika-three-utils', 'troika-three-text', 'troika-worker-utils'],
   webpack: (config) => {
     config.module.rules.push({
