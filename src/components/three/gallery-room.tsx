@@ -30,7 +30,7 @@ export default function GalleryRoom({ children }: GalleryRoomProps) {
 
   // Create neon grid lines on floor
   const gridLines = useMemo(() => {
-    const lines: JSX.Element[] = [];
+    const lines: React.ReactElement[] = [];
     const divisions = 30;
     const step = roomWidth / divisions;
 
