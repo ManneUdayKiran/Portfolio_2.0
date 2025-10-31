@@ -9,7 +9,7 @@ export default function NeonGrid() {
 
   // Create cyberpunk grid lines
   const gridLines = useMemo(() => {
-    const lines: JSX.Element[] = [];
+    const lines: React.ReactElement[] = [];
     const size = 40;
     const divisions = 40;
     const step = size / divisions;
