@@ -5,15 +5,26 @@ import { motion } from "framer-motion";
 import { useInView } from "@/hooks/use-in-view";
 import { useTypingEffect } from "@/hooks/use-typing-effect";
 // removed useLoopingTypingEffect import (we implement local looping logic)
-import { Canvas } from "@react-three/fiber";
+// import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 import * as THREE from "three";
-import FloatingBlob from "@/components/three/floating-blob";
-import AuroraBackground from "@/components/three/aurora-background";
+// import FloatingBlob from "@/components/three/floating-blob";
+// import AuroraBackground from "@/components/three/aurora-background";
 import AuroraCSS from "@/components/three/aurora-css";
 import ParticleField from "@/components/three/particle-field";
-import Fireflies from "@/components/three/fireflies";
-import RippleEffect from "@/components/three/ripple-effect";
+// import Fireflies from "@/components/three/fireflies";
+// import RippleEffect from "@/components/three/ripple-effect";
+import Scene from "@/components/three/scene";
+
+// Commented out React Three Fiber imports to avoid ReactCurrentOwner errors
+// import dynamic from "next/dynamic";
+// const Canvas = dynamic(() => import("@react-three/fiber").then(mod => mod.Canvas), { ssr: false });
+
+// Commented out Three.js component imports - using CSS animations instead
+// const FloatingBlob = dynamic(() => import("@/components/three/floating-blob"), { ssr: false });
+// const Fireflies = dynamic(() => import("@/components/three/fireflies"), { ssr: false });
+// const RippleEffect = dynamic(() => import("@/components/three/ripple-effect"), { ssr: false });
+// const AuroraBackground = dynamic(() => import("@/components/three/aurora-background"), { ssr: false });
 
 export default function HeroSection() {
   const [ref, inView] = useInView({
@@ -141,17 +152,16 @@ export default function HeroSection() {
       {/* Aurora Borealis Background */}
       <AuroraCSS />
 
-      {/* Interactive 3D Ripple Effect */}
-      <div className="absolute inset-0 z-3">
-        <Canvas
-          camera={{ position: [0, 0, 10], fov: 60 }}
-          gl={{ alpha: true, antialias: true }}
-          style={{ pointerEvents: "auto" }}
-        >
-          <Suspense fallback={null}>
-            <RippleEffect maxRipples={12} />
-          </Suspense>
-        </Canvas>
+      {/* Interactive 3D Ripple Effect - Replaced with CSS animation */}
+      <div className="absolute inset-0 z-3 pointer-events-auto">
+        <div className="ripple-container w-full h-full overflow-hidden">
+          {[...Array(12)].map((_, i) => (
+            <div
+              key={i}
+              className={`ripple-circle-${i} absolute rounded-full border border-cyan-400/20 animate-ripple`}
+            />
+          ))}
+        </div>
       </div>
 
       <div className="relative z-10 min-h-screen flex items-center">
@@ -210,11 +220,8 @@ export default function HeroSection() {
                 transition={{ duration: 0.8, delay: 0.6 }}
                 className="text-lg text-gray-400 leading-relaxed max-w-2xl font-light"
               >
-                Specializing in building exceptional digital experiences with{" "}
-                <span className="text-cyan-400 font-medium">
-                  React, Three.js,
-                </span>{" "}
-                using cutting-edge technologies. Specializing in{" "}
+                Currently building exceptional digital experiences with
+                cutting-edge technologies. Specializing in{" "}
                 <span className="text-purple-300 font-semibold">React</span>,{" "}
                 <span className="text-blue-300 font-semibold">Three.js</span>,
                 and modern web technologies. Transforming complex ideas into
@@ -345,84 +352,35 @@ export default function HeroSection() {
               className="relative h-96 lg:h-full"
             >
               <div className="absolute inset-0">
-                <Canvas
-                  camera={{ position: [0, 0, 6], fov: 50 }}
-                  gl={{
-                    alpha: true,
-                    antialias: true,
-                    powerPreference: "high-performance",
-                    stencil: false,
-                    depth: true,
-                    toneMapping: THREE.ACESFilmicToneMapping,
-                    toneMappingExposure: 1.2,
-                  }}
-                >
-                  <Suspense fallback={null}>
-                    {/* Shader Aurora Background */}
-                    <AuroraBackground />
+                {/* CSS-based Aurora Background */}
+                <div className="aurora-bg w-full h-full relative overflow-hidden">
+                  {/* Aurora Effect */}
+                  <div className="aurora-layer-1 absolute inset-0 animate-aurora-1"></div>
+                  <div className="aurora-layer-2 absolute inset-0 animate-aurora-2"></div>
 
-                    {/* Enhanced atmospheric lighting */}
-                    <ambientLight intensity={0.3} color="#4f46e5" />
+                  {/* Floating Blob Effect */}
+                  <div className="floating-blob absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <div className="blob-core w-32 h-32 rounded-full bg-gradient-to-br from-purple-500/40 via-blue-500/30 to-cyan-500/40 animate-blob-float"></div>
+                    <div className="blob-glow w-48 h-48 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-purple-500/20 via-blue-500/15 to-cyan-500/20 animate-blob-glow"></div>
+                  </div>
 
-                    {/* Main key light with blue tint */}
-                    <directionalLight
-                      position={[5, 5, 5]}
-                      intensity={1.5}
-                      color="#60a5fa"
-                      castShadow
-                    />
-
-                    {/* Purple fill light */}
-                    <pointLight
-                      position={[10, 10, 10]}
-                      intensity={1.0}
-                      color="#8b5cf6"
-                      distance={25}
-                      decay={2}
-                    />
-
-                    {/* Pink accent light */}
-                    <pointLight
-                      position={[-8, -8, 8]}
-                      intensity={0.8}
-                      color="#ec4899"
-                      distance={20}
-                      decay={2}
-                    />
-
-                    {/* Cyan rim light */}
-                    <pointLight
-                      position={[0, 10, -10]}
-                      intensity={0.6}
-                      color="#06b6d4"
-                      distance={18}
-                      decay={2}
-                    />
-
-                    {/* Dramatic rim lighting */}
-                    <spotLight
-                      position={[-5, 0, 10]}
-                      angle={0.4}
-                      penumbra={0.6}
-                      intensity={0.8}
-                      color="#3b82f6"
-                      distance={30}
-                      decay={2}
-                    />
-
-                    <FloatingBlob position={[0, 0, 0]} />
-                    <Fireflies
-                      count={12}
-                      onHit={() => {
-                        setNameGlow(true);
-                        setAuroraIndex(
-                          (prev) => (prev + 1) % auroraBackgrounds.length
-                        );
-                        setTimeout(() => setNameGlow(false), 2000);
-                      }}
-                    />
-                  </Suspense>
-                </Canvas>
+                  {/* Fireflies Effect */}
+                  <div className="fireflies-container absolute inset-0">
+                    {[...Array(12)].map((_, i) => (
+                      <div
+                        key={i}
+                        className={`firefly-${i} absolute w-2 h-2 bg-yellow-400 rounded-full animate-firefly cursor-pointer`}
+                        onClick={() => {
+                          setNameGlow(true);
+                          setAuroraIndex(
+                            (prev) => (prev + 1) % auroraBackgrounds.length
+                          );
+                          setTimeout(() => setNameGlow(false), 2000);
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
             </motion.div>
           </motion.div>
@@ -476,6 +434,269 @@ export default function HeroSection() {
           </motion.p>
         </motion.div>
       </motion.div>
+
+      {/* CSS Animation Styles */}
+      <style jsx>{`
+        @keyframes ripple {
+          0% {
+            width: 0;
+            height: 0;
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.5;
+          }
+          100% {
+            width: 200px;
+            height: 200px;
+            opacity: 0;
+          }
+        }
+
+        @keyframes aurora-1 {
+          0% {
+            background: linear-gradient(
+              45deg,
+              rgba(139, 92, 246, 0.3),
+              rgba(59, 130, 246, 0.2)
+            );
+            transform: translateX(-100%) rotate(0deg);
+          }
+          50% {
+            background: linear-gradient(
+              45deg,
+              rgba(59, 130, 246, 0.4),
+              rgba(6, 182, 212, 0.3)
+            );
+            transform: translateX(0%) rotate(180deg);
+          }
+          100% {
+            background: linear-gradient(
+              45deg,
+              rgba(139, 92, 246, 0.3),
+              rgba(59, 130, 246, 0.2)
+            );
+            transform: translateX(100%) rotate(360deg);
+          }
+        }
+
+        @keyframes aurora-2 {
+          0% {
+            background: linear-gradient(
+              -45deg,
+              rgba(236, 72, 153, 0.2),
+              rgba(139, 92, 246, 0.3)
+            );
+            transform: translateX(100%) rotate(0deg);
+          }
+          50% {
+            background: linear-gradient(
+              -45deg,
+              rgba(6, 182, 212, 0.3),
+              rgba(236, 72, 153, 0.4)
+            );
+            transform: translateX(0%) rotate(-180deg);
+          }
+          100% {
+            background: linear-gradient(
+              -45deg,
+              rgba(236, 72, 153, 0.2),
+              rgba(139, 92, 246, 0.3)
+            );
+            transform: translateX(-100%) rotate(-360deg);
+          }
+        }
+
+        @keyframes blob-float {
+          0%,
+          100% {
+            transform: translate(-50%, -50%) scale(1) rotate(0deg);
+          }
+          33% {
+            transform: translate(-50%, -60%) scale(1.1) rotate(120deg);
+          }
+          66% {
+            transform: translate(-40%, -50%) scale(0.9) rotate(240deg);
+          }
+        }
+
+        @keyframes blob-glow {
+          0%,
+          100% {
+            opacity: 0.3;
+            transform: translate(-50%, -50%) scale(1);
+          }
+          50% {
+            opacity: 0.6;
+            transform: translate(-50%, -50%) scale(1.2);
+          }
+        }
+
+        @keyframes firefly {
+          0% {
+            opacity: 0.3;
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0.3;
+          }
+        }
+
+        .animate-ripple {
+          animation: ripple linear infinite;
+        }
+        .animate-aurora-1 {
+          animation: aurora-1 8s ease-in-out infinite;
+        }
+        .animate-aurora-2 {
+          animation: aurora-2 12s ease-in-out infinite reverse;
+        }
+        .animate-blob-float {
+          animation: blob-float 6s ease-in-out infinite;
+        }
+        .animate-blob-glow {
+          animation: blob-glow 4s ease-in-out infinite;
+        }
+        .animate-firefly {
+          animation: firefly 2s ease-in-out infinite;
+        }
+
+        .ripple-circle-0 {
+          left: 20%;
+          top: 30%;
+          animation-delay: 0s;
+          animation-duration: 3s;
+        }
+        .ripple-circle-1 {
+          left: 70%;
+          top: 20%;
+          animation-delay: 0.5s;
+          animation-duration: 4s;
+        }
+        .ripple-circle-2 {
+          left: 40%;
+          top: 60%;
+          animation-delay: 1s;
+          animation-duration: 3.5s;
+        }
+        .ripple-circle-3 {
+          left: 80%;
+          top: 70%;
+          animation-delay: 1.5s;
+          animation-duration: 4.5s;
+        }
+        .ripple-circle-4 {
+          left: 15%;
+          top: 80%;
+          animation-delay: 2s;
+          animation-duration: 3.2s;
+        }
+        .ripple-circle-5 {
+          left: 60%;
+          top: 40%;
+          animation-delay: 2.5s;
+          animation-duration: 4.2s;
+        }
+        .ripple-circle-6 {
+          left: 30%;
+          top: 15%;
+          animation-delay: 3s;
+          animation-duration: 3.8s;
+        }
+        .ripple-circle-7 {
+          left: 85%;
+          top: 45%;
+          animation-delay: 3.5s;
+          animation-duration: 4.8s;
+        }
+        .ripple-circle-8 {
+          left: 50%;
+          top: 85%;
+          animation-delay: 4s;
+          animation-duration: 3.3s;
+        }
+        .ripple-circle-9 {
+          left: 25%;
+          top: 50%;
+          animation-delay: 4.5s;
+          animation-duration: 4.3s;
+        }
+        .ripple-circle-10 {
+          left: 75%;
+          top: 65%;
+          animation-delay: 5s;
+          animation-duration: 3.7s;
+        }
+        .ripple-circle-11 {
+          left: 45%;
+          top: 25%;
+          animation-delay: 5.5s;
+          animation-duration: 4.7s;
+        }
+
+        .firefly-0 {
+          left: 10%;
+          top: 20%;
+          animation-delay: 0s;
+        }
+        .firefly-1 {
+          left: 30%;
+          top: 10%;
+          animation-delay: 0.5s;
+        }
+        .firefly-2 {
+          left: 60%;
+          top: 30%;
+          animation-delay: 1s;
+        }
+        .firefly-3 {
+          left: 80%;
+          top: 50%;
+          animation-delay: 1.5s;
+        }
+        .firefly-4 {
+          left: 20%;
+          top: 70%;
+          animation-delay: 2s;
+        }
+        .firefly-5 {
+          left: 70%;
+          top: 80%;
+          animation-delay: 2.5s;
+        }
+        .firefly-6 {
+          left: 40%;
+          top: 60%;
+          animation-delay: 3s;
+        }
+        .firefly-7 {
+          left: 90%;
+          top: 30%;
+          animation-delay: 3.5s;
+        }
+        .firefly-8 {
+          left: 15%;
+          top: 45%;
+          animation-delay: 4s;
+        }
+        .firefly-9 {
+          left: 50%;
+          top: 15%;
+          animation-delay: 4.5s;
+        }
+        .firefly-10 {
+          left: 75%;
+          top: 65%;
+          animation-delay: 5s;
+        }
+        .firefly-11 {
+          left: 35%;
+          top: 85%;
+          animation-delay: 5.5s;
+        }
+      `}</style>
     </section>
   );
 }

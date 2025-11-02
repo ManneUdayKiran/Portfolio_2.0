@@ -1,13 +1,26 @@
 "use client";
 
-import { useState, Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { useInView } from "@/hooks/use-in-view";
-import ProjectCarousel from "@/components/three/project-carousel";
-import Starfield from "@/components/three/starfield";
-import * as THREE from "three";
+
+// Commented out React Three Fiber imports to avoid ReactCurrentOwner errors
+// const Canvas = dynamic(
+//   () => import("@react-three/fiber").then((mod) => mod.Canvas),
+//   { ssr: false }
+// );
+// const OrbitControls = dynamic(
+//   () => import("@react-three/drei").then((mod) => mod.OrbitControls),
+//   { ssr: false }
+// );
+// const ProjectCarousel = dynamic(
+//   () => import("@/components/three/project-carousel"),
+//   { ssr: false }
+// );
+// const Starfield = dynamic(
+//   () => import("@/components/three/starfield"),
+//   { ssr: false }
+// );
 
 interface Project {
   id: number;
@@ -27,7 +40,14 @@ const projects: Project[] = [
     title: "Real-Time Chat App",
     description:
       "A full-stack real-time chat app built with MERN stack (MongoDB, Express, React, Node.js) and Socket.IO. It supports one-on-one messaging, real-time typing indicators, emoji picker, image upload, and theme toggling.",
-    technologies: ["React", "Node.js", "MongoDB", "Antd Design","Socket.IO","Emoji Picker"],
+    technologies: [
+      "React",
+      "Node.js",
+      "MongoDB",
+      "Antd Design",
+      "Socket.IO",
+      "Emoji Picker",
+    ],
     liveUrl: "https://chat-app-fu9v.onrender.com",
     githubUrl: "https://github.com/ManneUdayKiran/Real-Time-Chat-App.git",
     image: "🌌",
@@ -63,7 +83,14 @@ const projects: Project[] = [
     title: "Prompt-to-Product",
     description:
       "Prompt-to-Product is a powerful MVP platform that lets developers instantly turn prompts into usable code or insights. It combines the capabilities of AI chat and code generation in a single, intuitive interface..",
-    technologies: ["React", "Antd", "FastApi", "Firebase","LLM Models","TailWind CSS"],
+    technologies: [
+      "React",
+      "Antd",
+      "FastApi",
+      "Firebase",
+      "LLM Models",
+      "TailWind CSS",
+    ],
     liveUrl: "https://prompt-to-product.onrender.com",
     githubUrl: "https://github.com/ManneUdayKiran/MVP-Platform-Project.git",
     image: "📱",
@@ -75,7 +102,14 @@ const projects: Project[] = [
     title: "Resume Analyzer",
     description:
       "A comprehensive resume analysis tool that helps job seekers optimize their resumes for Applicant Tracking Systems (ATS) and provides personalized improvement suggestions.",
-    technologies: ["React", "Material UI", "FastApi", "MongoDB","Machine Learning","LLM Model"],
+    technologies: [
+      "React",
+      "Material UI",
+      "FastApi",
+      "MongoDB",
+      "Machine Learning",
+      "LLM Model",
+    ],
     liveUrl: "https://frontend-two-pi-49.vercel.app/",
     githubUrl: "https://github.com/ManneUdayKiran/ResuScan-Resume-Analyser.git",
     image: "💬",
@@ -87,7 +121,14 @@ const projects: Project[] = [
     title: "Intelligent Journaling App",
     description:
       "An intelligent journaling app powered by LLMs that allows users to record daily thoughts and receive AI-generated summaries, mood detection, and mental wellness suggestions.",
-    technologies: ["React", "MongoDB", "Antd", "Material UI","Node.js","Express.js"],
+    technologies: [
+      "React",
+      "MongoDB",
+      "Antd",
+      "Material UI",
+      "Node.js",
+      "Express.js",
+    ],
     liveUrl: "https://ai-journalentry-app.onrender.com",
     githubUrl: "https://github.com/ManneUdayKiran/AI-Journal-App.git",
     image: "☁️",
@@ -98,8 +139,6 @@ const projects: Project[] = [
 
 export default function ProjectsSection() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [autoRotate, setAutoRotate] = useState(true);
-  const [isCardHovered, setIsCardHovered] = useState(false);
   const [ref, inView] = useInView({
     threshold: 0.1,
     triggerOnce: true,
@@ -107,16 +146,14 @@ export default function ProjectsSection() {
 
   const handleProjectClick = (project: Project) => {
     setSelectedProject(project);
-    setAutoRotate(false);
   };
 
   const handleCloseModal = () => {
     setSelectedProject(null);
-    setAutoRotate(true);
   };
 
   const handleHoverChange = (isHovered: boolean, hoveredIndex?: number) => {
-    setIsCardHovered(isHovered);
+    // Keep for future use if needed
   };
 
   return (
@@ -125,58 +162,23 @@ export default function ProjectsSection() {
       id="projects"
       className="min-h-screen py-20 relative overflow-hidden bg-black"
     >
-      {/* 3D Carousel Scene */}
+      {/* CSS Starfield Background */}
       <div className="absolute inset-0">
-        <Canvas
-          shadows
-          camera={{ position: [0, 2, 12], fov: 60 }}
-          gl={{
-            antialias: true,
-            alpha: true,
-            powerPreference: "high-performance",
-            toneMapping: THREE.ACESFilmicToneMapping,
-          }}
-        >
-          <Suspense fallback={null}>
-            {/* Starfield Background */}
-            <Starfield count={3000} />
+        {/* Starfield Effect */}
+        <div className="starfield-container absolute inset-0">
+          {[...Array(200)].map((_, i) => (
+            <div
+              key={i}
+              className={`star absolute bg-white rounded-full opacity-70 star-${
+                i % 10
+              }`}
+            />
+          ))}
+        </div>
 
-            {/* Lighting */}
-            <ambientLight intensity={0.3} />
-            <pointLight position={[10, 10, 10]} intensity={1} color="#00ffff" />
-            <pointLight
-              position={[-10, -10, -10]}
-              intensity={0.5}
-              color="#ff00ff"
-            />
-            <spotLight
-              position={[0, 15, 0]}
-              angle={0.5}
-              penumbra={1}
-              intensity={1}
-              castShadow
-              color="#ffffff"
-            />
-
-            {/* Project Carousel */}
-            <ProjectCarousel
-              projects={projects}
-              onProjectClick={handleProjectClick}
-              autoRotate={autoRotate && !isCardHovered}
-              onHoverChange={handleHoverChange}
-            />
-
-            {/* Camera Controls */}
-            <OrbitControls
-              enableZoom={false}
-              enablePan={false}
-              minPolarAngle={Math.PI / 3}
-              maxPolarAngle={Math.PI / 2}
-              autoRotate={autoRotate && !isCardHovered}
-              autoRotateSpeed={0.5}
-            />
-          </Suspense>
-        </Canvas>
+        {/* Gradient Overlays for Lighting Effect */}
+        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl gradient-glow-1" />
+        <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl gradient-glow-2" />
       </div>
 
       {/* UI Overlay */}
@@ -188,19 +190,6 @@ export default function ProjectsSection() {
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: -50 }}
           transition={{ duration: 0.6 }}
         >
-          <motion.div
-            className="inline-block mb-4 px-4 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full backdrop-blur-sm"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={
-              inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }
-            }
-            transition={{ duration: 0.5 }}
-          >
-            <span className="text-cyan-400 text-sm font-mono">
-              🎡 3D PROJECT CAROUSEL
-            </span>
-          </motion.div>
-
           <h2 className="text-5xl md:text-7xl font-bold mb-6">
             <span className="text-white">Explore My </span>
             <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
@@ -211,53 +200,6 @@ export default function ProjectsSection() {
           {/* <p className="text-xl text-gray-400 max-w-3xl mx-auto">
             Drag to rotate • Click panels to view details
           </p> */}
-        </motion.div>
-
-        {/* Controls */}
-        <motion.div
-          className="absolute top-24 right-8 pointer-events-auto space-y-4"
-          initial={{ opacity: 0, x: 50 }}
-          animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          {/* Auto Rotate Toggle */}
-          <motion.button
-            onClick={() => setAutoRotate(!autoRotate)}
-            className="w-14 h-14 bg-black/80 backdrop-blur-md border border-cyan-500/30 rounded-full flex items-center justify-center hover:border-cyan-500 hover:bg-cyan-500/10 transition-all group"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            title={autoRotate ? "Stop Rotation" : "Start Rotation"}
-          >
-            {autoRotate ? (
-              <svg
-                className="w-6 h-6 text-cyan-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 9v6m4-6v6"
-                />
-              </svg>
-            ) : (
-              <svg
-                className="w-6 h-6 text-cyan-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                />
-              </svg>
-            )}
-          </motion.button>
         </motion.div>
 
         {/* Instructions */}
@@ -283,6 +225,372 @@ export default function ProjectsSection() {
           </div>
         </motion.div> */}
       </div>
+
+      {/* Projects Grid */}
+      <motion.div
+        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16"
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+      >
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.15,
+                delayChildren: 0.2,
+              },
+            },
+          }}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+        >
+          {projects.map((project, index) => (
+            <motion.div
+              key={project.id}
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 80,
+                  scale: 0.8,
+                  rotateX: -15,
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  rotateX: 0,
+                  transition: {
+                    type: "spring",
+                    damping: 25,
+                    stiffness: 100,
+                    duration: 0.8,
+                  },
+                },
+              }}
+              whileHover={{
+                y: -10,
+                scale: 1.03,
+                rotateY: 2,
+                transition: {
+                  type: "spring",
+                  damping: 20,
+                  stiffness: 300,
+                },
+              }}
+              className="group relative cursor-pointer"
+              onClick={() => handleProjectClick(project)}
+              onMouseEnter={() => handleHoverChange(true, index)}
+              onMouseLeave={() => handleHoverChange(false)}
+            >
+              {/* Project Card */}
+              <motion.div
+                className="relative h-96 bg-gradient-to-br from-gray-900/80 to-black/80 rounded-2xl border border-gray-700 overflow-hidden backdrop-blur-sm transition-all duration-500"
+                whileHover={{
+                  borderColor: "rgba(34, 211, 238, 0.5)",
+                  boxShadow:
+                    "0 20px 40px rgba(34, 211, 238, 0.1), 0 0 0 1px rgba(34, 211, 238, 0.2)",
+                }}
+                transition={{
+                  type: "spring",
+                  damping: 25,
+                  stiffness: 400,
+                }}
+              >
+                {/* Animated Border */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-purple-500/20 to-pink-500/20"
+                  initial={{ opacity: 0 }}
+                  whileHover={{
+                    opacity: 1,
+                    background:
+                      "linear-gradient(45deg, rgba(34, 211, 238, 0.1), rgba(147, 51, 234, 0.1), rgba(236, 72, 153, 0.1))",
+                  }}
+                  transition={{ duration: 0.3 }}
+                />
+
+                {/* Project Icon/Image */}
+                <motion.div
+                  className="absolute top-6 left-6 w-16 h-16 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-xl flex items-center justify-center text-3xl shadow-lg"
+                  whileHover={{
+                    scale: 1.15,
+                    rotate: [0, -5, 5, 0],
+                    boxShadow: "0 10px 30px rgba(34, 211, 238, 0.4)",
+                  }}
+                  transition={{
+                    type: "spring",
+                    damping: 20,
+                    stiffness: 300,
+                    rotate: {
+                      duration: 0.5,
+                      ease: "easeInOut",
+                    },
+                  }}
+                >
+                  <motion.span
+                    whileHover={{
+                      scale: 1.1,
+                      filter: "brightness(1.2)",
+                    }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {project.image}
+                  </motion.span>
+                </motion.div>
+
+                {/* Content */}
+                <div className="relative p-6 pt-24 h-full flex flex-col">
+                  <div className="flex-grow">
+                    <motion.h3
+                      className="text-xl font-bold text-white mb-3"
+                      whileHover={{
+                        color: "#22d3ee",
+                        x: 5,
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {project.title}
+                    </motion.h3>
+                    <motion.p
+                      className="text-gray-300 text-sm mb-4 line-clamp-description-fixed"
+                      initial={{ opacity: 0.8 }}
+                      whileHover={{
+                        opacity: 1,
+                        color: "#d1d5db",
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {project.description}
+                    </motion.p>
+                  </div>
+
+                  {/* Bottom Section - Fixed at bottom */}
+                  <div className="mt-auto space-y-4">
+                    {/* Technologies */}
+                    <motion.div
+                      className="flex flex-wrap gap-2"
+                      variants={{
+                        hidden: { opacity: 0 },
+                        visible: {
+                          opacity: 1,
+                          transition: {
+                            staggerChildren: 0.1,
+                          },
+                        },
+                      }}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                    >
+                      {project.technologies
+                        .slice(0, 3)
+                        .map((tech, techIndex) => (
+                          <motion.span
+                            key={techIndex}
+                            className="px-2 py-1 bg-gray-800/80 text-gray-300 text-xs rounded-lg border border-gray-600"
+                            variants={{
+                              hidden: { opacity: 0, y: 10, scale: 0.8 },
+                              visible: {
+                                opacity: 1,
+                                y: 0,
+                                scale: 1,
+                                transition: {
+                                  type: "spring",
+                                  damping: 20,
+                                  stiffness: 300,
+                                },
+                              },
+                            }}
+                            whileHover={{
+                              scale: 1.05,
+                              borderColor: "rgba(34, 211, 238, 0.8)",
+                              color: "#22d3ee",
+                              backgroundColor: "rgba(34, 211, 238, 0.1)",
+                              y: -2,
+                            }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            {tech}
+                          </motion.span>
+                        ))}
+                      {project.technologies.length > 3 && (
+                        <motion.span
+                          className="px-2 py-1 bg-gray-800/80 text-gray-400 text-xs rounded-lg border border-gray-600"
+                          variants={{
+                            hidden: { opacity: 0, scale: 0.8 },
+                            visible: { opacity: 1, scale: 1 },
+                          }}
+                          whileHover={{
+                            scale: 1.05,
+                            color: "#9ca3af",
+                          }}
+                        >
+                          +{project.technologies.length - 3}
+                        </motion.span>
+                      )}
+                    </motion.div>
+
+                    {/* Action Buttons */}
+                    <motion.div
+                      className="flex gap-3"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3, duration: 0.5 }}
+                    >
+                      <motion.a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-center py-2 px-4 rounded-lg font-medium text-sm shadow-lg"
+                        onClick={(e) => e.stopPropagation()}
+                        whileHover={{
+                          scale: 1.05,
+                          boxShadow: "0 10px 25px rgba(34, 211, 238, 0.3)",
+                          background:
+                            "linear-gradient(90deg, #06b6d4, #3b82f6)",
+                        }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{
+                          type: "spring",
+                          damping: 20,
+                          stiffness: 400,
+                        }}
+                      >
+                        <motion.span
+                          whileHover={{ x: 2 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          Live Demo
+                        </motion.span>
+                      </motion.a>
+                      <motion.a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 bg-gray-800 text-white text-center py-2 px-4 rounded-lg font-medium text-sm border border-gray-600"
+                        onClick={(e) => e.stopPropagation()}
+                        whileHover={{
+                          scale: 1.05,
+                          backgroundColor: "#374151",
+                          borderColor: "#6b7280",
+                          boxShadow: "0 5px 15px rgba(0, 0, 0, 0.3)",
+                        }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{
+                          type: "spring",
+                          damping: 20,
+                          stiffness: 400,
+                        }}
+                      >
+                        <motion.span
+                          whileHover={{ x: 2 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          GitHub
+                        </motion.span>
+                      </motion.a>
+                    </motion.div>
+                  </div>
+                </div>
+
+                {/* Hover Effects */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-cyan-400/5 via-purple-500/5 to-pink-500/5"
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+
+                {/* Floating Particles on Hover */}
+                <div className="absolute inset-0 pointer-events-none">
+                  {[1, 2, 3, 4, 5, 6].map((particle) => (
+                    <motion.div
+                      key={particle}
+                      className={`absolute w-1 h-1 bg-cyan-400 rounded-full particle-${particle}`}
+                      initial={{ opacity: 0, scale: 0 }}
+                      whileHover={{
+                        opacity: [0, 0.6, 0],
+                        scale: [0, 1.2, 0],
+                        y: [0, -10, -20],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        delay: (particle - 1) * 0.2,
+                        ease: "easeOut",
+                      }}
+                    />
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Category Badge */}
+              <div className="absolute -top-2 -right-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-1 rounded-full text-xs font-medium shadow-lg">
+                {project.category.split(" ")[0]}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* View More Projects */}
+        <motion.div
+          initial={{ opacity: 0, y: 50, scale: 0.9 }}
+          animate={
+            inView
+              ? { opacity: 1, y: 0, scale: 1 }
+              : { opacity: 0, y: 50, scale: 0.9 }
+          }
+          transition={{
+            type: "spring",
+            damping: 25,
+            stiffness: 100,
+            delay: 1.2,
+            duration: 0.8,
+          }}
+          className="text-center mt-16"
+        >
+          <motion.a
+            href="https://github.com/ManneUdayKiran"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 bg-gradient-to-r from-gray-800 to-gray-900 text-white px-8 py-4 rounded-xl font-medium border border-gray-600 shadow-lg"
+            whileHover={{
+              scale: 1.05,
+              background: "linear-gradient(90deg, #374151, #1f2937)",
+              borderColor: "#6b7280",
+              boxShadow:
+                "0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(34, 211, 238, 0.1)",
+            }}
+            whileTap={{ scale: 0.95 }}
+            transition={{
+              type: "spring",
+              damping: 20,
+              stiffness: 400,
+            }}
+          >
+            <motion.svg
+              className="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z"
+                clipRule="evenodd"
+              />
+            </motion.svg>
+            <motion.span whileHover={{ x: 5 }} transition={{ duration: 0.2 }}>
+              View More Projects on GitHub
+            </motion.span>
+          </motion.a>
+        </motion.div>
+      </motion.div>
 
       {/* Project Detail Modal */}
       <AnimatePresence>
@@ -469,6 +777,136 @@ export default function ProjectsSection() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <style jsx>{`
+        .starfield-container .star {
+          animation: twinkle linear infinite;
+          width: 2px;
+          height: 2px;
+        }
+
+        .star-0 {
+          left: 10%;
+          top: 20%;
+        }
+        .star-1 {
+          left: 25%;
+          top: 45%;
+        }
+        .star-2 {
+          left: 40%;
+          top: 15%;
+        }
+        .star-3 {
+          left: 65%;
+          top: 70%;
+        }
+        .star-4 {
+          left: 80%;
+          top: 30%;
+        }
+        .star-5 {
+          left: 15%;
+          top: 60%;
+        }
+        .star-6 {
+          left: 50%;
+          top: 80%;
+        }
+        .star-7 {
+          left: 75%;
+          top: 55%;
+        }
+        .star-8 {
+          left: 90%;
+          top: 10%;
+        }
+        .star-9 {
+          left: 5%;
+          top: 85%;
+        }
+
+        .star:nth-child(odd) {
+          animation-delay: 0s;
+          animation-duration: 2s;
+        }
+
+        .star:nth-child(even) {
+          animation-delay: 1s;
+          animation-duration: 3s;
+        }
+
+        .star:nth-child(3n) {
+          animation-delay: 0.5s;
+          animation-duration: 2.5s;
+          width: 3px;
+          height: 3px;
+        }
+
+        @keyframes twinkle {
+          0%,
+          100% {
+            opacity: 0.3;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.2);
+          }
+        }
+
+        .gradient-glow-1 {
+          animation: glow-pulse 3s ease-in-out infinite;
+        }
+
+        .gradient-glow-2 {
+          animation: glow-pulse 3s ease-in-out infinite 1s;
+        }
+
+        @keyframes glow-pulse {
+          0%,
+          100% {
+            opacity: 0.1;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.3;
+            transform: scale(1.1);
+          }
+        }
+
+        /* Particle positioning for project cards */
+        .particle-1 {
+          left: 20%;
+          top: 30%;
+          animation-delay: 0s;
+        }
+        .particle-2 {
+          left: 35%;
+          top: 30%;
+          animation-delay: 0.2s;
+        }
+        .particle-3 {
+          left: 50%;
+          top: 50%;
+          animation-delay: 0.4s;
+        }
+        .particle-4 {
+          left: 65%;
+          top: 50%;
+          animation-delay: 0.6s;
+        }
+        .particle-5 {
+          left: 80%;
+          top: 70%;
+          animation-delay: 0.8s;
+        }
+        .particle-6 {
+          left: 95%;
+          top: 70%;
+          animation-delay: 1s;
+        }
+      `}</style>
     </section>
   );
 }

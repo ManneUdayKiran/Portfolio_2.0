@@ -2,10 +2,11 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "@/hooks/use-in-view";
-import { Canvas } from "@react-three/fiber";
-import { Suspense, useState } from "react";
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
-import HologramCard from "@/components/three/hologram-card";
+// React Three Fiber imports commented out to avoid ReactCurrentOwner errors
+// import { Canvas } from "@react-three/fiber";
+import { useState } from "react";
+// import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+// import HologramCard from "@/components/three/hologram-card";
 
 export default function AboutSection() {
   const [ref, inView] = useInView({
@@ -92,9 +93,36 @@ export default function AboutSection() {
         {/* Hero Section with Particle Avatar */}
         <div className="min-h-[70vh] flex items-center justify-center">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
-            {/* Left Side - Hologram Card */}
+            {/* Left Side - CSS Hologram Effect */}
             <div className="order-2 lg:order-1 flex items-center justify-center">
-              <HologramCard className="transform-gpu" />
+              <div className="relative w-80 h-80">
+                {/* Hologram Effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-purple-500/20 to-pink-500/20 rounded-2xl animate-pulse">
+                  <div className="absolute inset-4 bg-black/80 backdrop-blur-xl rounded-2xl border border-cyan-400/30 flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 animate-spin flex items-center justify-center">
+                        <div className="w-20 h-20 rounded-full bg-black flex items-center justify-center">
+                          <span className="text-3xl">👨‍💻</span>
+                        </div>
+                      </div>
+                      <h3 className="text-2xl font-bold text-white mb-2">
+                        Full Stack Developer
+                      </h3>
+                      <p className="text-cyan-400">Building Tomorrow's Web</p>
+                      <div className="mt-4 flex justify-center space-x-2">
+                        <div className="w-2 h-2 bg-cyan-400 rounded-full animate-ping"></div>
+                        <div className="w-2 h-2 bg-purple-400 rounded-full animate-ping-delayed-1"></div>
+                        <div className="w-2 h-2 bg-pink-400 rounded-full animate-ping-delayed-2"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Scanning lines effect */}
+                <div className="absolute inset-0 overflow-hidden rounded-2xl">
+                  <div className="absolute w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-scan"></div>
+                </div>
+              </div>
             </div>
 
             {/* Right Side - Introduction */}
@@ -228,11 +256,11 @@ export default function AboutSection() {
                       believe in writing clean, maintainable code while pushing
                       the boundaries of what&apos;s possible on the web.
                     </p>
-                      <p className="text-gray-300 text-lg leading-relaxed">
-                        When I&apos;m not coding, you&apos;ll find me exploring
-                        new technologies, contributing to open-source projects, or
-                        sharing knowledge with the developer community.
-                      </p>
+                    <p className="text-gray-300 text-lg leading-relaxed">
+                      When I&apos;m not coding, you&apos;ll find me exploring
+                      new technologies, contributing to open-source projects, or
+                      sharing knowledge with the developer community.
+                    </p>
                   </div>
 
                   {/* Education Timeline */}
@@ -341,10 +369,14 @@ export default function AboutSection() {
                                 }`,
                               }}
                             >
-                              <div className={`inline-block px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${item.color} text-white`}>
+                              <div
+                                className={`inline-block px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${item.color} text-white`}
+                              >
                                 {item.year}
                               </div>
-                              <h4 className={`text-xl font-bold mb-2 bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}>
+                              <h4
+                                className={`text-xl font-bold mb-2 bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}
+                              >
                                 {item.degree.replace("'", "&apos;")}
                               </h4>
                               <p className="text-gray-300 font-medium mb-2 flex items-center gap-2">
@@ -355,35 +387,37 @@ export default function AboutSection() {
                                 {item.description}
                               </p>
                               {/* Decorative Corner */}
-                              <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${item.color} opacity-5 rounded-bl-full`} />
+                              <div
+                                className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${item.color} opacity-5 rounded-bl-full`}
+                              />
                             </motion.div>
                           </motion.div>
                         ))}
-                    </div>
-                        
-                    {/* Timeline End Indicator */}
-                    <motion.div
-                      className="relative pl-12 mt-8"
-                      initial={{ opacity: 0 }}
-                      animate={inView ? { opacity: 1 } : {}}
-                      transition={{ delay: 1, duration: 0.6 }}
-                    >
-                      <div className="absolute left-0 w-8 h-8 bg-gradient-to-br from-cyan-400 via-purple-400 to-pink-400 rounded-full shadow-lg shadow-purple-500/50 flex items-center justify-center">
-                        <motion.div
-                          animate={{ rotate: 360 }}
-                          transition={{
-                            duration: 3,
-                            repeat: Infinity,
-                            ease: "linear",
-                          }}
-                        >
-                          ✨
-                        </motion.div>
                       </div>
-                      <div className="text-gray-500 italic">
-                        Journey continues...
-                      </div>
-                    </motion.div>
+
+                      {/* Timeline End Indicator */}
+                      <motion.div
+                        className="relative pl-12 mt-8"
+                        initial={{ opacity: 0 }}
+                        animate={inView ? { opacity: 1 } : {}}
+                        transition={{ delay: 1, duration: 0.6 }}
+                      >
+                        <div className="absolute left-0 w-8 h-8 bg-gradient-to-br from-cyan-400 via-purple-400 to-pink-400 rounded-full shadow-lg shadow-purple-500/50 flex items-center justify-center">
+                          <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{
+                              duration: 3,
+                              repeat: Infinity,
+                              ease: "linear",
+                            }}
+                          >
+                            ✨
+                          </motion.div>
+                        </div>
+                        <div className="text-gray-500 italic">
+                          Journey continues...
+                        </div>
+                      </motion.div>
                     </div>
                   </div>
                 </div>
@@ -536,6 +570,30 @@ export default function AboutSection() {
                 transparent 50%
               );
           }
+        }
+
+        /* Hologram scanning effect */
+        @keyframes scan {
+          0% {
+            top: -10%;
+          }
+          100% {
+            top: 110%;
+          }
+        }
+
+        .animate-scan {
+          animation: scan 2s linear infinite;
+        }
+
+        .animate-ping-delayed-1 {
+          animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+          animation-delay: 0.5s;
+        }
+
+        .animate-ping-delayed-2 {
+          animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+          animation-delay: 1s;
         }
       `}</style>
     </section>

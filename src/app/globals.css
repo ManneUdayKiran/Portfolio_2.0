@@ -204,3 +204,23 @@ html {
     transparent 100%
   );
 }
+
+/* Text Truncation Utility */
+.line-clamp-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+/* Fixed height text truncation for project cards */
+.line-clamp-description-fixed {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  overflow: hidden;
+  line-height: 1.4;
+  max-height: 4.2rem;
+}

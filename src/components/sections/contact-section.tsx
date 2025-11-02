@@ -76,13 +76,34 @@ export default function ContactSection() {
         </div>
 
         {/* Floating Particles */}
-        {[...Array(20)].map((_, i) => (
+        {[
+          { left: 15, top: 20 },
+          { left: 85, top: 15 },
+          { left: 65, top: 75 },
+          { left: 25, top: 85 },
+          { left: 90, top: 45 },
+          { left: 10, top: 60 },
+          { left: 75, top: 25 },
+          { left: 45, top: 90 },
+          { left: 20, top: 10 },
+          { left: 80, top: 70 },
+          { left: 55, top: 35 },
+          { left: 35, top: 80 },
+          { left: 70, top: 5 },
+          { left: 5, top: 50 },
+          { left: 95, top: 30 },
+          { left: 40, top: 95 },
+          { left: 60, top: 40 },
+          { left: 30, top: 65 },
+          { left: 85, top: 55 },
+          { left: 50, top: 15 },
+        ].map((particle, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-cyan-400 rounded-full"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: `${particle.left}%`,
+              top: `${particle.top}%`,
             }}
             animate={{
               y: [0, -20, 0],

@@ -2,7 +2,7 @@
 
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import Scene from "../scene";
+import Scene from "./scene";
 
 export default function ThreeCanvasClient() {
   return (

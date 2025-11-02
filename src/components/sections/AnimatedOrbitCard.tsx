@@ -1,9 +1,26 @@
 "use client";
 
-import { Html } from "@react-three/drei";
-import { useRef, useEffect, useState } from "react";
-import { useFrame } from "@react-three/fiber";
+// COMPONENT TEMPORARILY DISABLED - uses React Three Fiber
+// import { Html } from "@react-three/drei";
+// import { useRef, useEffect, useState } from "react";
+// import { useFrame } from "@react-three/fiber";
 
+// COMPONENT TEMPORARILY DISABLED - uses React Three Fiber
+export function AnimatedOrbitCard({
+  achievement,
+  index,
+  total,
+}: {
+  achievement: any;
+  index: number;
+  total: number;
+}) {
+  // Placeholder component to avoid errors
+  return null;
+}
+
+// Original component commented out:
+/*
 export function AnimatedOrbitCard({
   achievement,
   index,
@@ -68,3 +85,4 @@ export function AnimatedOrbitCard({
     </group>
   );
 }
+*/

@@ -1,90 +1,97 @@
 "use client";
-
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "@/hooks/use-in-view";
-import { useState, useRef, useEffect, Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Html, useGLTF, Environment } from "@react-three/drei";
-import { EffectComposer, Bloom, GodRays } from "@react-three/postprocessing";
-import * as THREE from "three";
-import { useFrame } from "@react-three/fiber";
-import { AnimatedOrbitCard } from "./AnimatedOrbitCard";
 
-// Energy Particle Component
-function EnergyParticle({
-  index,
-  radius,
-  isActive,
-}: {
-  index: number;
-  radius: number;
-  isActive: boolean;
-}) {
-  const particleRef = useRef<THREE.Mesh>(null);
+// All React Three Fiber imports commented out to avoid ReactCurrentOwner errors
+// import * as THREE from "three";
+// import { useFrame } from "@react-three/fiber";
+// const Canvas = dynamic(() => import("@react-three/fiber").then(mod => mod.Canvas), { ssr: false });
+// const OrbitControls = dynamic(() => import("@react-three/drei").then(mod => mod.OrbitControls), { ssr: false });
+// const Html = dynamic(() => import("@react-three/drei").then(mod => mod.Html), { ssr: false });
+// const Environment = dynamic(() => import("@react-three/drei").then(mod => mod.Environment), { ssr: false });
+// const EffectComposer = dynamic(() => import("@react-three/postprocessing").then(mod => mod.EffectComposer), { ssr: false });
+// const Bloom = dynamic(() => import("@react-three/postprocessing").then(mod => mod.Bloom), { ssr: false });
+// const GodRays = dynamic(() => import("@react-three/postprocessing").then(mod => mod.GodRays), { ssr: false });
 
-  useFrame((state) => {
-    if (particleRef.current) {
-      const time = state.clock.elapsedTime + index * 0.5;
-      const angle = (index / 8) * Math.PI * 2 + time * 0.3;
+// AnimatedOrbitCard import commented out since it likely uses React Three Fiber
+// import { AnimatedOrbitCard } from "./AnimatedOrbitCard";
 
-      particleRef.current.position.set(
-        Math.cos(angle) * radius,
-        Math.sin(time * 0.8) * 1.5 + 1,
-        Math.sin(angle) * radius
-      );
+// Energy Particle Component - COMMENTED OUT (uses React Three Fiber)
+// function EnergyParticle({
+//   index,
+//   radius,
+//   isActive,
+// }: {
+//   index: number;
+//   radius: number;
+//   isActive: boolean;
+// }) {
+//   const particleRef = useRef<THREE.Mesh>(null);
 
-      // Scale and opacity based on activity
-      const scale = isActive ? 0.15 : 0.08;
-      particleRef.current.scale.setScalar(scale);
+//   useFrame((state) => {
+//     if (particleRef.current) {
+//       const time = state.clock.elapsedTime + index * 0.5;
+//       const angle = (index / 8) * Math.PI * 2 + time * 0.3;
 
-      if (particleRef.current.material instanceof THREE.MeshBasicMaterial) {
-        particleRef.current.material.opacity = isActive ? 0.9 : 0.6;
-      }
-    }
-  });
+//       particleRef.current.position.set(
+//         Math.cos(angle) * radius,
+//         Math.sin(time * 0.8) * 1.5 + 1,
+//         Math.sin(angle) * radius
+//       );
 
-  return (
-    <mesh ref={particleRef}>
-      <sphereGeometry args={[0.1, 6, 6]} />
-      <meshBasicMaterial color="#FFD700" transparent opacity={0.6} />
-    </mesh>
-  );
-}
+//       // Scale and opacity based on activity
+//       const scale = isActive ? 0.15 : 0.08;
+//       particleRef.current.scale.setScalar(scale);
 
-// Simplified Achievement Display Component
-function AchievementStats() {
-  return (
-    <Html center position={[0, 4, 0]}>
-      <div className="bg-black/80 backdrop-blur-sm rounded-lg p-6 border border-gold-400/30 text-center">
-        <h3 className="text-gold-400 font-bold text-2xl mb-4">
-          🏆 Achievements
-        </h3>
-        <div className="grid grid-cols-2 gap-4 text-white">
-          <div>
-            <div className="text-3xl">🏅</div>
-            <div className="text-xl font-bold text-yellow-400">12</div>
-            <div className="text-sm">Certifications</div>
-          </div>
-          <div>
-            <div className="text-3xl">💻</div>
-            <div className="text-xl font-bold text-cyan-400">47</div>
-            <div className="text-sm">Projects</div>
-          </div>
-          <div>
-            <div className="text-3xl">🧠</div>
-            <div className="text-xl font-bold text-purple-400">23</div>
-            <div className="text-sm">Hackathons</div>
-          </div>
-          <div>
-            <div className="text-3xl">🥇</div>
-            <div className="text-xl font-bold text-emerald-400">8</div>
-            <div className="text-sm">Awards</div>
-          </div>
-        </div>
-      </div>
-    </Html>
-  );
-}
+//       if (particleRef.current.material instanceof THREE.MeshBasicMaterial) {
+//         particleRef.current.material.opacity = isActive ? 0.9 : 0.6;
+//       }
+//     }
+//   });
+
+//   return (
+//     <mesh ref={particleRef}>
+//       <sphereGeometry args={[0.1, 6, 6]} />
+//       <meshBasicMaterial color="#FFD700" transparent opacity={0.6} />
+//     </mesh>
+//   );
+// }
+
+// Simplified Achievement Display Component - COMMENTED OUT (uses React Three Fiber Html)
+// function AchievementStats() {
+//   return (
+//     <Html center position={[0, 4, 0]}>
+//       <div className="bg-black/80 backdrop-blur-sm rounded-lg p-6 border border-gold-400/30 text-center">
+//         <h3 className="text-gold-400 font-bold text-2xl mb-4">
+//           🏆 Achievements
+//         </h3>
+//         <div className="grid grid-cols-2 gap-4 text-white">
+//           <div>
+//             <div className="text-3xl">🏅</div>
+//             <div className="text-xl font-bold text-yellow-400">12</div>
+//             <div className="text-sm">Certifications</div>
+//           </div>
+//           <div>
+//             <div className="text-3xl">💻</div>
+//             <div className="text-xl font-bold text-cyan-400">47</div>
+//             <div className="text-sm">Projects</div>
+//           </div>
+//           <div>
+//             <div className="text-3xl">🧠</div>
+//             <div className="text-xl font-bold text-purple-400">23</div>
+//             <div className="text-sm">Hackathons</div>
+//           </div>
+//           <div>
+//             <div className="text-3xl">🥇</div>
+//             <div className="text-xl font-bold text-emerald-400">8</div>
+//             <div className="text-sm">Awards</div>
+//           </div>
+//         </div>
+//       </div>
+//     </Html>
+//   );
+// }
 
 // Animated Counter Component
 function AnimatedCounter({
@@ -307,15 +314,78 @@ export default function AchievementsSection() {
 
   // Update the certificateStats array to include links to certificates
   const certificateStats = [
-    { id: 1, icon: "📜", title: "C++ Certification", count: 1, gradient: "from-blue-400 to-purple-500", description: "Certified C++ Developer", link: "https://drive.google.com/file/d/1MLAql_prt85RsDt96qe9ccXBMEeiHdxv/view?usp=sharing" },
-    { id: 2, icon: "☕", title: "Java Certification", count: 1, gradient: "from-orange-400 to-red-500", description: "Certified Java Developer", link: "https://drive.google.com/file/d/10mJwFo-R3zGn4am79tCDTtU9dVn48ZpJ/view?usp=sharing" },
-    { id: 3, icon: "🐍", title: "Python Certification", count: 1, gradient: "from-green-400 to-blue-500", description: "Certified Python Developer", link: "https://drive.google.com/python-certificate" },
-    { id: 4, icon: "#️⃣", title: "C# Certification", count: 1, gradient: "from-purple-400 to-pink-500", description: "Certified C# Developer", link: "https://drive.google.com/csharp-certificate" },
-    { id: 5, icon: "🌐", title: "MERN Stack Certification", count: 1, gradient: "from-teal-400 to-green-500", description: "Certified MERN Stack Developer", link: "https://drive.google.com/file/d/1CbxdzQcv4iLaKqdLQgzUUDNRm4MwOdm-/view?usp=sharing" },
-    { id: 6, icon: "🤖", title: "AI & Machine Learning", count: 1, gradient: "from-teal-400 to-green-500", description: "Certified AI & Machine Learning Developer", link: "https://drive.google.com/file/d/1xTTnmDjW8EZFnZFZD_GIK_Dpgu-neufu/view?usp=sharing" },
-    { id: 7, icon: "🗄️", title: "MongoDB Certification", count: 1, gradient: "from-teal-400 to-green-500", description: "Certified MongoDB Developer", link: "#" },
-    { id: 8, icon: "🏆", title: "Code For Change Hackathon", count: 1, gradient: "from-teal-400 to-green-500", description: "", link: "https://credsverse.com/credentials/a4837d22-0acb-4111-a7b6-02b09f7bab84" },
-    
+    {
+      id: 1,
+      icon: "📜",
+      title: "C++ Certification",
+      count: 1,
+      gradient: "from-blue-400 to-purple-500",
+      description: "Certified C++ Developer",
+      link: "https://drive.google.com/file/d/1MLAql_prt85RsDt96qe9ccXBMEeiHdxv/view?usp=sharing",
+    },
+    {
+      id: 2,
+      icon: "☕",
+      title: "Java Certification",
+      count: 1,
+      gradient: "from-orange-400 to-red-500",
+      description: "Certified Java Developer",
+      link: "https://drive.google.com/file/d/10mJwFo-R3zGn4am79tCDTtU9dVn48ZpJ/view?usp=sharing",
+    },
+    {
+      id: 3,
+      icon: "🐍",
+      title: "Python Certification",
+      count: 1,
+      gradient: "from-green-400 to-blue-500",
+      description: "Certified Python Developer",
+      link: "https://drive.google.com/python-certificate",
+    },
+    {
+      id: 4,
+      icon: "#️⃣",
+      title: "C# Certification",
+      count: 1,
+      gradient: "from-purple-400 to-pink-500",
+      description: "Certified C# Developer",
+      link: "https://drive.google.com/csharp-certificate",
+    },
+    {
+      id: 5,
+      icon: "🌐",
+      title: "MERN Stack Certification",
+      count: 1,
+      gradient: "from-teal-400 to-green-500",
+      description: "Certified MERN Stack Developer",
+      link: "https://drive.google.com/file/d/1CbxdzQcv4iLaKqdLQgzUUDNRm4MwOdm-/view?usp=sharing",
+    },
+    {
+      id: 6,
+      icon: "🤖",
+      title: "AI & Machine Learning",
+      count: 1,
+      gradient: "from-teal-400 to-green-500",
+      description: "Certified AI & Machine Learning Developer",
+      link: "https://drive.google.com/file/d/1xTTnmDjW8EZFnZFZD_GIK_Dpgu-neufu/view?usp=sharing",
+    },
+    {
+      id: 7,
+      icon: "🗄️",
+      title: "MongoDB Certification",
+      count: 1,
+      gradient: "from-teal-400 to-green-500",
+      description: "Certified MongoDB Developer",
+      link: "#",
+    },
+    {
+      id: 8,
+      icon: "🏆",
+      title: "Code For Change Hackathon",
+      count: 1,
+      gradient: "from-teal-400 to-green-500",
+      description: "",
+      link: "https://credsverse.com/credentials/a4837d22-0acb-4111-a7b6-02b09f7bab84",
+    },
   ];
 
   const containerVariants = {
@@ -428,9 +498,7 @@ export default function AchievementsSection() {
               Achievements
             </span>
             <br />
-            <span className="text-4xl md:text-5xl text-gray-300 font-light">
-              
-            </span>
+            <span className="text-4xl md:text-5xl text-gray-300 font-light"></span>
           </motion.h2>
 
           <motion.p
