@@ -52,3 +52,4 @@ __snapshots__/
 
 # Optional: ignore local dev files
 local.env
+.vercel

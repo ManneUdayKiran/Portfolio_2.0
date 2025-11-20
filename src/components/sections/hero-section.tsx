@@ -149,37 +149,60 @@ export default function HeroSection() {
       ref={ref}
       className={`min-h-screen relative overflow-hidden bg-gradient-to-br transition-all duration-1000 cursor-ripple ${auroraBackgrounds[auroraIndex]}`}
     >
-      {/* Aurora Borealis Background */}
-      <AuroraCSS />
+      {/* Background layers - ensure they stay behind content */}
+      <div className="absolute inset-0 z-0">
+        {/* Aurora Borealis Background */}
+        <AuroraCSS />
 
-      {/* Interactive 3D Ripple Effect - Replaced with CSS animation */}
-      <div className="absolute inset-0 z-3 pointer-events-auto">
-        <div className="ripple-container w-full h-full overflow-hidden">
-          {[...Array(12)].map((_, i) => (
+        {/* Floating Blob Effect - Main Background */}
+        <div className="floating-blob absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="blob-core w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full bg-gradient-to-br from-purple-500/40 via-blue-500/30 to-cyan-500/40 animate-blob-float"></div>
+          <div className="blob-glow w-32 h-32 sm:w-36 sm:h-36 lg:w-48 lg:h-48 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-purple-500/20 via-blue-500/15 to-cyan-500/20 animate-blob-glow"></div>
+        </div>
+
+        {/* Fireflies Effect - Main Background */}
+        <div className="fireflies-container absolute inset-0">
+          {[...Array(8)].map((_, i) => (
             <div
               key={i}
-              className={`ripple-circle-${i} absolute rounded-full border border-cyan-400/20 animate-ripple`}
+              className={`firefly-${i} absolute w-1.5 h-1.5 sm:w-2 sm:h-2 bg-yellow-400 rounded-full animate-firefly cursor-pointer`}
+              onClick={() => {
+                setNameGlow(true);
+                setAuroraIndex((prev) => (prev + 1) % auroraBackgrounds.length);
+                setTimeout(() => setNameGlow(false), 2000);
+              }}
             />
           ))}
         </div>
-      </div>
 
-      <div className="relative z-10 min-h-screen flex items-center">
+        {/* Interactive 3D Ripple Effect - Replaced with CSS animation */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="ripple-container w-full h-full overflow-hidden">
+            {[...Array(12)].map((_, i) => (
+              <div
+                key={i}
+                className={`ripple-circle-${i} absolute rounded-full border border-cyan-400/20 animate-ripple`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>{" "}
+      <div className="relative z-10 min-h-screen flex items-center py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
+            className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center"
           >
             {/* Left Side - Professional Introduction */}
             <motion.div
               variants={leftVariants}
-              className="space-y-8 relative z-10"
+              className="space-y-6 lg:space-y-8 relative z-20 order-2 lg:order-1"
             >
-              <div className="space-y-6">
+              <div className="space-y-4 lg:space-y-6">
                 <motion.div
-                  className="text-sm text-gray-400 font-mono tracking-widest uppercase border-l-2 border-cyan-500 pl-4"
+                  className="text-xs sm:text-sm text-gray-400 font-mono tracking-widest uppercase border-l-2 border-cyan-500 pl-3 sm:pl-4"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
@@ -190,14 +213,14 @@ export default function HeroSection() {
                 <div className="space-y-2">
                   <h1
                     id="hero-name"
-                    className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight"
+                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight"
                   >
                     <span className="block text-white">Uday Kiran</span>
                   </h1>
 
                   {showProfession && (
                     <motion.h2
-                      className="text-xl md:text-2xl lg:text-3xl font-light text-gray-300"
+                      className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-light text-gray-300"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: 0.3 }}
@@ -218,7 +241,7 @@ export default function HeroSection() {
                   y: showProfession ? 0 : 20,
                 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
-                className="text-lg text-gray-400 leading-relaxed max-w-2xl font-light"
+                className="text-sm sm:text-base lg:text-lg text-gray-400 leading-relaxed max-w-2xl font-light"
               >
                 Currently building exceptional digital experiences with
                 cutting-edge technologies. Specializing in{" "}
@@ -235,10 +258,10 @@ export default function HeroSection() {
                   y: showProfession ? 0 : 20,
                 }}
                 transition={{ duration: 0.8, delay: 0.9 }}
-                className="flex flex-wrap gap-4"
+                className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4"
               >
                 <motion.button
-                  className="group px-8 py-4 bg-white text-black hover:bg-gray-100 rounded-lg font-medium text-base transition-all duration-300 flex items-center gap-2"
+                  className="group px-6 sm:px-8 py-3 sm:py-4 bg-white text-black hover:bg-gray-100 rounded-lg font-medium text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2"
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() =>
@@ -260,7 +283,7 @@ export default function HeroSection() {
                 </motion.button>
 
                 <motion.button
-                  className="group px-8 py-4 border border-white/20 bg-white/5 text-white hover:bg-white/10 rounded-lg font-medium text-base transition-all duration-300 backdrop-blur-sm"
+                  className="group px-6 sm:px-8 py-3 sm:py-4 border border-white/20 bg-white/5 text-white hover:bg-white/10 rounded-lg font-medium text-sm sm:text-base transition-all duration-300 backdrop-blur-sm"
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() =>
@@ -279,9 +302,9 @@ export default function HeroSection() {
                   opacity: showProfession ? 1 : 0,
                 }}
                 transition={{ duration: 0.8, delay: 1.2 }}
-                className="flex items-center gap-6 pt-4"
+                className="flex items-center gap-4 sm:gap-6 pt-4"
               >
-                <span className="text-sm text-gray-500 font-mono">
+                <span className="text-xs sm:text-sm text-gray-500 font-mono">
                   Connect:
                 </span>
                 {[
@@ -290,7 +313,7 @@ export default function HeroSection() {
                     href: "https://github.com/ManneUdayKiran",
                     icon: (
                       <svg
-                        className="w-5 h-5"
+                        className="w-4 h-4 sm:w-5 sm:h-5"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
@@ -303,7 +326,7 @@ export default function HeroSection() {
                     href: "https://www.linkedin.com/in/uday-kiran-536520282/",
                     icon: (
                       <svg
-                        className="w-5 h-5"
+                        className="w-4 h-4 sm:w-5 sm:h-5"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
@@ -316,7 +339,7 @@ export default function HeroSection() {
                     href: "https://twitter.com",
                     icon: (
                       <svg
-                        className="w-5 h-5"
+                        className="w-4 h-4 sm:w-5 sm:h-5"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
@@ -346,50 +369,26 @@ export default function HeroSection() {
               </motion.div>
             </motion.div>
 
-            {/* Right Side - 3D Floating Blob */}
+            {/* Right Side - Visual Elements */}
             <motion.div
               variants={rightVariants}
-              className="relative h-96 lg:h-full"
+              className="relative h-64 sm:h-80 lg:h-96 xl:h-full order-1 lg:order-2"
             >
-              <div className="absolute inset-0">
+              <div className="absolute inset-0 z-0">
                 {/* CSS-based Aurora Background */}
                 <div className="aurora-bg w-full h-full relative overflow-hidden">
                   {/* Aurora Effect */}
                   <div className="aurora-layer-1 absolute inset-0 animate-aurora-1"></div>
                   <div className="aurora-layer-2 absolute inset-0 animate-aurora-2"></div>
-
-                  {/* Floating Blob Effect */}
-                  <div className="floating-blob absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                    <div className="blob-core w-32 h-32 rounded-full bg-gradient-to-br from-purple-500/40 via-blue-500/30 to-cyan-500/40 animate-blob-float"></div>
-                    <div className="blob-glow w-48 h-48 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-purple-500/20 via-blue-500/15 to-cyan-500/20 animate-blob-glow"></div>
-                  </div>
-
-                  {/* Fireflies Effect */}
-                  <div className="fireflies-container absolute inset-0">
-                    {[...Array(12)].map((_, i) => (
-                      <div
-                        key={i}
-                        className={`firefly-${i} absolute w-2 h-2 bg-yellow-400 rounded-full animate-firefly cursor-pointer`}
-                        onClick={() => {
-                          setNameGlow(true);
-                          setAuroraIndex(
-                            (prev) => (prev + 1) % auroraBackgrounds.length
-                          );
-                          setTimeout(() => setNameGlow(false), 2000);
-                        }}
-                      />
-                    ))}
-                  </div>
                 </div>
               </div>
             </motion.div>
           </motion.div>
         </div>
       </div>
-
       {/* Enhanced Scroll Indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20"
+        className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-20"
         animate={{ y: [0, 15, 0] }}
         transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
         initial={{ opacity: 0 }}
@@ -406,14 +405,14 @@ export default function HeroSection() {
           }
         >
           {/* Outer glow */}
-          <div className="absolute inset-0 w-8 h-12 border-2 border-cyan-400/60 rounded-full blur-sm"></div>
+          <div className="absolute inset-0 w-6 h-10 sm:w-8 sm:h-12 border-2 border-cyan-400/60 rounded-full blur-sm"></div>
 
           {/* Main indicator */}
-          <div className="relative w-8 h-12 border-2 border-cyan-400 rounded-full flex justify-center backdrop-blur-sm bg-white/5">
+          <div className="relative w-6 h-10 sm:w-8 sm:h-12 border-2 border-cyan-400 rounded-full flex justify-center backdrop-blur-sm bg-white/5">
             <motion.div
-              className="w-1.5 h-4 bg-gradient-to-b from-cyan-400 to-blue-500 rounded-full mt-2 shadow-lg"
+              className="w-1 h-3 sm:w-1.5 sm:h-4 bg-gradient-to-b from-cyan-400 to-blue-500 rounded-full mt-1.5 sm:mt-2 shadow-lg"
               animate={{
-                y: [0, 16, 0],
+                y: [0, 12, 0],
                 opacity: [1, 0.3, 1],
               }}
               transition={{
@@ -426,7 +425,7 @@ export default function HeroSection() {
 
           {/* Scroll text */}
           <motion.p
-            className="absolute top-16 left-1/2 transform -translate-x-1/2 text-cyan-300/80 text-sm font-medium tracking-wider whitespace-nowrap"
+            className="absolute top-12 sm:top-16 left-1/2 transform -translate-x-1/2 text-cyan-300/80 text-xs sm:text-sm font-medium tracking-wider whitespace-nowrap"
             animate={{ opacity: [0.6, 1, 0.6] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
@@ -434,7 +433,6 @@ export default function HeroSection() {
           </motion.p>
         </motion.div>
       </motion.div>
-
       {/* CSS Animation Styles */}
       <style jsx>{`
         @keyframes ripple {

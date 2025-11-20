@@ -82,9 +82,9 @@ export default function TechStackSection() {
               {/* Skills Bubble Universe */}
               <div className="w-full h-full flex items-center justify-center p-8">
                 <div className="relative w-full max-w-4xl h-full">
-                  {/* Skills Bubble Clusters - Organic Group Layout */}
+                  {/* Skills Bubble Grid - 5x5 Layout */}
 
-                  {/* Frontend Cluster (Top Left) */}
+                  {/* Row 1 */}
                   <div
                     data-name="React"
                     title="React"
@@ -113,7 +113,7 @@ export default function TechStackSection() {
                     data-name="Next.js"
                     title="Next.js"
                     data-tooltip="Next.js • Level 92 • React Framework"
-                    className="absolute top-[20%] left-[25%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[12%] left-[25%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "nextjs",
@@ -137,7 +137,7 @@ export default function TechStackSection() {
                     data-name="Vue.js"
                     title="Vue.js"
                     data-tooltip="Vue.js • Level 88 • Frontend Framework"
-                    className="absolute top-[20%] left-[40%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[4%] left-[40%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "vue",
@@ -165,7 +165,7 @@ export default function TechStackSection() {
                     data-name="Tailwind CSS"
                     title="Tailwind CSS"
                     data-tooltip="Tailwind CSS • Level 95 • CSS Framework"
-                    className="absolute top-[20%] left-[55%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-5%] left-[55%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "tailwind",
@@ -175,7 +175,7 @@ export default function TechStackSection() {
                         connections: [],
                         category: "frontend",
                         projects: [
-                          "All UI Projects",
+                          "Al UI Projects",
                           "Design Systems",
                           "Responsive Design",
                         ],
@@ -193,7 +193,7 @@ export default function TechStackSection() {
                     data-name="TypeScript"
                     title="TypeScript"
                     data-tooltip="TypeScript • Level 95 • Programming Language"
-                    className="absolute top-[20%] left-[70%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-14%] left-[70%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "typescript",
@@ -217,12 +217,12 @@ export default function TechStackSection() {
                     <span className="skill-name">TypeScript</span>
                   </div>
 
-                  {/* Backend Cluster (Top Right) */}
+                  {/* Row 2 */}
                   <div
                     data-name="Node.js"
                     title="Node.js"
                     data-tooltip="Node.js • Level 90 • Backend Runtime"
-                    className="absolute top-[35%] left-[10%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-5%] left-[10%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "nodejs",
@@ -246,7 +246,7 @@ export default function TechStackSection() {
                     data-name="Python"
                     title="Python"
                     data-tooltip="Python • Level 88 • Programming Language"
-                    className="absolute top-[35%] left-[25%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-14%] left-[25%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "python",
@@ -269,7 +269,7 @@ export default function TechStackSection() {
                   <div
                     data-name="Express.js"
                     title="Express.js"
-                    className="absolute top-[35%] left-[40%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-22%] left-[40%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "express",
@@ -289,12 +289,11 @@ export default function TechStackSection() {
                     <span className="skill-name">Express.js</span>
                   </div>
 
-                  {/* Languages Cluster (Center Top) */}
                   <div
                     data-name="JavaScript"
                     title="JavaScript"
                     data-tooltip="JavaScript • Level 95 • Programming Language"
-                    className="absolute top-[35%] left-[55%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-32%] left-[55%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "javascript",
@@ -316,7 +315,7 @@ export default function TechStackSection() {
                   <div
                     data-name="Java"
                     title="Java"
-                    className="absolute top-[35%] left-[70%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-41%] left-[70%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "java",
@@ -336,12 +335,12 @@ export default function TechStackSection() {
                     <span className="skill-name">Java</span>
                   </div>
 
-                  {/* Database Cluster (Bottom Left) */}
+                  {/* Row 3 */}
                   <div
                     data-name="MongoDB"
                     title="MongoDB"
                     data-tooltip="MongoDB • Level 85 • NoSQL Database"
-                    className="absolute top-[50%] left-[10%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-30%] left-[10%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "mongodb",
@@ -368,7 +367,7 @@ export default function TechStackSection() {
                   <div
                     data-name="PostgreSQL"
                     title="PostgreSQL"
-                    className="absolute top-[50%] left-[25%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-38%] left-[25%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "postgresql",
@@ -392,34 +391,10 @@ export default function TechStackSection() {
                     <span className="skill-name">PostgreSQL</span>
                   </div>
 
-                  {/* Core Center Node */}
-                  {/* <div
-                    data-name="Full Stack"
-                    title="Full Stack"
-                    className="absolute top-[42%] left-[42%] w-24 h-20 rounded-full  skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 transition-all duration-300 shadow-lg animate-pulse backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "fullstack",
-                        name: "Full Stack",
-                        level: 100,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "frontend",
-                        projects: ["All Projects"],
-                        unlocked: true,
-                        description:
-                          "Complete full-stack development expertise",
-                      })
-                    }
-                  >
-                    <span className="text-2xl">⚡</span>
-                  </div> */}
-
-                  {/* DevOps/Tools Cluster (Bottom Right) */}
                   <div
                     data-name="Docker"
                     title="Docker"
-                    className="absolute top-[50%] left-[40%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-47%] left-[40%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "docker",
@@ -446,7 +421,7 @@ export default function TechStackSection() {
                   <div
                     data-name="Git/GitHub"
                     title="Git/GitHub"
-                    className="absolute top-[50%] left-[55%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-55%] left-[55%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "git",
@@ -470,11 +445,10 @@ export default function TechStackSection() {
                     <span className="skill-name">Git/GitHub</span>
                   </div>
 
-                  {/* Additional Frontend Skills - Adding to Frontend Cluster */}
                   <div
                     data-name="Redux"
                     title="Redux"
-                    className="absolute top-[50%] left-[70%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-65%] left-[70%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "redux",
@@ -498,10 +472,11 @@ export default function TechStackSection() {
                     <span className="skill-name">Redux</span>
                   </div>
 
+                  {/* Row 4 */}
                   <div
                     data-name="Framer Motion"
                     title="Framer Motion"
-                    className="absolute top-[65%] left-[10%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-55%] left-[10%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "framer",
@@ -524,7 +499,7 @@ export default function TechStackSection() {
                   <div
                     data-name="SASS/SCSS"
                     title="SASS/SCSS"
-                    className="absolute top-[65%] left-[25%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-63%] left-[25%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "sass",
@@ -544,11 +519,10 @@ export default function TechStackSection() {
                     <span className="skill-name">SASS/SCSS</span>
                   </div>
 
-                  {/* Backend Cluster Extensions */}
                   <div
                     data-name="GraphQL"
                     title="GraphQL"
-                    className="absolute top-[65%] left-[40%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-71%] left-[40%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "graphql",
@@ -567,11 +541,10 @@ export default function TechStackSection() {
                     <span className="skill-name">GraphQL</span>
                   </div>
 
-                  {/* Database Cluster Extensions */}
                   <div
                     data-name="Redis"
                     title="Redis"
-                    className="absolute top-[65%] left-[55%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-79%] left-[55%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "redis",
@@ -590,11 +563,10 @@ export default function TechStackSection() {
                     <span className="skill-name">Redis</span>
                   </div>
 
-                  {/* Tools Cluster Extensions */}
                   <div
                     data-name="AWS"
                     title="AWS"
-                    className="absolute top-[65%] left-[70%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-88%] left-[70%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "aws",
@@ -618,10 +590,11 @@ export default function TechStackSection() {
                     <span className="skill-name">AWS</span>
                   </div>
 
+                  {/* Row 5 */}
                   <div
                     data-name="Firebase"
                     title="Firebase"
-                    className="absolute top-[80%] left-[10%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-0%] left-[10%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "firebase",
@@ -648,7 +621,7 @@ export default function TechStackSection() {
                   <div
                     data-name="VS Code"
                     title="VS Code"
-                    className="absolute top-[80%] left-[25%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-80%] left-[25%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "vscode",
@@ -671,7 +644,7 @@ export default function TechStackSection() {
                   <div
                     data-name="Figma"
                     title="Figma"
-                    className="absolute top-[80%] left-[40%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-80%] left-[40%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "figma",
@@ -695,11 +668,10 @@ export default function TechStackSection() {
                     <span className="skill-name">Figma</span>
                   </div>
 
-                  {/* Languages Cluster Extensions */}
                   <div
                     data-name="C++"
                     title="C++"
-                    className="absolute top-[80%] left-[55%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-80%] left-[55%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "cpp",
@@ -726,7 +698,7 @@ export default function TechStackSection() {
                   <div
                     data-name="Linux"
                     title="Linux"
-                    className="absolute top-[80%] left-[70%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
+                    className="absolute top-[-80%] left-[70%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
                     onClick={() =>
                       setSelectedNode({
                         id: "linux",
@@ -753,7 +725,7 @@ export default function TechStackSection() {
               </div>
 
               {/* Legend */}
-              <div className="absolute bottom-4 left-4 z-20 bg-black/70 backdrop-blur-sm rounded-lg p-3">
+              {/* <div className="absolute bottom-4 left-4 z-20 bg-black/70 backdrop-blur-sm rounded-lg p-3">
                 <p className="text-sm text-gray-300 mb-2">Skill Clusters:</p>
                 <div className="flex flex-wrap gap-2">
                   <div className="flex items-center gap-1">
@@ -790,7 +762,7 @@ export default function TechStackSection() {
                 <p className="text-xs text-gray-500 mt-2">
                   ⚡ Core Full-Stack at center
                 </p>
-              </div>
+              </div> */}
             </motion.div>
           </div>
 

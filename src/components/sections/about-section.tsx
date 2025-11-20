@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "@/hooks/use-in-view";
 // React Three Fiber imports commented out to avoid ReactCurrentOwner errors
 // import { Canvas } from "@react-three/fiber";
-import { useState } from "react";
+import { useState, useRef } from "react";
 // import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 // import HologramCard from "@/components/three/hologram-card";
 
@@ -15,6 +15,9 @@ export default function AboutSection() {
   });
 
   const [showContent, setShowContent] = useState(true); // Show content immediately with hologram card
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageSrc, setImageSrc] = useState("/uk.jpg");
+  const imageRef = useRef<HTMLImageElement>(null);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -92,35 +95,50 @@ export default function AboutSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Hero Section with Particle Avatar */}
         <div className="min-h-[70vh] flex items-center justify-center">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
-            {/* Left Side - CSS Hologram Effect */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
+            {/* Left Side - Profile Image */}
             <div className="order-2 lg:order-1 flex items-center justify-center">
-              <div className="relative w-80 h-80">
-                {/* Hologram Effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-purple-500/20 to-pink-500/20 rounded-2xl animate-pulse">
-                  <div className="absolute inset-4 bg-black/80 backdrop-blur-xl rounded-2xl border border-cyan-400/30 flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 animate-spin flex items-center justify-center">
-                        <div className="w-20 h-20 rounded-full bg-black flex items-center justify-center">
-                          <span className="text-3xl">👨‍💻</span>
-                        </div>
-                      </div>
-                      <h3 className="text-2xl font-bold text-white mb-2">
-                        Full Stack Developer
-                      </h3>
-                      <p className="text-cyan-400">Building Tomorrow's Web</p>
-                      <div className="mt-4 flex justify-center space-x-2">
-                        <div className="w-2 h-2 bg-cyan-400 rounded-full animate-ping"></div>
-                        <div className="w-2 h-2 bg-purple-400 rounded-full animate-ping-delayed-1"></div>
-                        <div className="w-2 h-2 bg-pink-400 rounded-full animate-ping-delayed-2"></div>
-                      </div>
+              <div className="relative">
+                {/* Image with Colorful Animated Border */}
+                <div className="relative w-64 h-64 sm:w-80 sm:h-80">
+                  {/* Animated Border */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500  p-2">
+                    <div className="w-full h-full rounded-full bg-black p-2">
+                      <img
+                        ref={imageRef}
+                        src={imageSrc}
+                        alt="Uday Kiran"
+                        className="w-full h-full rounded-full object-cover"
+                        onLoad={() => {
+                          console.log("Image loaded successfully");
+                          setImageLoaded(true);
+                        }}
+                        onError={(e) => {
+                          console.log(
+                            "Image failed to load, trying alternatives"
+                          );
+                          const img = e.currentTarget as HTMLImageElement;
+
+                          // Try different image extensions if not already tried
+                          if (imageSrc === "/uk.jpg") {
+                            setImageSrc("/uk.png");
+                          } else if (imageSrc === "/uk.png") {
+                            setImageSrc("/udaykiran.jpg");
+                          } else if (imageSrc === "/udaykiran.jpg") {
+                            setImageSrc("/udaykiran.png");
+                          } else {
+                            // Final fallback to SVG
+                            console.log("Using final SVG fallback");
+                            setImageSrc(
+                              "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%236366f1'/%3E%3Ctext x='50' y='60' font-family='Arial' font-size='30' fill='white' text-anchor='middle'%3EUK%3C/text%3E%3C/svg%3E"
+                            );
+                          }
+                        }}
+                      />
                     </div>
                   </div>
-                </div>
-
-                {/* Scanning lines effect */}
-                <div className="absolute inset-0 overflow-hidden rounded-2xl">
-                  <div className="absolute w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-scan"></div>
+                  {/* Glow Effect */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400/20 via-purple-500/20 to-pink-500/20 blur-xl animate-pulse"></div>
                 </div>
               </div>
             </div>
@@ -140,7 +158,7 @@ export default function AboutSection() {
                   transition={{ delay: 0.3, duration: 0.8 }}
                   className="space-y-4"
                 >
-                  <h1 className="text-5xl md:text-6xl font-bold">
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
                     <span className="text-white">Hi, I'm </span>
                     <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-text-glow">
                       Uday Kiran
@@ -182,7 +200,7 @@ export default function AboutSection() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ delay: 0.9, duration: 0.8 }}
-                  className="grid grid-cols-2 gap-4"
+                  className="grid grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-4"
                 >
                   {stats.map((stat, index) => (
                     <motion.div
@@ -236,7 +254,7 @@ export default function AboutSection() {
               {/* About Story */}
               <motion.div
                 variants={itemVariants}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-16"
+                className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16"
               >
                 <div className="space-y-6">
                   <h2 className="text-4xl font-bold text-white mb-8">
@@ -265,7 +283,7 @@ export default function AboutSection() {
 
                   {/* Education Timeline */}
                   <div className="mt-12">
-                    <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-6 sm:mb-8 flex items-center gap-3">
                       <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
                         Education Timeline
                       </span>
@@ -274,10 +292,10 @@ export default function AboutSection() {
 
                     <div className="relative">
                       {/* Timeline Line */}
-                      <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-cyan-500 via-purple-500 to-pink-500" />
+                      <div className="absolute left-3 sm:left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-cyan-500 via-purple-500 to-pink-500" />
 
                       {/* Timeline Items */}
-                      <div className="space-y-8">
+                      <div className="space-y-6 sm:space-y-8">
                         {[
                           {
                             year: "2024-2027",
@@ -315,16 +333,16 @@ export default function AboutSection() {
                             initial={{ opacity: 0, x: -50 }}
                             animate={inView ? { opacity: 1, x: 0 } : {}}
                             transition={{ delay: 0.2 * index, duration: 0.6 }}
-                            className="relative pl-12 group"
+                            className="relative pl-10 sm:pl-12 group"
                           >
                             {/* Colorful Orb */}
                             <motion.div
-                              className={`absolute left-0 w-8 h-8 ${item.orbColor} rounded-full shadow-lg ${item.glowColor} flex items-center justify-center`}
+                              className={`absolute left-0 w-6 h-6 sm:w-8 sm:h-8 ${item.orbColor} rounded-full shadow-lg ${item.glowColor} flex items-center justify-center`}
                               whileHover={{ scale: 1.3, rotate: 360 }}
                               transition={{ duration: 0.5 }}
                             >
                               <motion.div
-                                className="w-3 h-3 bg-white rounded-full"
+                                className="w-2 h-2 sm:w-3 sm:h-3 bg-white rounded-full"
                                 animate={{
                                   scale: [1, 1.2, 1],
                                   opacity: [0.7, 1, 0.7],
@@ -339,7 +357,7 @@ export default function AboutSection() {
 
                             {/* Pulsing Ring */}
                             <motion.div
-                              className={`absolute left-0 w-8 h-8 ${item.orbColor} rounded-full opacity-0 group-hover:opacity-30`}
+                              className={`absolute left-0 w-6 h-6 sm:w-8 sm:h-8 ${item.orbColor} rounded-full opacity-0 group-hover:opacity-30`}
                               animate={{
                                 scale: [1, 2, 1],
                                 opacity: [0.5, 0, 0.5],
@@ -353,7 +371,7 @@ export default function AboutSection() {
 
                             {/* Content Card */}
                             <motion.div
-                              className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6 group-hover:border-opacity-100 transition-all duration-300"
+                              className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-gray-700/50 rounded-xl p-4 sm:p-6 group-hover:border-opacity-100 transition-all duration-300"
                               style={{
                                 borderColor: `var(--border-color-${index})`,
                               }}
@@ -375,7 +393,7 @@ export default function AboutSection() {
                                 {item.year}
                               </div>
                               <h4
-                                className={`text-xl font-bold mb-2 bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}
+                                className={`text-lg sm:text-xl font-bold mb-2 bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}
                               >
                                 {item.degree.replace("'", "&apos;")}
                               </h4>
@@ -397,12 +415,12 @@ export default function AboutSection() {
 
                       {/* Timeline End Indicator */}
                       <motion.div
-                        className="relative pl-12 mt-8"
+                        className="relative pl-10 sm:pl-12 mt-6 sm:mt-8"
                         initial={{ opacity: 0 }}
                         animate={inView ? { opacity: 1 } : {}}
                         transition={{ delay: 1, duration: 0.6 }}
                       >
-                        <div className="absolute left-0 w-8 h-8 bg-gradient-to-br from-cyan-400 via-purple-400 to-pink-400 rounded-full shadow-lg shadow-purple-500/50 flex items-center justify-center">
+                        <div className="absolute left-0 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-cyan-400 via-purple-400 to-pink-400 rounded-full shadow-lg shadow-purple-500/50 flex items-center justify-center">
                           <motion.div
                             animate={{ rotate: 360 }}
                             transition={{
@@ -456,7 +474,7 @@ export default function AboutSection() {
                 variants={itemVariants}
                 className="text-center bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10 border border-cyan-400/20 rounded-2xl p-12 backdrop-blur-sm"
               >
-                <h4 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                <h4 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6">
                   Let's Create Something
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
                     {" "}

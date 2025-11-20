@@ -224,3 +224,80 @@ html {
   line-height: 1.4;
   max-height: 4.2rem;
 }
+
+/* Mobile Responsive Improvements */
+@media (max-width: 768px) {
+  .cursor-ripple {
+    cursor: default;
+  }
+
+  .cursor-ripple::before {
+    display: none;
+  }
+
+  /* Ensure proper touch interactions on mobile */
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Better scroll performance on mobile */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Reduce motion for mobile performance */
+  .firefly-container {
+    display: none;
+  }
+
+  /* Optimize animations for mobile */
+  .animate-ripple {
+    animation-duration: 4s;
+  }
+}
+
+/* Ensure background elements stay behind content */
+.hero-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .text-gray-400 {
+    color: #ffffff;
+  }
+
+  .text-gray-500 {
+    color: #ffffff;
+  }
+
+  .border-cyan-500 {
+    border-color: #ffffff;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-ripple,
+  .animate-aurora-1,
+  .animate-aurora-2,
+  .animate-blob-float,
+  .animate-blob-glow,
+  .animate-firefly {
+    animation: none;
+  }
+
+  .cursor-ripple::before {
+    animation: none;
+  }
+}
