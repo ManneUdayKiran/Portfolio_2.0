@@ -243,12 +243,11 @@ export default function HeroSection() {
                 transition={{ duration: 0.8, delay: 0.6 }}
                 className="text-sm sm:text-base lg:text-lg text-gray-400 leading-relaxed max-w-2xl font-light"
               >
-                Currently building exceptional digital experiences with
-                cutting-edge technologies. Specializing in{" "}
+                Passionate about learning and building digital experiences with
+                modern web technologies. Currently exploring{" "}
                 <span className="text-purple-300 font-semibold">React</span>,{" "}
-                <span className="text-blue-300 font-semibold">Three.js</span>,
-                and modern web technologies. Transforming complex ideas into
-                elegant, high-performance solutions.
+                and the latest web development practices. Always eager to learn
+                new technologies and create innovative solutions.
               </motion.p>
 
               <motion.div
@@ -367,21 +366,6 @@ export default function HeroSection() {
                   </motion.a>
                 ))}
               </motion.div>
-            </motion.div>
-
-            {/* Right Side - Visual Elements */}
-            <motion.div
-              variants={rightVariants}
-              className="relative h-64 sm:h-80 lg:h-96 xl:h-full order-1 lg:order-2"
-            >
-              <div className="absolute inset-0 z-0">
-                {/* CSS-based Aurora Background */}
-                <div className="aurora-bg w-full h-full relative overflow-hidden">
-                  {/* Aurora Effect */}
-                  <div className="aurora-layer-1 absolute inset-0 animate-aurora-1"></div>
-                  <div className="aurora-layer-2 absolute inset-0 animate-aurora-2"></div>
-                </div>
-              </div>
             </motion.div>
           </motion.div>
         </div>

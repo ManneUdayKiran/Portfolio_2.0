@@ -191,7 +191,7 @@ export default function ContactSection() {
                       htmlFor="name"
                       className="block text-sm font-mono text-cyan-400 mb-2 uppercase tracking-wider"
                     >
-                      &gt; Name
+                      Name
                     </label>
                     <motion.input
                       whileFocus={{
@@ -202,10 +202,10 @@ export default function ContactSection() {
                       type="text"
                       id="name"
                       {...register("name", {
-                        required: "Identity verification required",
+                        required: "Name is required",
                       })}
                       className="w-full px-4 py-3 bg-black/30 backdrop-blur-sm border border-cyan-400/30 rounded-lg focus:border-cyan-400 focus:outline-none text-white placeholder-gray-400 font-mono transition-all duration-300 hover:border-cyan-400/50"
-                      placeholder="Initialize identity protocol..."
+                      placeholder="Enter your full name"
                     />
                     {/* Neon Glow Effect on Focus */}
                     <motion.div
@@ -227,7 +227,7 @@ export default function ContactSection() {
                       htmlFor="email"
                       className="block text-sm font-mono text-cyan-400 mb-2 uppercase tracking-wider"
                     >
-                      &gt; Email Address
+                      Email
                     </label>
                     <motion.input
                       whileFocus={{
@@ -238,14 +238,14 @@ export default function ContactSection() {
                       type="email"
                       id="email"
                       {...register("email", {
-                        required: "Quantum address required",
+                        required: "Email is required",
                         pattern: {
                           value: /^\S+@\S+$/i,
-                          message: "Invalid quantum signature",
+                          message: "Please enter a valid email address",
                         },
                       })}
                       className="w-full px-4 py-3 bg-black/30 backdrop-blur-sm border border-cyan-400/30 rounded-lg focus:border-cyan-400 focus:outline-none text-white placeholder-gray-400 font-mono transition-all duration-300 hover:border-cyan-400/50"
-                      placeholder="neural.link@cybernet.holo"
+                      placeholder="your.email@example.com"
                     />
                     <motion.div
                       className="absolute inset-0 border border-cyan-400/0 rounded-lg pointer-events-none"
@@ -266,7 +266,7 @@ export default function ContactSection() {
                       htmlFor="message"
                       className="block text-sm font-mono text-cyan-400 mb-2 uppercase tracking-wider"
                     >
-                      &gt; Message
+                      Message
                     </label>
                     <motion.textarea
                       whileFocus={{
@@ -277,10 +277,10 @@ export default function ContactSection() {
                       id="message"
                       rows={5}
                       {...register("message", {
-                        required: "Neural transmission required",
+                        required: "Message is required",
                       })}
                       className="w-full px-4 py-3 bg-black/30 backdrop-blur-sm border border-cyan-400/30 rounded-lg focus:border-cyan-400 focus:outline-none text-white placeholder-gray-400 font-mono transition-all duration-300 hover:border-cyan-400/50 resize-none"
-                      placeholder="Upload consciousness data stream..."
+                      placeholder="Write your message here..."
                     />
                     <motion.div
                       className="absolute inset-0 border border-cyan-400/0 rounded-lg pointer-events-none"
@@ -327,10 +327,10 @@ export default function ContactSection() {
                       {isSubmitting ? (
                         <>
                           <div className="w-5 h-5 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
-                          <span>◦ TRANSMITTING_DATA ◦</span>
+                          <span>Sending...</span>
                         </>
                       ) : (
-                        <span>◦ INITIATE_NEURAL_LINK ◦</span>
+                        <span>Send Message</span>
                       )}
                     </div>
                   </motion.button>

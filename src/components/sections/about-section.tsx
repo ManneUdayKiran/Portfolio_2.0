@@ -97,7 +97,7 @@ export default function AboutSection() {
         <div className="min-h-[70vh] flex items-center justify-center">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
             {/* Left Side - Profile Image */}
-            <div className="order-2 lg:order-1 flex items-center justify-center">
+            <div className="order-1 lg:order-1 flex items-center justify-center">
               <div className="relative">
                 {/* Image with Colorful Animated Border */}
                 <div className="relative w-64 h-64 sm:w-80 sm:h-80">
@@ -144,7 +144,7 @@ export default function AboutSection() {
             </div>
 
             {/* Right Side - Introduction */}
-            <div className="order-1 lg:order-2 space-y-8">
+            <div className="order-2 lg:order-2 space-y-8">
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={inView ? { opacity: 1, scale: 1 } : {}}

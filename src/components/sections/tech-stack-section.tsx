@@ -63,663 +63,834 @@ export default function TechStackSection() {
         </motion.div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 min-h-[600px]">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 min-h-[600px]">
           {/* Skill Tree Visualization */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-2">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
-              className="h-[600px] bg-gradient-to-br from-gray-900/50 to-black/50 rounded-2xl border border-gray-800 overflow-hidden relative"
+              className="min-h-[500px] lg:h-[600px] bg-gradient-to-br from-gray-900/50 to-black/50 rounded-2xl border border-gray-800 overflow-hidden relative"
             >
-              {/* Interactive Skills Visualization */}
-              <div className="absolute top-4 left-4 z-20 bg-black/70 backdrop-blur-sm rounded-lg p-3">
-                <p className="text-sm text-gray-300 mb-1">💻 Tech Skills:</p>
-                <p className="text-xs text-gray-400">• Hover for details</p>
-                <p className="text-xs text-gray-400">• Click to explore</p>
-              </div>
-
               {/* Skills Bubble Universe */}
-              <div className="w-full h-full flex items-center justify-center p-8">
-                <div className="relative w-full max-w-4xl h-full">
-                  {/* Skills Bubble Grid - 5x5 Layout */}
+              <div className="w-full h-full flex items-center justify-center p-4 lg:p-8">
+                <div className="w-full max-w-4xl h-full">
+                  {/* Skills Bubble Grid - Responsive Layout */}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 lg:gap-8 h-full items-center justify-items-center">
+                    {/* Row 1 */}
+                    <div
+                      data-name="React"
+                      title="React"
+                      data-tooltip="React • Level 95 • Frontend Framework"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "react",
+                          name: "React",
+                          level: 95,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "frontend",
+                          projects: ["Portfolio", "E-commerce", "SaaS Apps"],
+                          unlocked: true,
+                          description:
+                            "Expert in React with hooks, context, and modern patterns",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          ⚛️
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        React
+                      </span>
+                    </div>
 
-                  {/* Row 1 */}
-                  <div
-                    data-name="React"
-                    title="React"
-                    data-tooltip="React • Level 95 • Frontend Framework"
-                    className="absolute top-[20%] left-[10%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "react",
-                        name: "React",
-                        level: 95,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "frontend",
-                        projects: ["Portfolio", "E-commerce", "SaaS Apps"],
-                        unlocked: true,
-                        description:
-                          "Expert in React with hooks, context, and modern patterns",
-                      })
-                    }
-                  >
-                    <span className="text-lg">⚛️</span>
-                    <span className="skill-name">React</span>
-                  </div>
+                    <div
+                      data-name="Next.js"
+                      title="Next.js"
+                      data-tooltip="Next.js • Level 92 • React Framework"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "nextjs",
+                          name: "Next.js",
+                          level: 92,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "frontend",
+                          projects: ["SSR Apps", "Static Sites", "Full-stack"],
+                          unlocked: true,
+                          description:
+                            "Advanced Next.js for SSR, SSG, and full-stack applications",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          🟢
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        Next.js
+                      </span>
+                    </div>
 
-                  <div
-                    data-name="Next.js"
-                    title="Next.js"
-                    data-tooltip="Next.js • Level 92 • React Framework"
-                    className="absolute top-[12%] left-[25%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "nextjs",
-                        name: "Next.js",
-                        level: 92,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "frontend",
-                        projects: ["SSR Apps", "Static Sites", "Full-stack"],
-                        unlocked: true,
-                        description:
-                          "Advanced Next.js for SSR, SSG, and full-stack applications",
-                      })
-                    }
-                  >
-                    <span className="text-lg">🟢</span>
-                    <span className="skill-name">Next.js</span>
-                  </div>
+                    <div
+                      data-name="Vue.js"
+                      title="Vue.js"
+                      data-tooltip="Vue.js • Level 88 • Frontend Framework"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "vue",
+                          name: "Vue.js",
+                          level: 88,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "frontend",
+                          projects: [
+                            "SPAs",
+                            "Progressive Apps",
+                            "Interactive UIs",
+                          ],
+                          unlocked: true,
+                          description:
+                            "Proficient in Vue.js ecosystem and composition API",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          💚
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        Vue.js
+                      </span>
+                    </div>
 
-                  <div
-                    data-name="Vue.js"
-                    title="Vue.js"
-                    data-tooltip="Vue.js • Level 88 • Frontend Framework"
-                    className="absolute top-[4%] left-[40%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "vue",
-                        name: "Vue.js",
-                        level: 88,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "frontend",
-                        projects: [
-                          "SPAs",
-                          "Progressive Apps",
-                          "Interactive UIs",
-                        ],
-                        unlocked: true,
-                        description:
-                          "Proficient in Vue.js ecosystem and composition API",
-                      })
-                    }
-                  >
-                    <span className="text-lg">💚</span>
-                    <span className="skill-name">Vue.js</span>
-                  </div>
+                    <div
+                      data-name="Tailwind CSS"
+                      title="Tailwind CSS"
+                      data-tooltip="Tailwind CSS • Level 95 • CSS Framework"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "tailwind",
+                          name: "Tailwind CSS",
+                          level: 95,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "frontend",
+                          projects: [
+                            "Al UI Projects",
+                            "Design Systems",
+                            "Responsive Design",
+                          ],
+                          unlocked: true,
+                          description:
+                            "Expert in Tailwind CSS and utility-first styling",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          🎨
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        Tailwind
+                      </span>
+                    </div>
 
-                  <div
-                    data-name="Tailwind CSS"
-                    title="Tailwind CSS"
-                    data-tooltip="Tailwind CSS • Level 95 • CSS Framework"
-                    className="absolute top-[-5%] left-[55%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "tailwind",
-                        name: "Tailwind CSS",
-                        level: 95,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "frontend",
-                        projects: [
-                          "Al UI Projects",
-                          "Design Systems",
-                          "Responsive Design",
-                        ],
-                        unlocked: true,
-                        description:
-                          "Expert in Tailwind CSS and utility-first styling",
-                      })
-                    }
-                  >
-                    <span className="text-lg">🎨</span>
-                    <span className="skill-name">Tailwind CSS</span>
-                  </div>
+                    <div
+                      data-name="TypeScript"
+                      title="TypeScript"
+                      data-tooltip="TypeScript • Level 95 • Programming Language"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "typescript",
+                          name: "TypeScript",
+                          level: 95,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "frontend",
+                          projects: [
+                            "All Modern Projects",
+                            "Type-safe Apps",
+                            "Enterprise",
+                          ],
+                          unlocked: true,
+                          description:
+                            "Expert in TypeScript for type-safe development",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          📘
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        TypeScript
+                      </span>
+                    </div>
 
-                  <div
-                    data-name="TypeScript"
-                    title="TypeScript"
-                    data-tooltip="TypeScript • Level 95 • Programming Language"
-                    className="absolute top-[-14%] left-[70%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "typescript",
-                        name: "TypeScript",
-                        level: 95,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "frontend",
-                        projects: [
-                          "All Modern Projects",
-                          "Type-safe Apps",
-                          "Enterprise",
-                        ],
-                        unlocked: true,
-                        description:
-                          "Expert in TypeScript for type-safe development",
-                      })
-                    }
-                  >
-                    <span className="text-lg">📘</span>
-                    <span className="skill-name">TypeScript</span>
-                  </div>
+                    {/* Row 2 */}
+                    <div
+                      data-name="Node.js"
+                      title="Node.js"
+                      data-tooltip="Node.js • Level 90 • Backend Runtime"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "nodejs",
+                          name: "Node.js",
+                          level: 90,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "backend",
+                          projects: ["APIs", "Microservices", "Real-time Apps"],
+                          unlocked: true,
+                          description:
+                            "Skilled in Node.js backend development and APIs",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          🟢
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        Node.js
+                      </span>
+                    </div>
 
-                  {/* Row 2 */}
-                  <div
-                    data-name="Node.js"
-                    title="Node.js"
-                    data-tooltip="Node.js • Level 90 • Backend Runtime"
-                    className="absolute top-[-5%] left-[10%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "nodejs",
-                        name: "Node.js",
-                        level: 90,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "backend",
-                        projects: ["APIs", "Microservices", "Real-time Apps"],
-                        unlocked: true,
-                        description:
-                          "Skilled in Node.js backend development and APIs",
-                      })
-                    }
-                  >
-                    <span className="text-lg">🟢</span>
-                    <span className="skill-name">Node.js</span>
-                  </div>
+                    <div
+                      data-name="Python"
+                      title="Python"
+                      data-tooltip="Python • Level 88 • Programming Language"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "python",
+                          name: "Python",
+                          level: 88,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "backend",
+                          projects: ["APIs", "Data Processing", "Automation"],
+                          unlocked: true,
+                          description:
+                            "Skilled in Python, Django, and data processing",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          🐍
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        Python
+                      </span>
+                    </div>
 
-                  <div
-                    data-name="Python"
-                    title="Python"
-                    data-tooltip="Python • Level 88 • Programming Language"
-                    className="absolute top-[-14%] left-[25%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "python",
-                        name: "Python",
-                        level: 88,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "backend",
-                        projects: ["APIs", "Data Processing", "Automation"],
-                        unlocked: true,
-                        description:
-                          "Skilled in Python, Django, and data processing",
-                      })
-                    }
-                  >
-                    <span className="text-lg">🐍</span>
-                    <span className="skill-name">Python</span>
-                  </div>
+                    <div
+                      data-name="Express.js"
+                      title="Express.js"
+                      data-tooltip="Express.js • Level 92 • Backend Framework"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "express",
+                          name: "Express.js",
+                          level: 92,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "backend",
+                          projects: [
+                            "REST APIs",
+                            "Microservices",
+                            "Web Servers",
+                          ],
+                          unlocked: true,
+                          description:
+                            "Expertise in Express.js and Node.js backend development",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          ⚡
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        Express
+                      </span>
+                    </div>
 
-                  <div
-                    data-name="Express.js"
-                    title="Express.js"
-                    className="absolute top-[-22%] left-[40%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "express",
-                        name: "Express.js",
-                        level: 92,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "backend",
-                        projects: ["REST APIs", "Microservices", "Web Servers"],
-                        unlocked: true,
-                        description:
-                          "Expertise in Express.js and Node.js backend development",
-                      })
-                    }
-                  >
-                    <span className="text-lg">⚡</span>
-                    <span className="skill-name">Express.js</span>
-                  </div>
+                    <div
+                      data-name="JavaScript"
+                      title="JavaScript"
+                      data-tooltip="JavaScript • Level 95 • Programming Language"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "javascript",
+                          name: "JavaScript",
+                          level: 95,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "languages",
+                          projects: ["All Web Projects", "Full-stack Apps"],
+                          unlocked: true,
+                          description: "Expert in modern JavaScript and ES6+",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          📜
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        JavaScript
+                      </span>
+                    </div>
 
-                  <div
-                    data-name="JavaScript"
-                    title="JavaScript"
-                    data-tooltip="JavaScript • Level 95 • Programming Language"
-                    className="absolute top-[-32%] left-[55%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "javascript",
-                        name: "JavaScript",
-                        level: 95,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "languages",
-                        projects: ["All Web Projects", "Full-stack Apps"],
-                        unlocked: true,
-                        description: "Expert in modern JavaScript and ES6+",
-                      })
-                    }
-                  >
-                    <span className="text-lg">📜</span>
-                    <span className="skill-name">JavaScript</span>
-                  </div>
+                    <div
+                      data-name="Java"
+                      title="Java"
+                      data-tooltip="Java • Level 80 • Programming Language"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "java",
+                          name: "Java",
+                          level: 80,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "languages",
+                          projects: ["Enterprise Apps", "Spring Boot APIs"],
+                          unlocked: true,
+                          description:
+                            "Solid foundation in Java and Spring framework",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          ☕
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        Java
+                      </span>
+                    </div>
 
-                  <div
-                    data-name="Java"
-                    title="Java"
-                    className="absolute top-[-41%] left-[70%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "java",
-                        name: "Java",
-                        level: 80,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "languages",
-                        projects: ["Enterprise Apps", "Spring Boot APIs"],
-                        unlocked: true,
-                        description:
-                          "Solid foundation in Java and Spring framework",
-                      })
-                    }
-                  >
-                    <span className="text-lg">☕</span>
-                    <span className="skill-name">Java</span>
-                  </div>
+                    {/* Row 3 */}
+                    <div
+                      data-name="MongoDB"
+                      title="MongoDB"
+                      data-tooltip="MongoDB • Level 85 • NoSQL Database"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "mongodb",
+                          name: "MongoDB",
+                          level: 85,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "database",
+                          projects: [
+                            "E-commerce",
+                            "Content Management",
+                            "Analytics",
+                          ],
+                          unlocked: true,
+                          description:
+                            "Proficient in MongoDB and NoSQL databases",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          🍃
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        MongoDB
+                      </span>
+                    </div>
 
-                  {/* Row 3 */}
-                  <div
-                    data-name="MongoDB"
-                    title="MongoDB"
-                    data-tooltip="MongoDB • Level 85 • NoSQL Database"
-                    className="absolute top-[-30%] left-[10%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "mongodb",
-                        name: "MongoDB",
-                        level: 85,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "database",
-                        projects: [
-                          "E-commerce",
-                          "Content Management",
-                          "Analytics",
-                        ],
-                        unlocked: true,
-                        description:
-                          "Proficient in MongoDB and NoSQL databases",
-                      })
-                    }
-                  >
-                    <span className="text-lg">🍃</span>
-                    <span className="skill-name">MongoDB</span>
-                  </div>
+                    <div
+                      data-name="PostgreSQL"
+                      title="PostgreSQL"
+                      data-tooltip="PostgreSQL • Level 82 • SQL Database"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "postgresql",
+                          name: "PostgreSQL",
+                          level: 82,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "database",
+                          projects: [
+                            "Complex Applications",
+                            "Analytics",
+                            "Enterprise",
+                          ],
+                          unlocked: true,
+                          description:
+                            "Advanced SQL and PostgreSQL database design",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          🐘
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        PostgreSQL
+                      </span>
+                    </div>
 
-                  <div
-                    data-name="PostgreSQL"
-                    title="PostgreSQL"
-                    className="absolute top-[-38%] left-[25%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "postgresql",
-                        name: "PostgreSQL",
-                        level: 82,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "database",
-                        projects: [
-                          "Complex Applications",
-                          "Analytics",
-                          "Enterprise",
-                        ],
-                        unlocked: true,
-                        description:
-                          "Advanced SQL and PostgreSQL database design",
-                      })
-                    }
-                  >
-                    <span className="text-lg">🐘</span>
-                    <span className="skill-name">PostgreSQL</span>
-                  </div>
+                    <div
+                      data-name="Docker"
+                      title="Docker"
+                      data-tooltip="Docker • Level 85 • Container Platform"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "docker",
+                          name: "Docker",
+                          level: 85,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "tools",
+                          projects: [
+                            "Containerization",
+                            "DevOps",
+                            "Microservices",
+                          ],
+                          unlocked: true,
+                          description:
+                            "Container orchestration and DevOps practices",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          🐳
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        Docker
+                      </span>
+                    </div>
 
-                  <div
-                    data-name="Docker"
-                    title="Docker"
-                    className="absolute top-[-47%] left-[40%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "docker",
-                        name: "Docker",
-                        level: 85,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "tools",
-                        projects: [
-                          "Containerization",
-                          "DevOps",
-                          "Microservices",
-                        ],
-                        unlocked: true,
-                        description:
-                          "Container orchestration and DevOps practices",
-                      })
-                    }
-                  >
-                    <span className="text-lg">🐳</span>
-                    <span className="skill-name">Docker</span>
-                  </div>
+                    <div
+                      data-name="Git/GitHub"
+                      title="Git/GitHub"
+                      data-tooltip="Git/GitHub • Level 95 • Version Control"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "git",
+                          name: "Git/GitHub",
+                          level: 95,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "tools",
+                          projects: [
+                            "All Projects",
+                            "Version Control",
+                            "Collaboration",
+                          ],
+                          unlocked: true,
+                          description:
+                            "Advanced version control and collaboration workflows",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          🔧
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        Git
+                      </span>
+                    </div>
 
-                  <div
-                    data-name="Git/GitHub"
-                    title="Git/GitHub"
-                    className="absolute top-[-55%] left-[55%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "git",
-                        name: "Git/GitHub",
-                        level: 95,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "tools",
-                        projects: [
-                          "All Projects",
-                          "Version Control",
-                          "Collaboration",
-                        ],
-                        unlocked: true,
-                        description:
-                          "Advanced version control and collaboration workflows",
-                      })
-                    }
-                  >
-                    <span className="text-lg">🔧</span>
-                    <span className="skill-name">Git/GitHub</span>
-                  </div>
+                    <div
+                      data-name="Redux"
+                      title="Redux"
+                      data-tooltip="Redux • Level 88 • State Management"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "redux",
+                          name: "Redux",
+                          level: 88,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "frontend",
+                          projects: [
+                            "State Management",
+                            "Complex Apps",
+                            "Enterprise",
+                          ],
+                          unlocked: true,
+                          description:
+                            "Advanced state management with Redux and Zustand",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          🔄
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        Redux
+                      </span>
+                    </div>
 
-                  <div
-                    data-name="Redux"
-                    title="Redux"
-                    className="absolute top-[-65%] left-[70%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "redux",
-                        name: "Redux",
-                        level: 88,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "frontend",
-                        projects: [
-                          "State Management",
-                          "Complex Apps",
-                          "Enterprise",
-                        ],
-                        unlocked: true,
-                        description:
-                          "Advanced state management with Redux and Zustand",
-                      })
-                    }
-                  >
-                    <span className="text-sm">🔄</span>
-                    <span className="skill-name">Redux</span>
-                  </div>
+                    {/* Row 4 */}
+                    <div
+                      data-name="Framer Motion"
+                      title="Framer Motion"
+                      data-tooltip="Framer Motion • Level 90 • Animation Library"
+                      className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md transition-transform duration-200"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "framer",
+                          name: "Framer Motion",
+                          level: 90,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "frontend",
+                          projects: [
+                            "Animations",
+                            "Interactive UI",
+                            "Modern UX",
+                          ],
+                          unlocked: true,
+                          description:
+                            "Advanced animations and interactive experiences",
+                        })
+                      }
+                    >
+                      <span className="text-lg sm:text-xl lg:text-2xl">🎬</span>
+                      <span className="skill-name sr-only">Framer Motion</span>
+                    </div>
 
-                  {/* Row 4 */}
-                  <div
-                    data-name="Framer Motion"
-                    title="Framer Motion"
-                    className="absolute top-[-55%] left-[10%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "framer",
-                        name: "Framer Motion",
-                        level: 90,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "frontend",
-                        projects: ["Animations", "Interactive UI", "Modern UX"],
-                        unlocked: true,
-                        description:
-                          "Advanced animations and interactive experiences",
-                      })
-                    }
-                  >
-                    <span className="text-sm">🎬</span>
-                    <span className="skill-name">Framer Motion</span>
-                  </div>
+                    <div
+                      data-name="SASS/SCSS"
+                      title="SASS/SCSS"
+                      data-tooltip="SASS/SCSS • Level 90 • CSS Preprocessor"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "sass",
+                          name: "SASS/SCSS",
+                          level: 90,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "frontend",
+                          projects: ["Styling Systems", "Component Libraries"],
+                          unlocked: true,
+                          description:
+                            "Advanced CSS preprocessing and styling architectures",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          🎨
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        SASS
+                      </span>
+                    </div>
 
-                  <div
-                    data-name="SASS/SCSS"
-                    title="SASS/SCSS"
-                    className="absolute top-[-63%] left-[25%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "sass",
-                        name: "SASS/SCSS",
-                        level: 90,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "frontend",
-                        projects: ["Styling Systems", "Component Libraries"],
-                        unlocked: true,
-                        description:
-                          "Advanced CSS preprocessing and styling architectures",
-                      })
-                    }
-                  >
-                    <span className="text-sm">🎨</span>
-                    <span className="skill-name">SASS/SCSS</span>
-                  </div>
+                    <div
+                      data-name="GraphQL"
+                      title="GraphQL"
+                      data-tooltip="GraphQL • Level 82 • Query Language"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "graphql",
+                          name: "GraphQL",
+                          level: 82,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "backend",
+                          projects: ["Modern APIs", "Data Fetching", "Apollo"],
+                          unlocked: true,
+                          description: "Modern API development with GraphQL",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          🔗
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        GraphQL
+                      </span>
+                    </div>
 
-                  <div
-                    data-name="GraphQL"
-                    title="GraphQL"
-                    className="absolute top-[-71%] left-[40%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "graphql",
-                        name: "GraphQL",
-                        level: 82,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "backend",
-                        projects: ["Modern APIs", "Data Fetching", "Apollo"],
-                        unlocked: true,
-                        description: "Modern API development with GraphQL",
-                      })
-                    }
-                  >
-                    <span className="text-lg">🔗</span>
-                    <span className="skill-name">GraphQL</span>
-                  </div>
+                    <div
+                      data-name="Redis"
+                      title="Redis"
+                      data-tooltip="Redis • Level 82 • In-Memory Database"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "redis",
+                          name: "Redis",
+                          level: 82,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "database",
+                          projects: [
+                            "Caching",
+                            "Sessions",
+                            "Real-time Features",
+                          ],
+                          unlocked: true,
+                          description:
+                            "Advanced caching and session management",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          💎
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        Redis
+                      </span>
+                    </div>
 
-                  <div
-                    data-name="Redis"
-                    title="Redis"
-                    className="absolute top-[-79%] left-[55%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "redis",
-                        name: "Redis",
-                        level: 82,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "database",
-                        projects: ["Caching", "Sessions", "Real-time Features"],
-                        unlocked: true,
-                        description: "Advanced caching and session management",
-                      })
-                    }
-                  >
-                    <span className="text-lg">💎</span>
-                    <span className="skill-name">Redis</span>
-                  </div>
+                    <div
+                      data-name="AWS"
+                      title="AWS"
+                      data-tooltip="AWS • Level 78 • Cloud Platform"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "aws",
+                          name: "AWS",
+                          level: 78,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "tools",
+                          projects: [
+                            "Cloud Infrastructure",
+                            "Serverless",
+                            "CI/CD",
+                          ],
+                          unlocked: true,
+                          description:
+                            "Cloud infrastructure and serverless architectures",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          ☁️
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        AWS
+                      </span>
+                    </div>
 
-                  <div
-                    data-name="AWS"
-                    title="AWS"
-                    className="absolute top-[-88%] left-[70%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "aws",
-                        name: "AWS",
-                        level: 78,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "tools",
-                        projects: [
-                          "Cloud Infrastructure",
-                          "Serverless",
-                          "CI/CD",
-                        ],
-                        unlocked: true,
-                        description:
-                          "Cloud infrastructure and serverless architectures",
-                      })
-                    }
-                  >
-                    <span className="text-sm">☁️</span>
-                    <span className="skill-name">AWS</span>
-                  </div>
+                    {/* Row 5 */}
+                    <div
+                      data-name="Firebase"
+                      title="Firebase"
+                      data-tooltip="Firebase • Level 85 • Backend Service"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "firebase",
+                          name: "Firebase",
+                          level: 85,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "tools",
+                          projects: [
+                            "Real-time Apps",
+                            "Authentication",
+                            "Hosting",
+                          ],
+                          unlocked: true,
+                          description:
+                            "Firebase services for rapid application development",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          🔥
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        Firebase
+                      </span>
+                    </div>
 
-                  {/* Row 5 */}
-                  <div
-                    data-name="Firebase"
-                    title="Firebase"
-                    className="absolute top-[-0%] left-[10%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "firebase",
-                        name: "Firebase",
-                        level: 85,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "tools",
-                        projects: [
-                          "Real-time Apps",
-                          "Authentication",
-                          "Hosting",
-                        ],
-                        unlocked: true,
-                        description:
-                          "Firebase services for rapid application development",
-                      })
-                    }
-                  >
-                    <span className="text-sm">🔥</span>
-                    <span className="skill-name">Firebase</span>
-                  </div>
+                    <div
+                      data-name="VS Code"
+                      title="VS Code"
+                      data-tooltip="VS Code • Level 95 • Code Editor"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "vscode",
+                          name: "VS Code",
+                          level: 95,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "tools",
+                          projects: [
+                            "Development",
+                            "Extensions",
+                            "Productivity",
+                          ],
+                          unlocked: true,
+                          description:
+                            "Expert-level proficiency in VS Code development environment",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          📝
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        VS Code
+                      </span>
+                    </div>
 
-                  <div
-                    data-name="VS Code"
-                    title="VS Code"
-                    className="absolute top-[-80%] left-[25%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "vscode",
-                        name: "VS Code",
-                        level: 95,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "tools",
-                        projects: ["Development", "Extensions", "Productivity"],
-                        unlocked: true,
-                        description:
-                          "Expert-level proficiency in VS Code development environment",
-                      })
-                    }
-                  >
-                    <span className="text-sm">📝</span>
-                    <span className="skill-name">VS Code</span>
-                  </div>
+                    <div
+                      data-name="Figma"
+                      title="Figma"
+                      data-tooltip="Figma • Level 85 • Design Tool"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "figma",
+                          name: "Figma",
+                          level: 85,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "tools",
+                          projects: [
+                            "UI/UX Design",
+                            "Prototyping",
+                            "Design Systems",
+                          ],
+                          unlocked: true,
+                          description:
+                            "Advanced UI/UX design and prototyping skills",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          🎨
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        Figma
+                      </span>
+                    </div>
 
-                  <div
-                    data-name="Figma"
-                    title="Figma"
-                    className="absolute top-[-80%] left-[40%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "figma",
-                        name: "Figma",
-                        level: 85,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "tools",
-                        projects: [
-                          "UI/UX Design",
-                          "Prototyping",
-                          "Design Systems",
-                        ],
-                        unlocked: true,
-                        description:
-                          "Advanced UI/UX design and prototyping skills",
-                      })
-                    }
-                  >
-                    <span className="text-sm">🎨</span>
-                    <span className="skill-name">Figma</span>
-                  </div>
+                    <div
+                      data-name="C++"
+                      title="C++"
+                      data-tooltip="C++ • Level 75 • Programming Language"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "cpp",
+                          name: "C++",
+                          level: 75,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "languages",
+                          projects: [
+                            "Algorithms",
+                            "System Programming",
+                            "Performance",
+                          ],
+                          unlocked: true,
+                          description:
+                            "Strong foundation in C++ and system programming",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          ⚙️
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        C++
+                      </span>
+                    </div>
 
-                  <div
-                    data-name="C++"
-                    title="C++"
-                    className="absolute top-[-80%] left-[55%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "cpp",
-                        name: "C++",
-                        level: 75,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "languages",
-                        projects: [
-                          "Algorithms",
-                          "System Programming",
-                          "Performance",
-                        ],
-                        unlocked: true,
-                        description:
-                          "Strong foundation in C++ and system programming",
-                      })
-                    }
-                  >
-                    <span className="text-sm">⚙️</span>
-                    <span className="skill-name">C++</span>
-                  </div>
-
-                  <div
-                    data-name="Linux"
-                    title="Linux"
-                    className="absolute top-[-80%] left-[70%] w-12 h-12 rounded-full skill-bubble flex items-center justify-center cursor-pointer hover:scale-110 shadow-lg backdrop-blur-md"
-                    onClick={() =>
-                      setSelectedNode({
-                        id: "linux",
-                        name: "Linux",
-                        level: 80,
-                        position: [0, 0, 0],
-                        connections: [],
-                        category: "tools",
-                        projects: [
-                          "Server Management",
-                          "DevOps",
-                          "System Admin",
-                        ],
-                        unlocked: true,
-                        description:
-                          "Proficient in Linux system administration and shell scripting",
-                      })
-                    }
-                  >
-                    <span className="text-sm">🐧</span>
-                    <span className="skill-name">Linux</span>
+                    <div
+                      data-name="Linux"
+                      title="Linux"
+                      data-tooltip="Linux • Level 80 • Operating System"
+                      className="flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-transform duration-200 group"
+                      onClick={() =>
+                        setSelectedNode({
+                          id: "linux",
+                          name: "Linux",
+                          level: 80,
+                          position: [0, 0, 0],
+                          connections: [],
+                          category: "tools",
+                          projects: [
+                            "Server Management",
+                            "DevOps",
+                            "System Admin",
+                          ],
+                          unlocked: true,
+                          description:
+                            "Proficient in Linux system administration and shell scripting",
+                        })
+                      }
+                    >
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full skill-bubble flex items-center justify-center shadow-lg backdrop-blur-md group-hover:scale-110 transition-transform duration-200">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          🐧
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm mt-1 text-center text-gray-300 lg:hidden font-medium">
+                        Linux
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -767,7 +938,7 @@ export default function TechStackSection() {
           </div>
 
           {/* Side Panel - Node Details & Stats */}
-          <div className="space-y-6">
+          <div className="hidden lg:block lg:col-span-1 space-y-6 max-w-sm">
             <div className="bg-gradient-to-br from-gray-900/80 to-black/80 rounded-xl border border-gray-800 p-6">
               {selectedNode ? (
                 <div>
@@ -909,6 +1080,113 @@ export default function TechStackSection() {
               </div>
             </motion.div>
           </div>
+
+          {/* Mobile Skill Details Modal */}
+          {selectedNode && (
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 50 }}
+              className="fixed inset-x-4 bottom-4 lg:hidden z-50 bg-gray-900/95 backdrop-blur-md rounded-xl border border-gray-700 p-4"
+            >
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full skill-bubble flex items-center justify-center">
+                    <span className="text-lg">
+                      {selectedNode.id === "react" && "⚛️"}
+                      {selectedNode.id === "nextjs" && "🟢"}
+                      {selectedNode.id === "vue" && "💚"}
+                      {selectedNode.id === "tailwind" && "🎨"}
+                      {selectedNode.id === "typescript" && "📘"}
+                      {selectedNode.id === "nodejs" && "🟢"}
+                      {selectedNode.id === "python" && "🐍"}
+                      {selectedNode.id === "express" && "⚡"}
+                      {selectedNode.id === "javascript" && "📜"}
+                      {selectedNode.id === "java" && "☕"}
+                      {selectedNode.id === "mongodb" && "🍃"}
+                      {selectedNode.id === "postgresql" && "🐘"}
+                      {selectedNode.id === "docker" && "🐳"}
+                      {selectedNode.id === "git" && "🔧"}
+                      {selectedNode.id === "redux" && "🔄"}
+                      {selectedNode.id === "framer" && "🎬"}
+                      {selectedNode.id === "sass" && "🎨"}
+                      {selectedNode.id === "graphql" && "🔗"}
+                      {selectedNode.id === "redis" && "💎"}
+                      {selectedNode.id === "aws" && "☁️"}
+                      {selectedNode.id === "firebase" && "🔥"}
+                      {selectedNode.id === "vscode" && "📝"}
+                      {selectedNode.id === "figma" && "🎨"}
+                      {selectedNode.id === "cpp" && "⚙️"}
+                      {selectedNode.id === "linux" && "🐧"}
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-white">
+                      {selectedNode.name}
+                    </h3>
+                    <p className="text-sm text-gray-300">
+                      Level {selectedNode.level}/100
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setSelectedNode(null)}
+                  className="text-gray-400 hover:text-white"
+                  aria-label="Close skill details"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="space-y-3">
+                <p className="text-sm text-gray-300">
+                  {selectedNode.description}
+                </p>
+
+                {selectedNode.projects && selectedNode.projects.length > 0 && (
+                  <div>
+                    <h4 className="text-sm font-medium text-gray-200 mb-2">
+                      Projects:
+                    </h4>
+                    <div className="flex flex-wrap gap-1">
+                      {selectedNode.projects.map((project, index) => (
+                        <span
+                          key={index}
+                          className="px-2 py-1 bg-gray-800 rounded-md text-xs text-gray-300"
+                        >
+                          {project}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex items-center gap-2">
+                  <div className="flex-1 bg-gray-800 rounded-full h-2">
+                    <div
+                      className={`h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full transition-all duration-500`}
+                      data-level={selectedNode.level}
+                    />
+                  </div>
+                  <span className="text-xs text-gray-400">
+                    {selectedNode.level}%
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          )}
         </div>
 
         {/* Additional Information */}
@@ -990,19 +1268,20 @@ export default function TechStackSection() {
           bottom: 120%;
           left: 50%;
           transform: translateX(-50%);
-          background: rgba(0, 0, 0, 0.9);
-          color: #10b981;
-          padding: 8px 12px;
-          border-radius: 6px;
-          font-size: 12px;
-          font-weight: 500;
+          background: rgba(0, 0, 0, 0.95);
+          color: #00f5ff !important;
+          padding: 10px 14px;
+          border-radius: 8px;
+          font-size: 13px;
+          font-weight: 600;
           white-space: nowrap;
           opacity: 0;
           visibility: hidden;
           transition: all 0.3s ease;
           z-index: 1000;
-          border: 1px solid #10b981;
-          box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+          border: 1px solid #00f5ff;
+          box-shadow: 0 4px 16px rgba(0, 245, 255, 0.4);
+          backdrop-filter: blur(8px);
         }
 
         .skill-bubble::after {
@@ -1013,9 +1292,9 @@ export default function TechStackSection() {
           transform: translateX(-50%);
           width: 0;
           height: 0;
-          border-left: 5px solid transparent;
-          border-right: 5px solid transparent;
-          border-top: 5px solid #10b981;
+          border-left: 6px solid transparent;
+          border-right: 6px solid transparent;
+          border-top: 6px solid #00f5ff;
           opacity: 0;
           visibility: hidden;
           transition: all 0.3s ease;
@@ -1059,28 +1338,11 @@ export default function TechStackSection() {
         //   box-shadow: 0 2px 6px rgba(16,185,129,0.08);
         // }
 
-        /* tooltip using data-name attribute */
-        .skill-bubble::before {
-          content: attr(data-name);
-          position: absolute;
-          top: -40px;
-          left: 50%;
-          transform: translateX(-50%);
-          padding: 6px 10px;
-          font-size: 12px;
-          white-space: nowrap;
-          background: rgba(18,18,18,0.9);
-          color: #e6ffe9;
-          border-radius: 8px;
-          opacity: 0;
-          pointer-events: none;
-          transition: opacity 0.18s ease, transform 0.18s ease;
-          box-shadow: 0 6px 18px rgba(0,0,0,0.6);
-        }
-
-        .skill-bubble:hover::before {
+        /* tooltip using data-tooltip attribute - more detailed content */
+        .skill-bubble:hover::before,
+        .skill-bubble:hover::after {
           opacity: 1;
-          transform: translateX(-50%) translateY(-6px);
+          visibility: visible;
         }
 
         /* Staggered entrance animations for natural movement */
