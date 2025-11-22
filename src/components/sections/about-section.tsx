@@ -2,43 +2,52 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "@/hooks/use-in-view";
-// React Three Fiber imports commented out to avoid ReactCurrentOwner errors
-// import { Canvas } from "@react-three/fiber";
-import { useState, useRef } from "react";
-// import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
-// import HologramCard from "@/components/three/hologram-card";
+import { useState, useRef, useEffect } from "react";
 
 export default function AboutSection() {
+  const [isMounted, setIsMounted] = useState(false);
   const [ref, inView] = useInView({
-    threshold: 0.2,
+    threshold: 0.1, // Reduced threshold for mobile
     triggerOnce: true,
   });
 
-  const [showContent, setShowContent] = useState(true); // Show content immediately with hologram card
+  const [showContent, setShowContent] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageSrc, setImageSrc] = useState("/uk.jpg");
   const imageRef = useRef<HTMLImageElement>(null);
+
+  // Ensure component is mounted before animations
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.3,
+        staggerChildren: 0.1, // Reduced for mobile
+        delayChildren: 0.1,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 }, // Reduced movement for mobile
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.8,
+        duration: 0.6, // Faster animation
         ease: "easeOut",
       },
     },
+  };
+
+  // Use simple opacity for mobile
+  const simpleVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
   };
 
   const stats = [
@@ -82,7 +91,7 @@ export default function AboutSection() {
     <section
       id="about"
       ref={ref}
-      className="min-h-screen py-24 bg-black relative overflow-hidden"
+      className="about-section min-h-screen py-24 bg-black relative overflow-hidden"
     >
       {/* Cinematic Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20" />
@@ -143,102 +152,112 @@ export default function AboutSection() {
               </div>
             </div>
 
-            {/* Right Side - Introduction */}
-            <div className="order-2 lg:order-2 space-y-8">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={inView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 1.2, ease: "easeOut" }}
-                className="space-y-6"
-              >
-                {/* Greeting */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 0.3, duration: 0.8 }}
-                  className="space-y-4"
-                >
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
-                    <span className="text-white">Hi, I'm </span>
-                    <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-text-glow">
-                      Uday Kiran
-                    </span>
-                    <motion.span
-                      className="inline-block ml-4 text-4xl"
-                      animate={{
-                        rotate: [0, 14, -8, 14, -4, 10, 0],
-                        scale: [1, 1.2, 1, 1.1, 1],
-                      }}
-                      transition={{
-                        duration: 2.5,
-                        repeat: Infinity,
-                        repeatDelay: 3,
-                        ease: "easeInOut",
-                      }}
-                    >
-                      👋
-                    </motion.span>
-                  </h1>
-
-                  <motion.p
-                    className="text-xl text-gray-300 leading-relaxed"
-                    initial={{ opacity: 0 }}
-                    animate={inView ? { opacity: 1 } : {}}
-                    transition={{ delay: 0.6, duration: 1 }}
+                {/* Right Side - Introduction */}
+                <div className="order-2 lg:order-2 space-y-8">
+                  {/* Always show content, use conditional animations */}
+                  <div
+                    className={`space-y-6 ${
+                      isMounted && inView 
+                        ? 'mobile-intro-visible' 
+                        : 'mobile-intro-hidden'
+                    }`}
                   >
-                    A passionate{" "}
-                    <span className="text-cyan-400 font-semibold">
-                      Full-Stack Developer
-                    </span>{" "}
-                    crafting immersive digital experiences that blend
-                    cutting-edge technology with stunning visual design.
-                  </motion.p>
-                </motion.div>
+                    {isMounted ? (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="space-y-6"
+                      >
+                        {/* Greeting with fallback */}
+                        <div className="space-y-4">
+                          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
+                            <span className="text-white">Hi, I'm </span>
+                            <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-text-glow">
+                              Uday Kiran
+                            </span>
+                            {isMounted && (
+                              <motion.span
+                                className="inline-block ml-4 text-4xl"
+                                animate={{
+                                  rotate: [0, 14, -8, 14, -4, 10, 0],
+                                  scale: [1, 1.2, 1, 1.1, 1],
+                                }}
+                                transition={{
+                                  duration: 2.5,
+                                  repeat: Infinity,
+                                  repeatDelay: 3,
+                                  ease: "easeInOut",
+                                }}
+                              >
+                                👋
+                              </motion.span>
+                            )}
+                            {!isMounted && <span className="inline-block ml-4 text-4xl">👋</span>}
+                          </h1>
 
-                {/* Animated Stats */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 0.9, duration: 0.8 }}
-                  className="grid grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-4"
-                >
-                  {stats.map((stat, index) => (
-                    <motion.div
-                      key={stat.label}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={inView ? { opacity: 1, scale: 1 } : {}}
-                      transition={{ delay: 1.2 + index * 0.1, duration: 0.5 }}
-                      className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-gray-700/50 rounded-xl p-4 hover:border-cyan-400/50 transition-all duration-300 group"
-                    >
-                      <div className="text-2xl mb-1">{stat.icon}</div>
-                      <div className="text-2xl font-bold text-cyan-400 group-hover:text-cyan-300 transition-colors">
-                        {stat.value}
+                          <p className="text-xl text-gray-300 leading-relaxed">
+                            A passionate{" "}
+                            <span className="text-cyan-400 font-semibold">
+                              Full-Stack Developer
+                            </span>{" "}
+                            crafting immersive digital experiences that blend
+                            cutting-edge technology with stunning visual design.
+                          </p>
+                        </div>
+                      </motion.div>
+                    ) : (
+                      // Fallback content without animations
+                      <div className="space-y-6">
+                        <div className="space-y-4">
+                          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
+                            <span className="text-white">Hi, I'm </span>
+                            <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                              Uday Kiran
+                            </span>
+                            <span className="inline-block ml-4 text-4xl">👋</span>
+                          </h1>
+                          <p className="text-xl text-gray-300 leading-relaxed">
+                            A passionate{" "}
+                            <span className="text-cyan-400 font-semibold">
+                              Full-Stack Developer
+                            </span>{" "}
+                            crafting immersive digital experiences that blend
+                            cutting-edge technology with stunning visual design.
+                          </p>
+                        </div>
                       </div>
-                      <div className="text-sm text-gray-400">{stat.label}</div>
-                    </motion.div>
-                  ))}
-                </motion.div>
+                    )}
 
-                {/* Hologram Info Panel */}
-                {/* <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 1.8, duration: 0.8 }}
-                  className="bg-gradient-to-br from-cyan-500/10 to-purple-500/10 border border-cyan-400/20 rounded-xl p-6 backdrop-blur-sm"
-                >
-                  <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                    <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
-                    Hologram Identity System
-                  </h3>
-                  <p className="text-gray-400 text-sm">
-                    The holographic identity card showcases real-time developer
-                    metrics, skill progressions, and system status. Interact
-                    with the card to reveal enhanced biometric data and
-                    professional capabilities.
-                  </p>
-                </motion.div> */}
-              </motion.div>
-            </div>
+                {/* Animated Stats - Always visible with conditional animations */}
+                <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-4">
+                  {stats.map((stat, index) => {
+                    const StatComponent = isMounted ? motion.div : 'div';
+                    const statProps = isMounted ? {
+                      initial: { opacity: 0, scale: 0.8 },
+                      animate: inView ? { opacity: 1, scale: 1 } : { opacity: 0.3, scale: 0.95 },
+                      transition: { delay: 0.3 + index * 0.1, duration: 0.5 }
+                    } : {
+                      className: inView ? 'mobile-fallback-visible' : 'mobile-fallback-hidden'
+                    };
+
+                    return (
+                      <StatComponent
+                        key={stat.label}
+                        {...statProps}
+                        className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-gray-700/50 rounded-xl p-4 hover:border-cyan-400/50 transition-all duration-300 group"
+                      >
+                        <div className="text-2xl mb-1">{stat.icon}</div>
+                        <div className="text-2xl font-bold text-cyan-400 group-hover:text-cyan-300 transition-colors">
+                          {stat.value}
+                        </div>
+                        <div className="text-sm text-gray-400">{stat.label}</div>
+                      </StatComponent>
+                    );
+                  })}
+                </div>
+                  </div>
+                </div>
           </div>
         </div>
 
@@ -282,20 +301,20 @@ export default function AboutSection() {
                   </div>
 
                   {/* Education Timeline */}
-                  <div className="mt-12">
-                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-6 sm:mb-8 flex items-center gap-3">
+                  <div className="mt-8 sm:mt-12 w-full">
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-4 sm:mb-6 md:mb-8 flex items-center gap-2 sm:gap-3">
                       <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
                         Education Timeline
                       </span>
                       <div className="h-0.5 flex-1 bg-gradient-to-r from-purple-500/50 to-transparent" />
                     </h3>
 
-                    <div className="relative">
+                    <div className="relative w-full overflow-hidden">
                       {/* Timeline Line */}
-                      <div className="absolute left-3 sm:left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-cyan-500 via-purple-500 to-pink-500" />
+                      <div className="absolute left-2 sm:left-3 md:left-4 top-0 bottom-0 w-0.5 sm:w-1 bg-gradient-to-b from-cyan-500 via-purple-500 to-pink-500 z-10" />
 
                       {/* Timeline Items */}
-                      <div className="space-y-6 sm:space-y-8">
+                      <div className="space-y-4 sm:space-y-6 md:space-y-8 relative z-20">
                         {[
                           {
                             year: "2024-2027",
@@ -321,43 +340,40 @@ export default function AboutSection() {
                           {
                             year: "2020",
                             degree: "St.isaac Advent High School",
-
                             description: "",
                             color: "from-pink-400 to-rose-500",
                             orbColor: "bg-pink-400",
                             glowColor: "shadow-pink-400/50",
                           },
-                        ].map((item, index) => (
-                          <motion.div
-                            key={index}
-                            initial={{ opacity: 0, x: -50 }}
-                            animate={inView ? { opacity: 1, x: 0 } : {}}
-                            transition={{ delay: 0.2 * index, duration: 0.6 }}
-                            className="relative pl-10 sm:pl-12 group"
-                          >
-                            {/* Colorful Orb */}
-                            <motion.div
-                              className={`absolute left-0 w-6 h-6 sm:w-8 sm:h-8 ${item.orbColor} rounded-full shadow-lg ${item.glowColor} flex items-center justify-center`}
-                              whileHover={{ scale: 1.3, rotate: 360 }}
-                              transition={{ duration: 0.5 }}
-                            >
-                              <motion.div
-                                className="w-2 h-2 sm:w-3 sm:h-3 bg-white rounded-full"
-                                animate={{
-                                  scale: [1, 1.2, 1],
-                                  opacity: [0.7, 1, 0.7],
-                                }}
-                                transition={{
-                                  duration: 2,
-                                  repeat: Infinity,
-                                  ease: "easeInOut",
-                                }}
-                              />
-                            </motion.div>
+                        ].map((item, index) => {
+                          const TimelineComponent = isMounted ? motion.div : 'div';
+                          const timelineProps = isMounted ? {
+                            initial: { opacity: 0, x: -50 },
+                            animate: inView ? { opacity: 1, x: 0 } : { opacity: 0.5 },
+                            transition: { delay: 0.2 * index, duration: 0.6 }
+                          } : {
+                            className: inView ? 'mobile-fallback-visible' : 'mobile-fallback-hidden'
+                          };
 
-                            {/* Pulsing Ring */}
+                          return (
+                          <TimelineComponent
+                            key={index}
+                            {...timelineProps}
+                            className="relative pl-8 sm:pl-10 md:pl-12 group w-full"
+                          >
+                            {/* Colorful Orb - Always visible */}
+                            <div
+                              className={`absolute left-0 top-2 w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 ${item.orbColor} rounded-full shadow-lg ${item.glowColor} flex items-center justify-center z-30`}
+                            >
+                              <div
+                                className="w-1.5 h-1.5 sm:w-2 sm:h-2 md:w-3 md:h-3 bg-white rounded-full"
+                              />
+                            </div>
+
+                            {/* Pulsing Ring - Only with animation when mounted */}
+                            {isMounted && (
                             <motion.div
-                              className={`absolute left-0 w-6 h-6 sm:w-8 sm:h-8 ${item.orbColor} rounded-full opacity-0 group-hover:opacity-30`}
+                              className={`absolute left-0 top-2 w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 ${item.orbColor} rounded-full opacity-0 group-hover:opacity-30 z-20`}
                               animate={{
                                 scale: [1, 2, 1],
                                 opacity: [0.5, 0, 0.5],
@@ -368,24 +384,11 @@ export default function AboutSection() {
                                 ease: "easeOut",
                               }}
                             />
+                            )}
 
-                            {/* Content Card */}
-                            <motion.div
-                              className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-gray-700/50 rounded-xl p-4 sm:p-6 group-hover:border-opacity-100 transition-all duration-300"
-                              style={{
-                                borderColor: `var(--border-color-${index})`,
-                              }}
-                              whileHover={{
-                                y: -5,
-                                boxShadow: `0 20px 40px -15px ${
-                                  [
-                                    "rgba(34, 211, 238, 0.4)",
-                                    "rgba(168, 85, 247, 0.4)",
-                                    "rgba(244, 114, 182, 0.4)",
-                                    "rgba(251, 146, 60, 0.4)",
-                                  ][index]
-                                }`,
-                              }}
+                            {/* Content Card - Always visible */}
+                            <div
+                              className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm border border-gray-700/50 rounded-lg sm:rounded-xl p-3 sm:p-4 md:p-6 group-hover:border-opacity-100 transition-all duration-300 w-full max-w-full"
                             >
                               <div
                                 className={`inline-block px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${item.color} text-white`}
@@ -408,19 +411,20 @@ export default function AboutSection() {
                               <div
                                 className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-br ${item.color} opacity-5 rounded-bl-full`}
                               />
-                            </motion.div>
-                          </motion.div>
-                        ))}
+                            </div>
+                          </TimelineComponent>
+                        );
+                      })}
                       </div>
 
-                      {/* Timeline End Indicator */}
-                      <motion.div
-                        className="relative pl-10 sm:pl-12 mt-6 sm:mt-8"
-                        initial={{ opacity: 0 }}
-                        animate={inView ? { opacity: 1 } : {}}
-                        transition={{ delay: 1, duration: 0.6 }}
+                      {/* Timeline End Indicator - Simplified for mobile */}
+                      <div
+                        className={`relative pl-8 sm:pl-10 md:pl-12 mt-4 sm:mt-6 md:mt-8 ${
+                          inView ? 'mobile-fallback-visible' : 'mobile-fallback-hidden'
+                        }`}
                       >
-                        <div className="absolute left-0 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-cyan-400 via-purple-400 to-pink-400 rounded-full shadow-lg shadow-purple-500/50 flex items-center justify-center">
+                        <div className="absolute left-0 top-0 w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-gradient-to-br from-cyan-400 via-purple-400 to-pink-400 rounded-full shadow-lg shadow-purple-500/50 flex items-center justify-center z-30">
+                          {isMounted ? (
                           <motion.div
                             animate={{ rotate: 360 }}
                             transition={{
@@ -431,11 +435,14 @@ export default function AboutSection() {
                           >
                             ✨
                           </motion.div>
+                          ) : (
+                            <div>✨</div>
+                          )}
                         </div>
                         <div className="text-gray-500 italic">
                           Journey continues...
                         </div>
-                      </motion.div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -550,6 +557,68 @@ export default function AboutSection() {
 
         .bg-icon-bg {
           background-color: rgba(96, 165, 250, 0.125);
+        }
+
+          /* Hide all scrollbars globally in this section */
+        :global(.about-section) {
+          scrollbar-width: none; /* Firefox */
+          -ms-overflow-style: none; /* Internet Explorer 10+ */
+        }
+        
+        :global(.about-section)::-webkit-scrollbar {
+          display: none; /* WebKit */
+        }
+        
+        /* Ensure no overflow on timeline elements */
+        .timeline-content {
+          box-sizing: border-box;
+          max-width: 100%;
+        }
+
+        /* Mobile-specific fixes for timeline */
+          @media (max-width: 640px) {
+            .relative {
+              position: relative !important;
+            }
+            
+            .timeline-container {
+              min-height: 50px;
+              display: block;
+              width: 100%;
+              overflow: hidden;
+            }
+            
+            .timeline-item {
+              display: block;
+              width: 100%;
+              margin-bottom: 1rem;
+              position: relative;
+              overflow: visible;
+            }          .timeline-orb {
+            position: absolute !important;
+            left: 0 !important;
+            top: 8px !important;
+            z-index: 50 !important;
+            display: flex !important;
+            background: linear-gradient(45deg, #06b6d4, #8b5cf6) !important;
+          }
+          
+          .timeline-line {
+            position: absolute !important;
+            left: 7px !important;
+            top: 0 !important;
+            bottom: 0 !important;
+            width: 2px !important;
+            background: linear-gradient(to bottom, #06b6d4, #8b5cf6, #ec4899) !important;
+            z-index: 10 !important;
+          }
+          
+          .timeline-content {
+            margin-left: 2rem !important;
+            padding: 0.75rem !important;
+            display: block !important;
+            width: calc(100% - 2rem) !important;
+          }
         }
 
         @keyframes backgroundShift {

@@ -4,27 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "@/hooks/use-in-view";
 import { useTypingEffect } from "@/hooks/use-typing-effect";
-// removed useLoopingTypingEffect import (we implement local looping logic)
-// import { Canvas } from "@react-three/fiber";
-import { Suspense } from "react";
-import * as THREE from "three";
-// import FloatingBlob from "@/components/three/floating-blob";
-// import AuroraBackground from "@/components/three/aurora-background";
-import AuroraCSS from "@/components/three/aurora-css";
-import ParticleField from "@/components/three/particle-field";
-// import Fireflies from "@/components/three/fireflies";
-// import RippleEffect from "@/components/three/ripple-effect";
-import Scene from "@/components/three/scene";
-
-// Commented out React Three Fiber imports to avoid ReactCurrentOwner errors
-// import dynamic from "next/dynamic";
-// const Canvas = dynamic(() => import("@react-three/fiber").then(mod => mod.Canvas), { ssr: false });
-
-// Commented out Three.js component imports - using CSS animations instead
-// const FloatingBlob = dynamic(() => import("@/components/three/floating-blob"), { ssr: false });
-// const Fireflies = dynamic(() => import("@/components/three/fireflies"), { ssr: false });
-// const RippleEffect = dynamic(() => import("@/components/three/ripple-effect"), { ssr: false });
-// const AuroraBackground = dynamic(() => import("@/components/three/aurora-background"), { ssr: false });
 
 export default function HeroSection() {
   const [ref, inView] = useInView({
@@ -36,12 +15,10 @@ export default function HeroSection() {
   const [nameGlow, setNameGlow] = useState(false);
   const [auroraIndex, setAuroraIndex] = useState(0);
 
-  // Aurora background variants
+  // Simplified aurora backgrounds for performance
   const auroraBackgrounds = [
     "from-slate-900/95 via-purple-900/90 to-indigo-900/95",
-    "from-indigo-900/95 via-purple-800/90 to-pink-900/95",
     "from-purple-900/95 via-blue-800/90 to-cyan-900/95",
-    "from-blue-900/95 via-indigo-800/90 to-purple-900/95",
   ];
 
   // Name types once and stays
@@ -152,7 +129,7 @@ export default function HeroSection() {
       {/* Background layers - ensure they stay behind content */}
       <div className="absolute inset-0 z-0">
         {/* Aurora Borealis Background */}
-        <AuroraCSS />
+        {/* <AuroraCSS /> */}
 
         {/* Floating Blob Effect - Main Background */}
         <div className="floating-blob absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">

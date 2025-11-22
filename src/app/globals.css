@@ -8,6 +8,29 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Mobile animation fallback styles */
+.mobile-fallback-visible {
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+.mobile-fallback-hidden {
+  opacity: 0.3;
+  transition: opacity 0.5s ease-out;
+}
+
+.mobile-intro-visible {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.mobile-intro-hidden {
+  opacity: 0.3;
+  transform: scale(0.95);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
 /* Progress Bar Levels */
 [data-level="75"] {
   width: 75%;

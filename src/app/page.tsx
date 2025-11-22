@@ -66,22 +66,72 @@
 // "use client";
 
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
 
 import HeroSection from "@/components/sections/hero-section";
-import AboutSection from "@/components/sections/about-section";
-import ProjectsSection from "@/components/sections/projects-section";
-import TechStackSection from "@/components/sections/tech-stack-section";
-import ContactSection from "@/components/sections/contact-section";
 import Navigation from "@/components/navigation";
 import ScrollProgress from "@/components/scroll-progress";
 import LoadingSpinner from "@/components/ui/loading-spinner";
 
-// Temporarily disabled to fix React Three Fiber ReactCurrentOwner errors
-// const SceneCanvas = dynamic(() => import("@/components/three/SceneClient"), { ssr: false });
+// Lazy load all non-critical sections for better performance
+const AboutSection = dynamic(
+  () => import("@/components/sections/about-section"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    ),
+  }
+);
+
+const ProjectsSection = dynamic(
+  () => import("@/components/sections/projects-section"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    ),
+  }
+);
+
+const TechStackSection = dynamic(
+  () => import("@/components/sections/tech-stack-section"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    ),
+  }
+);
+
+const ContactSection = dynamic(
+  () => import("@/components/sections/contact-section"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    ),
+  }
+);
+
 const AchievementsSection = dynamic(
   () => import("@/components/sections/achievements-section"),
-  { ssr: false }
+  {
+    ssr: false,
+    loading: () => (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    ),
+  }
 );
 
 export default function Home() {
@@ -90,53 +140,36 @@ export default function Home() {
       <Navigation />
       <ScrollProgress />
 
-      {/* CSS Background instead of 3D Scene */}
+      {/* Simplified CSS Background for better performance */}
       <div className="fixed inset-0 -z-10 bg-gradient-to-br from-gray-900 via-black to-purple-900">
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-        {/* Animated particles background */}
-        <div className="absolute inset-0 bg-stars animate-twinkle"></div>
       </div>
 
       <div className="relative z-10">
+        {/* Load hero immediately for better UX */}
+        <HeroSection />
+
+        {/* Lazy load other sections */}
         <Suspense fallback={<LoadingSpinner />}>
-          <HeroSection />
           <AboutSection />
+        </Suspense>
+
+        <Suspense fallback={<LoadingSpinner />}>
           <ProjectsSection />
+        </Suspense>
+
+        <Suspense fallback={<LoadingSpinner />}>
           <AchievementsSection />
+        </Suspense>
+
+        <Suspense fallback={<LoadingSpinner />}>
           <TechStackSection />
+        </Suspense>
+
+        <Suspense fallback={<LoadingSpinner />}>
           <ContactSection />
         </Suspense>
       </div>
-
-      <style jsx>{`
-        @keyframes twinkle {
-          0%,
-          100% {
-            opacity: 0.3;
-          }
-          50% {
-            opacity: 0.8;
-          }
-        }
-
-        .bg-stars {
-          background-image: radial-gradient(
-              2px 2px at 20px 30px,
-              #a855f7,
-              transparent
-            ),
-            radial-gradient(2px 2px at 40px 70px, #06b6d4, transparent),
-            radial-gradient(1px 1px at 90px 40px, #8b5cf6, transparent),
-            radial-gradient(1px 1px at 130px 80px, #06b6d4, transparent),
-            radial-gradient(2px 2px at 160px 30px, #a855f7, transparent);
-          background-repeat: repeat;
-          background-size: 200px 100px;
-        }
-
-        .animate-twinkle {
-          animation: twinkle 3s ease-in-out infinite;
-        }
-      `}</style>
     </main>
   );
 }

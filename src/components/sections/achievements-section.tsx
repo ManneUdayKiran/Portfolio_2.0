@@ -152,6 +152,7 @@ function StatCard({
   inView,
   gradient,
   description,
+  isClickable = false,
 }: {
   icon: string;
   title: string;
@@ -162,6 +163,7 @@ function StatCard({
   inView: boolean;
   gradient: string;
   description: string;
+  isClickable?: boolean;
 }) {
   return (
     <motion.div
@@ -183,6 +185,39 @@ function StatCard({
 
       {/* Main Card */}
       <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-8 border border-gray-800 hover:border-gray-600 transition-all duration-500 group-hover:scale-105">
+        {/* Link Icon - Top Right Corner */}
+        {isClickable && (
+          <div className="absolute top-3 right-3 z-10">
+            <div className="bg-cyan-500/20 backdrop-blur-sm rounded-full p-2 border border-cyan-400/30 group-hover:bg-cyan-500/30 transition-all duration-300">
+              <svg
+                className="w-4 h-4 text-cyan-400 group-hover:text-cyan-300 transition-colors duration-300"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </svg>
+            </div>
+          </div>
+        )}
+
+        {/* Click Here Indicator */}
+        {isClickable && (
+          <div className="absolute top-3 left-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="bg-emerald-500/20 backdrop-blur-sm rounded-lg px-2 py-1 border border-emerald-400/30">
+              <span className="text-emerald-400 text-xs font-medium">
+                Click to view
+              </span>
+            </div>
+          </div>
+        )}
+
         {/* Icon */}
         <div className="text-6xl mb-4 text-center group-hover:scale-110 transition-transform duration-300">
           {icon}
@@ -530,6 +565,7 @@ export default function AchievementsSection() {
                 description={stat.description}
                 delay={index * 0.2}
                 inView={inView}
+                isClickable={true}
               />
             </a>
           ))}
