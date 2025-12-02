@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { animate, stagger } from "animejs";
 import { useInView } from "@/hooks/use-in-view";
 import { useTypingEffect } from "@/hooks/use-typing-effect";
 
@@ -99,25 +99,231 @@ export default function HeroSection() {
     // only re-run if showProfession toggles
   }, [showProfession]);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 1,
-        staggerChildren: 0.3,
-      },
-    },
+  // Refs for anime.js animations
+  const containerRef = useRef<HTMLDivElement>(null);
+  const leftContentRef = useRef<HTMLDivElement>(null);
+  const taglineRef = useRef<HTMLDivElement>(null);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const buttonsRef = useRef<HTMLDivElement>(null);
+  const socialsRef = useRef<HTMLDivElement>(null);
+  const scrollIndicatorRef = useRef<HTMLDivElement>(null);
+  const arrowRef = useRef<HTMLSpanElement>(null);
+
+  // Animate elements when they come into view
+  useEffect(() => {
+    if (inView && containerRef.current) {
+      // Container fade in
+      animate(containerRef.current, {
+        opacity: [0, 1],
+        duration: 1000,
+        easing: "easeOutQuad",
+      });
+
+      // Left content slide with elastic spring effect
+      if (leftContentRef.current) {
+        animate(leftContentRef.current, {
+          opacity: [0, 1],
+          translateX: [-150, 0],
+          translateY: [-50, 0],
+          rotate: [-5, 0],
+          scale: [0.8, 1],
+          duration: 1800,
+          delay: 200,
+          easing: "spring(1, 80, 10, 0)",
+        });
+      }
+
+      // Tagline animation
+      if (taglineRef.current) {
+        animate(taglineRef.current, {
+          opacity: [0, 1],
+          translateX: [-20, 0],
+          duration: 800,
+          delay: 200,
+          easing: "easeOutQuad",
+        });
+      }
+    }
+  }, [inView]);
+
+  // Animate description with wave morphing effect
+  useEffect(() => {
+    if (showProfession && descriptionRef.current) {
+      animate(descriptionRef.current, {
+        opacity: [0, 1],
+        translateY: [50, -5, 0],
+        scale: [0.9, 1.02, 1],
+        filter: ["blur(8px)", "blur(0px)"],
+        duration: 1200,
+        delay: 600,
+        easing: "easeOutElastic(1, .6)",
+      });
+    }
+  }, [showProfession]);
+
+  // Animate buttons with 3D flip entrance
+  useEffect(() => {
+    if (showProfession && buttonsRef.current) {
+      const buttons = buttonsRef.current.querySelectorAll("a, button");
+      animate(buttons, {
+        opacity: [0, 1],
+        translateY: [80, 0],
+        rotateX: [90, 0],
+        scale: [0.7, 1.1, 1],
+        duration: 1400,
+        delay: stagger(200, { start: 800 }),
+        easing: "easeOutElastic(1, .5)",
+      });
+    }
+  }, [showProfession]);
+
+  // Social links with spiral pattern and floating effect
+  useEffect(() => {
+    if (showProfession && socialsRef.current) {
+      const socialLinks = Array.from(socialsRef.current.querySelectorAll("a"));
+      animate(socialsRef.current, {
+        opacity: [0, 1],
+        duration: 800,
+        delay: 1200,
+        easing: "easeOutQuad",
+      });
+      socialLinks.forEach((link, i) => {
+        animate(link, {
+          opacity: [0, 1],
+          translateY: [100, 0],
+          translateX: [(-1) ** i * 50, 0],
+          rotate: [180, 0],
+          scale: [0, 1.15, 1],
+          duration: 1600,
+          delay: 1000 + i * 150,
+          easing: "easeOutElastic(1, .8)",
+        });
+      });
+      // Continuous floating
+      setTimeout(() => {
+        animate(socialLinks, {
+          translateY: [-8, 8],
+          duration: 2000,
+          direction: "alternate",
+          easing: "easeInOutSine",
+          loop: true,
+          delay: stagger(200),
+        });
+      }, 2600);
+    }
+  }, [showProfession]);
+
+  // Scroll indicator with magnetic pulse effect
+  useEffect(() => {
+    if (scrollIndicatorRef.current) {
+      // Fade in
+      animate(scrollIndicatorRef.current, {
+        opacity: [0, 1],
+        duration: 1000,
+        easing: "easeInOutQuad",
+      });
+
+      // Elastic bouncing animation
+      animate(scrollIndicatorRef.current, {
+        translateY: [0, 20, 0],
+        scale: [1, 1.2, 1],
+        duration: 2500,
+        loop: true,
+        easing: "easeInOutElastic(1, .6)",
+      });
+
+      // Pulsing glow effect
+      animate(scrollIndicatorRef.current, {
+        filter: [
+          "blur(0px) brightness(1)",
+          "blur(2px) brightness(1.5)",
+          "blur(0px) brightness(1)",
+        ],
+        duration: 3000,
+        loop: true,
+        easing: "easeInOutQuad",
+      });
+
+      // Inner dot animation
+      const dot = scrollIndicatorRef.current.querySelector(".scroll-dot");
+      if (dot) {
+        animate(dot, {
+          translateY: [0, 12, 0],
+          opacity: [1, 0.3, 1],
+          duration: 2000,
+          loop: true,
+          easing: "easeInOutQuad",
+        });
+      }
+
+      // Text pulse animation
+      const text = scrollIndicatorRef.current.querySelector(".scroll-text");
+      if (text) {
+        animate(text, {
+          opacity: [0.6, 1, 0.6],
+          duration: 2000,
+          loop: true,
+          easing: "easeInOutQuad",
+        });
+      }
+    }
+  }, []);
+
+  // Arrow animation for button
+  useEffect(() => {
+    if (arrowRef.current) {
+      animate(arrowRef.current, {
+        translateX: [0, 4, 0],
+        duration: 1500,
+        loop: true,
+        easing: "easeInOutQuad",
+      });
+    }
+  }, []);
+
+  // Button hover handlers
+  const handleButtonHover = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    scale: number,
+    y: number
+  ) => {
+    animate(e.currentTarget, {
+      scale: scale,
+      translateY: y,
+      duration: 300,
+      easing: "easeOutQuad",
+    });
   };
 
-  const leftVariants = {
-    hidden: { opacity: 0, x: -50 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.8 } },
-  };
-
-  const rightVariants = {
-    hidden: { opacity: 0, x: 50 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.8, delay: 0.5 } },
+  // Social link hover with liquid morphing
+  const handleSocialHover = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    entering: boolean
+  ) => {
+    if (entering) {
+      animate(e.currentTarget, {
+        translateY: -8,
+        scale: 1.15,
+        rotate: [-5, 5],
+        borderRadius: ["50%", "40%", "50%"],
+        boxShadow: [
+          "0 0 10px rgba(6, 182, 212, 0.3)",
+          "0 10px 40px rgba(6, 182, 212, 0.7)",
+        ],
+        duration: 600,
+        easing: "easeOutElastic(1, .7)",
+      });
+    } else {
+      animate(e.currentTarget, {
+        translateY: 0,
+        scale: 1,
+        rotate: 0,
+        borderRadius: "50%",
+        boxShadow: "0 0 10px rgba(6, 182, 212, 0.3)",
+        duration: 400,
+        easing: "easeOutQuad",
+      });
+    }
   };
 
   return (
@@ -143,7 +349,39 @@ export default function HeroSection() {
             <div
               key={i}
               className={`firefly-${i} absolute w-1.5 h-1.5 sm:w-2 sm:h-2 bg-yellow-400 rounded-full animate-firefly cursor-pointer`}
-              onClick={() => {
+              onClick={(e) => {
+                const firefly = e.currentTarget;
+                // Explosive morph effect
+                animate(firefly, {
+                  scale: [1, 2.5, 0.8, 1.5, 1],
+                  opacity: [1, 0.8, 0.6, 0.4, 0.3],
+                  rotate: [0, 180, 360],
+                  duration: 800,
+                  easing: "easeOutElastic(1, .6)",
+                });
+
+                // Shockwave ripple effect
+                const shockwave = document.createElement("div");
+                shockwave.style.cssText = `
+                  position: absolute;
+                  width: 10px;
+                  height: 10px;
+                  border: 2px solid rgba(6, 182, 212, 0.8);
+                  border-radius: 50%;
+                  pointer-events: none;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                `;
+                firefly.appendChild(shockwave);
+                animate(shockwave, {
+                  scale: [1, 20],
+                  opacity: [1, 0],
+                  duration: 1000,
+                  easing: "easeOutQuad",
+                  complete: () => shockwave.remove(),
+                });
+
                 setNameGlow(true);
                 setAuroraIndex((prev) => (prev + 1) % auroraBackgrounds.length);
                 setTimeout(() => setNameGlow(false), 2000);
@@ -166,26 +404,25 @@ export default function HeroSection() {
       </div>{" "}
       <div className="relative z-10 min-h-screen flex items-center py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
+          <div
+            ref={containerRef}
             className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center"
+            style={{ opacity: 0 }}
           >
             {/* Left Side - Professional Introduction */}
-            <motion.div
-              variants={leftVariants}
+            <div
+              ref={leftContentRef}
               className="space-y-6 lg:space-y-8 relative z-20 order-2 lg:order-1"
+              style={{ opacity: 0 }}
             >
               <div className="space-y-4 lg:space-y-6">
-                <motion.div
+                <div
+                  ref={taglineRef}
                   className="text-xs sm:text-sm text-gray-400 font-mono tracking-widest uppercase border-l-2 border-cyan-500 pl-3 sm:pl-4"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
+                  style={{ opacity: 0 }}
                 >
                   Software Engineer & 3D Developer
-                </motion.div>
+                </div>
 
                 <div className="space-y-2">
                   <h1
@@ -196,50 +433,53 @@ export default function HeroSection() {
                   </h1>
 
                   {showProfession && (
-                    <motion.h2
+                    <h2
                       className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-light text-gray-300"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.3 }}
+                      style={{ opacity: 0 }}
+                      ref={(el) => {
+                        if (el && showProfession) {
+                          animate(el, {
+                            opacity: [0, 1],
+                            translateY: [10, 0],
+                            duration: 600,
+                            delay: 300,
+                            easing: "easeOutQuad",
+                          });
+                        }
+                      }}
                     >
                       <span className="font-mono">
                         {professionText}
                         <span className="animate-pulse text-cyan-400">_</span>
                       </span>
-                    </motion.h2>
+                    </h2>
                   )}
                 </div>
               </div>
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{
-                  opacity: showProfession ? 1 : 0,
-                  y: showProfession ? 0 : 20,
-                }}
-                transition={{ duration: 0.8, delay: 0.6 }}
+              <p
+                ref={descriptionRef}
                 className="text-sm sm:text-base lg:text-lg text-gray-400 leading-relaxed max-w-2xl font-light"
+                style={{ opacity: 0 }}
               >
                 Passionate about learning and building digital experiences with
                 modern web technologies. Currently exploring{" "}
                 <span className="text-purple-300 font-semibold">React</span>,{" "}
                 and the latest web development practices. Always eager to learn
                 new technologies and create innovative solutions.
-              </motion.p>
+              </p>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{
-                  opacity: showProfession ? 1 : 0,
-                  y: showProfession ? 0 : 20,
-                }}
-                transition={{ duration: 0.8, delay: 0.9 }}
+              <div
+                ref={buttonsRef}
                 className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4"
+                style={{ opacity: 0 }}
               >
-                <motion.button
+                <button
                   className="group px-6 sm:px-8 py-3 sm:py-4 bg-white text-black hover:bg-gray-100 rounded-lg font-medium text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
+                  onMouseEnter={(e) => handleButtonHover(e, 1.02, -2)}
+                  onMouseLeave={(e) => handleButtonHover(e, 1, 0)}
+                  onMouseDown={(e) => handleButtonHover(e, 0.98, 0)}
+                  onMouseUp={(e) => handleButtonHover(e, 1.02, -2)}
                   onClick={() =>
                     document
                       .querySelector("#projects")
@@ -248,20 +488,18 @@ export default function HeroSection() {
                 >
                   <span className="flex items-center gap-2">
                     View Projects
-                    <motion.span
-                      className="inline-block"
-                      animate={{ x: [0, 4, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
+                    <span ref={arrowRef} className="inline-block">
                       →
-                    </motion.span>
+                    </span>
                   </span>
-                </motion.button>
+                </button>
 
-                <motion.button
+                <button
                   className="group px-6 sm:px-8 py-3 sm:py-4 border border-white/20 bg-white/5 text-white hover:bg-white/10 rounded-lg font-medium text-sm sm:text-base transition-all duration-300 backdrop-blur-sm"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
+                  onMouseEnter={(e) => handleButtonHover(e, 1.02, -2)}
+                  onMouseLeave={(e) => handleButtonHover(e, 1, 0)}
+                  onMouseDown={(e) => handleButtonHover(e, 0.98, 0)}
+                  onMouseUp={(e) => handleButtonHover(e, 1.02, -2)}
                   onClick={() =>
                     document
                       .querySelector("#contact")
@@ -269,16 +507,13 @@ export default function HeroSection() {
                   }
                 >
                   Get In Touch
-                </motion.button>
-              </motion.div>
+                </button>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{
-                  opacity: showProfession ? 1 : 0,
-                }}
-                transition={{ duration: 0.8, delay: 1.2 }}
+              <div
+                ref={socialsRef}
                 className="flex items-center gap-4 sm:gap-6 pt-4"
+                style={{ opacity: 0 }}
               >
                 <span className="text-xs sm:text-sm text-gray-500 font-mono">
                   Connect:
@@ -324,41 +559,63 @@ export default function HeroSection() {
                     ),
                   },
                 ].map((social, index) => (
-                  <motion.a
+                  <a
                     key={social.name}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-400 hover:text-white transition-colors duration-300"
-                    whileHover={{ y: -2 }}
-                    whileTap={{ scale: 0.95 }}
+                    onMouseEnter={(e) => handleSocialHover(e, true)}
+                    onMouseLeave={(e) => handleSocialHover(e, false)}
+                    onMouseDown={(e) => {
+                      animate(e.currentTarget, {
+                        scale: 0.95,
+                        duration: 150,
+                        easing: "easeOutQuad",
+                      });
+                    }}
+                    onMouseUp={(e) => {
+                      animate(e.currentTarget, {
+                        scale: 1,
+                        duration: 150,
+                        easing: "easeOutQuad",
+                      });
+                    }}
                     title={social.name}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 1.2 + index * 0.1 }}
+                    style={{ opacity: 0 }}
                   >
                     <span className="block group-hover:scale-110 transition-transform duration-300">
                       {social.icon}
                     </span>
-                  </motion.a>
+                  </a>
                 ))}
-              </motion.div>
-            </motion.div>
-          </motion.div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       {/* Enhanced Scroll Indicator */}
-      <motion.div
+      <div
+        ref={scrollIndicatorRef}
         className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-20"
-        animate={{ y: [0, 15, 0] }}
-        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
+        style={{ opacity: 0 }}
       >
-        <motion.div
+        <div
           className="relative group cursor-pointer"
-          whileHover={{ scale: 1.1 }}
+          onMouseEnter={(e) => {
+            animate(e.currentTarget, {
+              scale: 1.1,
+              duration: 300,
+              easing: "easeOutQuad",
+            });
+          }}
+          onMouseLeave={(e) => {
+            animate(e.currentTarget, {
+              scale: 1,
+              duration: 300,
+              easing: "easeOutQuad",
+            });
+          }}
           onClick={() =>
             document
               .querySelector("#projects")
@@ -370,30 +627,15 @@ export default function HeroSection() {
 
           {/* Main indicator */}
           <div className="relative w-6 h-10 sm:w-8 sm:h-12 border-2 border-cyan-400 rounded-full flex justify-center backdrop-blur-sm bg-white/5">
-            <motion.div
-              className="w-1 h-3 sm:w-1.5 sm:h-4 bg-gradient-to-b from-cyan-400 to-blue-500 rounded-full mt-1.5 sm:mt-2 shadow-lg"
-              animate={{
-                y: [0, 12, 0],
-                opacity: [1, 0.3, 1],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
+            <div className="scroll-dot w-1 h-3 sm:w-1.5 sm:h-4 bg-gradient-to-b from-cyan-400 to-blue-500 rounded-full mt-1.5 sm:mt-2 shadow-lg" />
           </div>
 
           {/* Scroll text */}
-          <motion.p
-            className="absolute top-12 sm:top-16 left-1/2 transform -translate-x-1/2 text-cyan-300/80 text-xs sm:text-sm font-medium tracking-wider whitespace-nowrap"
-            animate={{ opacity: [0.6, 1, 0.6] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
+          <p className="scroll-text absolute top-12 sm:top-16 left-1/2 transform -translate-x-1/2 text-cyan-300/80 text-xs sm:text-sm font-medium tracking-wider whitespace-nowrap">
             Scroll to explore
-          </motion.p>
-        </motion.div>
-      </motion.div>
+          </p>
+        </div>
+      </div>
       {/* CSS Animation Styles */}
       <style jsx>{`
         @keyframes ripple {

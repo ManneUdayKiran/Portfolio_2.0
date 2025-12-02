@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
-import { motion } from "framer-motion";
+import { useState, useMemo, useCallback, useRef, useEffect } from "react";
+import { animate, stagger } from "animejs";
+import { useInView } from "@/hooks/use-in-view";
 
 interface SkillNode {
   id: string;
@@ -257,27 +258,32 @@ const SkillBubble = ({
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case "frontend": return "from-cyan-400/20 to-blue-500/20 border-cyan-400/50";
-      case "backend": return "from-green-400/20 to-emerald-500/20 border-green-400/50";
-      case "database": return "from-orange-400/20 to-red-500/20 border-orange-400/50";
-      case "tools": return "from-purple-400/20 to-violet-500/20 border-purple-400/50";
-      case "languages": return "from-yellow-400/20 to-amber-500/20 border-yellow-400/50";
-      default: return "from-gray-400/20 to-gray-500/20 border-gray-400/50";
+      case "frontend":
+        return "from-cyan-400/20 to-blue-500/20 border-cyan-400/50";
+      case "backend":
+        return "from-green-400/20 to-emerald-500/20 border-green-400/50";
+      case "database":
+        return "from-orange-400/20 to-red-500/20 border-orange-400/50";
+      case "tools":
+        return "from-purple-400/20 to-violet-500/20 border-purple-400/50";
+      case "languages":
+        return "from-yellow-400/20 to-amber-500/20 border-yellow-400/50";
+      default:
+        return "from-gray-400/20 to-gray-500/20 border-gray-400/50";
     }
   };
 
   const categoryColor = getCategoryColor(skill.category);
 
   return (
-    <div
-      className="relative group cursor-pointer"
-      onClick={handleClick}
-    >
+    <div className="relative group cursor-pointer" onClick={handleClick}>
       {/* Tooltip */}
       <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-20">
         <div className="bg-black/90 backdrop-blur-sm text-white px-3 py-1 rounded-lg text-sm whitespace-nowrap border border-gray-700">
           <div className="font-medium">{skill.name}</div>
-          <div className="text-xs text-gray-300">{skill.level}% • {skill.category}</div>
+          <div className="text-xs text-gray-300">
+            {skill.level}% • {skill.category}
+          </div>
           {/* Tooltip arrow */}
           <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-700"></div>
         </div>
@@ -293,33 +299,37 @@ const SkillBubble = ({
         >
           {/* Animated background ring */}
           <div className="absolute inset-0 rounded-full skill-bubble-glow opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          
+
           {/* Skill level indicator ring */}
-          <div 
+          <div
             className="absolute inset-0 rounded-full border-2 border-transparent skill-level-ring"
             style={{
               background: `conic-gradient(from 0deg, ${
-                skill.category === 'frontend' ? '#06b6d4' :
-                skill.category === 'backend' ? '#10b981' :
-                skill.category === 'database' ? '#f97316' :
-                skill.category === 'tools' ? '#8b5cf6' :
-                '#eab308'
+                skill.category === "frontend"
+                  ? "#06b6d4"
+                  : skill.category === "backend"
+                  ? "#10b981"
+                  : skill.category === "database"
+                  ? "#f97316"
+                  : skill.category === "tools"
+                  ? "#8b5cf6"
+                  : "#eab308"
               } ${skill.level * 3.6}deg, transparent ${skill.level * 3.6}deg)`,
-              mask: 'radial-gradient(circle at center, transparent 65%, black 67%)'
+              mask: "radial-gradient(circle at center, transparent 65%, black 67%)",
             }}
           />
-          
+
           {/* Emoji */}
           <span className="relative z-10 text-2xl sm:text-3xl lg:text-3xl transform group-hover:scale-110 transition-transform duration-300">
             {skill.emoji}
           </span>
-          
+
           {/* Pulse effect for selected */}
           {isSelected && (
             <div className="absolute inset-0 rounded-full animate-pulse bg-cyan-400/20"></div>
           )}
         </div>
-        
+
         {/* Skill name (visible on mobile/tablet) */}
         <span className="text-xs sm:text-sm mt-2 text-center text-gray-300 xl:hidden font-medium max-w-[80px] leading-tight">
           {skill.name}
@@ -331,6 +341,12 @@ const SkillBubble = ({
 
 export default function TechStackSection() {
   const [selectedNode, setSelectedNode] = useState<SkillNode | null>(null);
+  const [sectionRef, isInView] = useInView({ threshold: 0.1 });
+  const headerRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const skillBubblesRef = useRef<HTMLDivElement[]>([]);
+  const sidePanelRef = useRef<HTMLDivElement>(null);
+  const categoryOverviewRef = useRef<HTMLDivElement>(null);
 
   const categoryStats = useMemo(
     () => ({
@@ -347,17 +363,104 @@ export default function TechStackSection() {
     setSelectedNode(node);
   }, []);
 
+  // Animate header when in view
+  useEffect(() => {
+    if (isInView && headerRef.current) {
+      animate(headerRef.current, {
+        opacity: [0, 1],
+        translateY: [20, 0],
+        duration: 600,
+        easing: "easeOutExpo",
+      });
+    }
+  }, [isInView]);
+
+  // Animate skill bubbles with center-burst stagger pattern
+  useEffect(() => {
+    if (isInView && skillBubblesRef.current.length > 0) {
+      // Initial explosive burst entrance from center
+      const total = skillBubblesRef.current.length;
+      const centerIndex = Math.floor(total / 2);
+
+      skillBubblesRef.current.forEach((bubble, i) => {
+        if (bubble) {
+          const distanceFromCenter = Math.abs(i - centerIndex);
+          const distance = (i - centerIndex) * 8;
+
+          animate(bubble, {
+            opacity: [0, 1],
+            scale: [0, 1.5, 1],
+            translateY: [150, -20, 0],
+            translateX: [distance * 2, distance * 0.5, 0],
+            rotate: [540, 0],
+            duration: 1600,
+            delay: distanceFromCenter * 50,
+            easing: "easeOutElastic(1, .7)",
+          });
+        }
+      });
+
+      // Continuous wave floating animation
+      setTimeout(() => {
+        animate(skillBubblesRef.current, {
+          translateY: (el: any, i: number) => [0, Math.sin(i * 0.5) * 10],
+          translateX: (el: any, i: number) => [0, Math.cos(i * 0.5) * 6],
+          rotate: [-3, 3],
+          duration: 3000,
+          direction: "alternate",
+          easing: "easeInOutSine",
+          loop: true,
+          delay: stagger(100, { from: "first" }),
+        });
+      }, 1400);
+    }
+  }, [isInView]);
+
+  // Animate grid container
+  useEffect(() => {
+    if (isInView && gridRef.current) {
+      animate(gridRef.current, {
+        opacity: [0, 1],
+        scale: [0.9, 1],
+        duration: 800,
+        easing: "easeOutExpo",
+      });
+    }
+  }, [isInView]);
+
+  // Animate side panels
+  useEffect(() => {
+    if (isInView && sidePanelRef.current && categoryOverviewRef.current) {
+      animate(sidePanelRef.current, {
+        opacity: [0, 1],
+        translateX: [20, 0],
+        duration: 600,
+        easing: "easeOutExpo",
+      });
+
+      animate(categoryOverviewRef.current, {
+        opacity: [0, 1],
+        translateX: [20, 0],
+        duration: 600,
+        delay: 100,
+        easing: "easeOutExpo",
+      });
+    }
+  }, [isInView]);
+
   return (
-    <section className="min-h-screen bg-black text-white relative overflow-hidden py-20">
+    <section
+      ref={sectionRef}
+      className="min-h-screen bg-black text-white relative overflow-hidden py-20"
+    >
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 via-black to-blue-900/10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+        <div
+          ref={headerRef}
+          style={{ opacity: 0 }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
@@ -367,16 +470,15 @@ export default function TechStackSection() {
             Explore my technical skills and expertise across different
             technologies.
           </p>
-        </motion.div>
+        </div>
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 min-h-[600px]">
           {/* Skill Tree Visualization */}
           <div className="lg:col-span-2">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
+            <div
+              ref={gridRef}
+              style={{ opacity: 0 }}
               className="min-h-[500px] lg:h-[600px] bg-gradient-to-br from-gray-900/50 to-black/50 rounded-2xl border border-gray-800 overflow-hidden relative"
             >
               <div className="w-full h-full flex items-center justify-center p-4 lg:p-8">
@@ -384,16 +486,12 @@ export default function TechStackSection() {
                   {/* Skills Grid - Enhanced Responsive Layout */}
                   <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-3 sm:gap-4 md:gap-6 lg:gap-8 h-full items-center justify-items-center p-4">
                     {SKILLS_DATA.map((skill, index) => (
-                      <motion.div
+                      <div
                         key={skill.id}
-                        initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                        whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                        transition={{ 
-                          duration: 0.5, 
-                          delay: index * 0.05, 
-                          type: "spring",
-                          stiffness: 100 
+                        ref={(el) => {
+                          if (el) skillBubblesRef.current[index] = el;
                         }}
+                        style={{ opacity: 0 }}
                         className="w-full flex justify-center"
                       >
                         <SkillBubble
@@ -401,17 +499,21 @@ export default function TechStackSection() {
                           onSelect={handleNodeSelect}
                           isSelected={selectedNode?.id === skill.id}
                         />
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
 
           {/* Side Panel - Node Details */}
           <div className="hidden lg:block lg:col-span-1 space-y-6 max-w-sm">
-            <div className="bg-gradient-to-br from-gray-900/80 to-black/80 rounded-xl border border-gray-800 p-6">
+            <div
+              ref={sidePanelRef}
+              style={{ opacity: 0 }}
+              className="bg-gradient-to-br from-gray-900/80 to-black/80 rounded-xl border border-gray-800 p-6"
+            >
               {selectedNode ? (
                 <div>
                   <div className="flex items-center gap-3 mb-4">
@@ -491,10 +593,9 @@ export default function TechStackSection() {
             </div>
 
             {/* Category Overview */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+            <div
+              ref={categoryOverviewRef}
+              style={{ opacity: 0 }}
               className="bg-gradient-to-br from-gray-900/80 to-black/80 rounded-xl border border-gray-800 p-6"
             >
               <h3 className="text-lg font-bold text-white mb-4">
@@ -518,16 +619,16 @@ export default function TechStackSection() {
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           </div>
 
           {/* Mobile Skill Details Modal */}
           {selectedNode && (
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 50 }}
+            <div
               className="fixed inset-x-4 bottom-4 lg:hidden z-50 bg-gray-900/95 backdrop-blur-md rounded-xl border border-gray-700 p-4"
+              style={{
+                animation: "slideUpFade 0.3s ease-out forwards",
+              }}
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-3">
@@ -599,12 +700,24 @@ export default function TechStackSection() {
                   </span>
                 </div>
               </div>
-            </motion.div>
+            </div>
           )}
         </div>
       </div>
 
       <style jsx>{`
+        /* Mobile modal animation */
+        @keyframes slideUpFade {
+          from {
+            opacity: 0;
+            transform: translateY(50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
         /* Enhanced skill bubbles with category-specific styling */
         .skill-bubble {
           backdrop-filter: blur(10px);
@@ -614,11 +727,16 @@ export default function TechStackSection() {
         }
 
         .skill-bubble::before {
-          content: '';
+          content: "";
           position: absolute;
           inset: 0;
           border-radius: inherit;
-          background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+          background: linear-gradient(
+            45deg,
+            transparent,
+            rgba(255, 255, 255, 0.1),
+            transparent
+          );
           opacity: 0;
           transition: opacity 0.3s ease;
         }
@@ -629,13 +747,24 @@ export default function TechStackSection() {
 
         /* Animated glow effect */
         .skill-bubble-glow {
-          background: radial-gradient(circle at center, rgba(99, 102, 241, 0.4) 0%, transparent 70%);
+          background: radial-gradient(
+            circle at center,
+            rgba(99, 102, 241, 0.4) 0%,
+            transparent 70%
+          );
           animation: pulse-glow 2s infinite;
         }
 
         @keyframes pulse-glow {
-          0%, 100% { opacity: 0; transform: scale(1); }
-          50% { opacity: 0.6; transform: scale(1.1); }
+          0%,
+          100% {
+            opacity: 0;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.6;
+            transform: scale(1.1);
+          }
         }
 
         /* Skill level ring animation */
@@ -661,8 +790,13 @@ export default function TechStackSection() {
         }
 
         @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-5px); }
+          0%,
+          100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-5px);
+          }
         }
 
         /* Tooltip improvements */
@@ -672,15 +806,33 @@ export default function TechStackSection() {
         }
 
         /* Dynamic width classes for progress bars */
-        [data-level="75"] { width: 75%; }
-        [data-level="78"] { width: 78%; }
-        [data-level="80"] { width: 80%; }
-        [data-level="82"] { width: 82%; }
-        [data-level="85"] { width: 85%; }
-        [data-level="88"] { width: 88%; }
-        [data-level="90"] { width: 90%; }
-        [data-level="92"] { width: 92%; }
-        [data-level="95"] { width: 95%; }
+        [data-level="75"] {
+          width: 75%;
+        }
+        [data-level="78"] {
+          width: 78%;
+        }
+        [data-level="80"] {
+          width: 80%;
+        }
+        [data-level="82"] {
+          width: 82%;
+        }
+        [data-level="85"] {
+          width: 85%;
+        }
+        [data-level="88"] {
+          width: 88%;
+        }
+        [data-level="90"] {
+          width: 90%;
+        }
+        [data-level="92"] {
+          width: 92%;
+        }
+        [data-level="95"] {
+          width: 95%;
+        }
 
         /* Responsive grid adjustments */
         @media (max-width: 640px) {
@@ -691,29 +843,27 @@ export default function TechStackSection() {
 
         /* Enhanced hover effects */
         .skill-bubble:hover {
-          box-shadow: 
-            0 0 20px rgba(99, 102, 241, 0.4),
-            0 0 40px rgba(99, 102, 241, 0.2),
-            0 0 60px rgba(99, 102, 241, 0.1);
+          box-shadow: 0 0 20px rgba(99, 102, 241, 0.4),
+            0 0 40px rgba(99, 102, 241, 0.2), 0 0 60px rgba(99, 102, 241, 0.1);
         }
 
         /* Category-specific glow colors */
         .group:hover .skill-bubble[data-category="frontend"] {
           box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
         }
-        
+
         .group:hover .skill-bubble[data-category="backend"] {
           box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
         }
-        
+
         .group:hover .skill-bubble[data-category="database"] {
           box-shadow: 0 0 20px rgba(249, 115, 22, 0.4);
         }
-        
+
         .group:hover .skill-bubble[data-category="tools"] {
           box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
         }
-        
+
         .group:hover .skill-bubble[data-category="languages"] {
           box-shadow: 0 0 20px rgba(234, 179, 8, 0.4);
         }

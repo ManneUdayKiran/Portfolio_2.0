@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { animate } from "animejs";
 import { useInView } from "@/hooks/use-in-view";
 
 // All React Three Fiber imports commented out to avoid ReactCurrentOwner errors
@@ -93,6 +93,157 @@ import { useInView } from "@/hooks/use-in-view";
 //   );
 // }
 
+// Detail Item Component for Modal
+function DetailItem({
+  detail,
+  index,
+  gradient,
+}: {
+  detail: string;
+  index: number;
+  gradient: string;
+}) {
+  const detailRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (detailRef.current) {
+      animate(detailRef.current, {
+        opacity: [0, 1],
+        translateX: [-20, 0],
+        duration: 400,
+        delay: index * 100,
+        easing: "easeOutQuad",
+      });
+    }
+  }, [index]);
+
+  return (
+    <div
+      ref={detailRef}
+      className="bg-black/40 rounded-lg p-3 border-l-4 border-gradient-to-r backdrop-blur-sm"
+      style={{
+        opacity: 0,
+        borderLeftColor: gradient.includes("cyan")
+          ? "#06b6d4"
+          : gradient.includes("yellow")
+          ? "#f59e0b"
+          : gradient.includes("purple")
+          ? "#a855f7"
+          : "#10b981",
+      }}
+    >
+      <div className="text-white font-medium">{detail}</div>
+    </div>
+  );
+}
+
+// Modal Overlay Component with Anime.js
+function ModalOverlay({
+  selectedStat,
+  onClose,
+}: {
+  selectedStat: any;
+  onClose: () => void;
+}) {
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const detailsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (overlayRef.current) {
+      animate(overlayRef.current, {
+        opacity: [0, 1],
+        scale: [0.9, 1],
+        duration: 400,
+        easing: "easeOutQuad",
+      });
+    }
+
+    if (modalRef.current) {
+      animate(modalRef.current, {
+        translateY: [30, 0],
+        rotateX: [-10, 0],
+        duration: 500,
+        delay: 100,
+        easing: "easeOutQuad",
+      });
+    }
+  }, []);
+
+  const handleClose = () => {
+    if (overlayRef.current && modalRef.current) {
+      animate(overlayRef.current, {
+        opacity: 0,
+        scale: 0.9,
+        duration: 300,
+        easing: "easeInQuad",
+        complete: onClose,
+      });
+    } else {
+      onClose();
+    }
+  };
+
+  return (
+    <div
+      ref={overlayRef}
+      className="fixed inset-0 bg-black/90 backdrop-blur-lg z-50 flex items-center justify-center p-4"
+      onClick={handleClose}
+      style={{ opacity: 0 }}
+    >
+      <div
+        ref={modalRef}
+        className="bg-gradient-to-br from-gray-900/95 via-black/90 to-gray-800/95 rounded-3xl p-8 max-w-4xl w-full border border-gray-700 relative overflow-hidden backdrop-blur-md"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Animated Background */}
+        <div
+          className={`absolute inset-0 bg-gradient-to-r ${selectedStat.gradient} opacity-5`}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent animate-pulse" />
+
+        <button
+          onClick={handleClose}
+          className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors z-10 text-2xl"
+        >
+          ✕
+        </button>
+
+        <div className="relative z-10">
+          <div className="text-center mb-8">
+            <div className="text-8xl mb-4 animate-bounce">
+              {selectedStat.icon}
+            </div>
+
+            <div
+              className={`text-6xl font-bold mb-4 bg-gradient-to-r ${selectedStat.gradient} bg-clip-text text-transparent`}
+            >
+              {selectedStat.count}
+            </div>
+
+            <h3 className="text-4xl font-bold text-white mb-2">
+              {selectedStat.title}
+            </h3>
+
+            <p className="text-gray-300 text-lg">{selectedStat.description}</p>
+          </div>
+
+          <div ref={detailsRef} className="grid gap-3 max-h-64 overflow-y-auto">
+            {selectedStat.details?.map((detail: string, index: number) => (
+              <DetailItem
+                key={index}
+                detail={detail}
+                index={index}
+                gradient={selectedStat.gradient}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // Animated Counter Component
 function AnimatedCounter({
   end,
@@ -165,26 +316,76 @@ function StatCard({
   description: string;
   isClickable?: boolean;
 }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 50, scale: 0.9 }}
-      animate={
-        inView
-          ? { opacity: 1, y: 0, scale: 1 }
-          : { opacity: 0, y: 50, scale: 0.9 }
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    if (!cardRef.current) return;
+
+    if (inView) {
+      animate(cardRef.current, {
+        opacity: [0, 1],
+        translateY: [50, 0],
+        scale: [0.9, 1],
+        duration: 800,
+        delay: delay * 1000,
+        easing: "easeOutQuad",
+      });
+    }
+  }, [inView, delay]);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    if (cardRef.current) {
+      const cardMain = cardRef.current.querySelector(".card-main");
+      if (cardMain) {
+        // 3D lift with shadow morphing
+        animate(cardMain, {
+          scale: [1, 1.08],
+          translateY: [0, -15],
+          rotateX: [0, -5],
+          rotateY: [0, 5],
+          duration: 800,
+          easing: "easeOutElastic(1, .6)",
+        });
+
+        // Glow pulse effect
+        animate(cardMain, {
+          filter: ["brightness(1)", "brightness(1.2)"],
+          boxShadow: [
+            "0 10px 40px rgba(6, 182, 212, 0.2)",
+            "0 25px 80px rgba(6, 182, 212, 0.5)",
+          ],
+          duration: 600,
+          easing: "easeOutQuad",
+        });
       }
-      transition={{
-        duration: 0.8,
-        delay: delay,
-        ease: "easeOut",
-      }}
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    if (cardRef.current) {
+      const cardMain = cardRef.current.querySelector(".card-main");
+      if (cardMain) {
+        animate(cardMain, { scale: 1, duration: 500, easing: "easeOutQuad" });
+      }
+    }
+  };
+
+  return (
+    <div
+      ref={cardRef}
       className="relative group"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      style={{ opacity: 0 }}
     >
       {/* Neon Border Effect */}
       <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-pink-500/20 rounded-2xl blur-lg group-hover:blur-xl transition-all duration-500 animate-pulse" />
 
       {/* Main Card */}
-      <div className="relative bg-black/80 backdrop-blur-xl rounded-2xl p-8 border border-gray-800 hover:border-gray-600 transition-all duration-500 group-hover:scale-105">
+      <div className="card-main relative bg-black/80 backdrop-blur-xl rounded-2xl p-8 border border-gray-800 hover:border-gray-600 transition-all duration-500">
         {/* Link Icon - Top Right Corner */}
         {isClickable && (
           <div className="absolute top-3 right-3 z-10">
@@ -249,7 +450,7 @@ function StatCard({
           className={`absolute inset-0 bg-gradient-to-r ${gradient} opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-500`}
         />
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -423,27 +624,35 @@ export default function AchievementsSection() {
     },
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
+  const headerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-      },
-    },
-  };
+  useEffect(() => {
+    if (!inView) return;
+
+    // Animate header elements
+    if (titleRef.current) {
+      animate(titleRef.current, {
+        opacity: [0, 1],
+        translateY: [30, 0],
+        duration: 800,
+        delay: 0,
+        easing: "easeOutQuad",
+      });
+    }
+
+    if (descriptionRef.current) {
+      animate(descriptionRef.current, {
+        opacity: [0, 1],
+        translateY: [30, 0],
+        duration: 800,
+        delay: 200,
+        easing: "easeOutQuad",
+      });
+    }
+  }, [inView]);
 
   return (
     <section
@@ -519,35 +728,35 @@ export default function AchievementsSection() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className="text-center mb-20"
-        >
-          <motion.h2
-            variants={itemVariants}
+        <div ref={headerRef} className="text-center mb-20">
+          <h2
+            ref={titleRef}
             className="text-6xl md:text-8xl font-bold text-white mb-6"
+            style={{ opacity: 0 }}
           >
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500">
               Achievements
             </span>
             <br />
             <span className="text-4xl md:text-5xl text-gray-300 font-light"></span>
-          </motion.h2>
+          </h2>
 
-          <motion.p
-            variants={itemVariants}
+          <p
+            ref={descriptionRef}
             className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
+            style={{ opacity: 0 }}
           >
             Quantifying excellence through dynamic counters that showcase my
             journey of continuous learning, innovation, and professional growth
             in technology.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         {/* Render certificates as cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div
+          ref={gridRef}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+        >
           {certificateStats.map((stat, index) => (
             <a
               key={stat.id}
@@ -588,12 +797,7 @@ export default function AchievementsSection() {
         </div> */}
 
         {/* Interactive Details Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.8, delay: 1 }}
-          className="text-center"
-        >
+        <div className="text-center">
           {/* <h3 className="text-3xl font-bold text-white mb-8">
             Click any stat to explore details
           </h3> */}
@@ -617,87 +821,16 @@ export default function AchievementsSection() {
               </button>
             ))}
           </div> */}
-        </motion.div>
+        </div>
       </div>
 
       {/* Detail Modal */}
-      <AnimatePresence>
-        {selectedStat && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="fixed inset-0 bg-black/90 backdrop-blur-lg z-50 flex items-center justify-center p-4"
-            onClick={() => setSelectedStat(null)}
-          >
-            <motion.div
-              initial={{ y: 30, rotateX: -10 }}
-              animate={{ y: 0, rotateX: 0 }}
-              exit={{ y: 30, rotateX: -10 }}
-              className="bg-gradient-to-br from-gray-900/95 via-black/90 to-gray-800/95 rounded-3xl p-8 max-w-4xl w-full border border-gray-700 relative overflow-hidden backdrop-blur-md"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Animated Background */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-r ${selectedStat.gradient} opacity-5`}
-              />
-              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent animate-pulse" />
-
-              <button
-                onClick={() => setSelectedStat(null)}
-                className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors z-10 text-2xl"
-              >
-                ✕
-              </button>
-
-              <div className="relative z-10">
-                <div className="text-center mb-8">
-                  <div className="text-8xl mb-4 animate-bounce">
-                    {selectedStat.icon}
-                  </div>
-
-                  <div
-                    className={`text-6xl font-bold mb-4 bg-gradient-to-r ${selectedStat.gradient} bg-clip-text text-transparent`}
-                  >
-                    {selectedStat.count}
-                  </div>
-
-                  <h3 className="text-4xl font-bold text-white mb-2">
-                    {selectedStat.title}
-                  </h3>
-
-                  <p className="text-gray-300 text-lg">
-                    {selectedStat.description}
-                  </p>
-                </div>
-
-                <div className="grid gap-3 max-h-64 overflow-y-auto">
-                  {selectedStat.details.map((detail: string, index: number) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="bg-black/40 rounded-lg p-3 border-l-4 border-gradient-to-r backdrop-blur-sm"
-                      style={{
-                        borderLeftColor: selectedStat.gradient.includes("cyan")
-                          ? "#06b6d4"
-                          : selectedStat.gradient.includes("yellow")
-                          ? "#f59e0b"
-                          : selectedStat.gradient.includes("purple")
-                          ? "#a855f7"
-                          : "#10b981",
-                      }}
-                    >
-                      <div className="text-white font-medium">{detail}</div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {selectedStat && (
+        <ModalOverlay
+          selectedStat={selectedStat}
+          onClose={() => setSelectedStat(null)}
+        />
+      )}
 
       <style jsx>{`
         @keyframes float {
