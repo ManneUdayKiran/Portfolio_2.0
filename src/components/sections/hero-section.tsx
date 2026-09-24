@@ -420,7 +420,7 @@ export default function HeroSection() {
                   className="text-xs sm:text-sm text-gray-400 font-mono tracking-widest uppercase border-l-2 border-cyan-500 pl-3 sm:pl-4"
                   style={{ opacity: 0 }}
                 >
-                  Software Engineer & 3D Developer
+                 
                 </div>
 
                 <div className="space-y-2">

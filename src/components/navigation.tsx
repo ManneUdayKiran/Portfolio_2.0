@@ -264,15 +264,6 @@ export default function Navigation() {
               </button>
             ))}
 
-            <a 
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 border border-cyan-500 text-cyan-400 font-medium rounded-md hover:bg-cyan-500/10 transition-colors"
-            >
-              Resume
-            </a>
-
             {/* Theme Toggle */}
             {/* <motion.button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
