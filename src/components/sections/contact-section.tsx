@@ -314,15 +314,13 @@ export default function ContactSection() {
             ref={titleRef}
             className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent mb-6 opacity-0"
           >
-            Holographic{" "}
-            <span className="text-neon-cyan glow-text">Contact</span>
+            Let's <span className="text-neon-cyan glow-text">Connect</span>
           </h2>
           <p
             ref={subtitleRef}
             className="text-xl text-gray-300 max-w-3xl mx-auto opacity-0"
           >
-            Initialize quantum communication protocol. Ready to establish secure
-            connection.
+            I'm currently open to new opportunities. Let's build something amazing together.
           </p>
         </div>
 
@@ -348,11 +346,11 @@ export default function ContactSection() {
                   <div className="flex items-center gap-3">
                     <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
                     <span className="text-cyan-400 font-mono text-sm">
-                      HOLOGRAM_TERMINAL_ACTIVE
+                      STATUS: ONLINE
                     </span>
                   </div>
                   <div className="text-cyan-400/60 font-mono text-xs">
-                    QUANTUM_ENCRYPTED
+                    SECURE_CONNECTION
                   </div>
                 </div>
 
@@ -652,12 +650,13 @@ function ContactLink({
         }
       };
 
-      linkRef.current?.addEventListener("mouseenter", handleMouseEnter);
-      linkRef.current?.addEventListener("mouseleave", handleMouseLeave);
+      const currentLink = linkRef.current;
+      currentLink?.addEventListener("mouseenter", handleMouseEnter);
+      currentLink?.addEventListener("mouseleave", handleMouseLeave);
 
       return () => {
-        linkRef.current?.removeEventListener("mouseenter", handleMouseEnter);
-        linkRef.current?.removeEventListener("mouseleave", handleMouseLeave);
+        currentLink?.removeEventListener("mouseenter", handleMouseEnter);
+        currentLink?.removeEventListener("mouseleave", handleMouseLeave);
       };
     }
   }, []);

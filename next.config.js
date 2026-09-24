@@ -1,15 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   turbopack: {}, // Enable Turbopack with default config
-  webpack: (config) => {
-    config.module.rules.push({
-      test: /\.(glb|gltf)$/,
-      use: {
-        loader: "file-loader",
-      },
-    });
-    return config;
-  },
   // Performance optimizations
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
@@ -21,7 +12,6 @@ const nextConfig = {
   // Enable experimental features for performance
   experimental: {
     optimizeCss: true,
-    optimizePackageImports: ["framer-motion"],
   },
 };
 

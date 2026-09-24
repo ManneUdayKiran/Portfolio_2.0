@@ -335,7 +335,6 @@ export default function HeroSection() {
       {/* Background layers - ensure they stay behind content */}
       <div className="absolute inset-0 z-0">
         {/* Aurora Borealis Background */}
-        {/* <AuroraCSS /> */}
 
         {/* Floating Blob Effect - Main Background */}
         <div className="floating-blob absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -462,11 +461,10 @@ export default function HeroSection() {
                 className="text-sm sm:text-base lg:text-lg text-gray-400 leading-relaxed max-w-2xl font-light"
                 style={{ opacity: 0 }}
               >
-                Passionate about learning and building digital experiences with
-                modern web technologies. Currently exploring{" "}
-                <span className="text-purple-300 font-semibold">React</span>,{" "}
-                and the latest web development practices. Always eager to learn
-                new technologies and create innovative solutions.
+                I help startups and businesses build polished, scalable web applications. 
+                With expertise in <span className="text-cyan-400 font-semibold">React</span> and{" "}
+                <span className="text-purple-300 font-semibold">Node.js</span>, I specialize in 
+                crafting high-performance products that prioritize user-experience, clean code, and interactive visual design.
               </p>
 
               <div

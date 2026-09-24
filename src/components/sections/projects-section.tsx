@@ -3,139 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { animate, stagger } from "animejs";
 import { useInView } from "@/hooks/use-in-view";
-
-// Commented out React Three Fiber imports to avoid ReactCurrentOwner errors
-// const Canvas = dynamic(
-//   () => import("@react-three/fiber").then((mod) => mod.Canvas),
-//   { ssr: false }
-// );
-// const OrbitControls = dynamic(
-//   () => import("@react-three/drei").then((mod) => mod.OrbitControls),
-//   { ssr: false }
-// );
-// const ProjectCarousel = dynamic(
-//   () => import("@/components/three/project-carousel"),
-//   { ssr: false }
-// );
-// const Starfield = dynamic(
-//   () => import("@/components/three/starfield"),
-//   { ssr: false }
-// );
-
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  technologies: string[];
-  liveUrl: string;
-  githubUrl: string;
-  image: string;
-  category: string;
-  gradient: string;
-}
-
-const projects: Project[] = [
-  {
-    id: 1,
-    title: "Real-Time Chat App",
-    description:
-      "A full-stack real-time chat app built with MERN stack (MongoDB, Express, React, Node.js) and Socket.IO. It supports one-on-one messaging, real-time typing indicators, emoji picker, image upload, and theme toggling.",
-    technologies: [
-      "React",
-      "Node.js",
-      "MongoDB",
-      "Antd Design",
-      "Socket.IO",
-      "Emoji Picker",
-    ],
-    liveUrl: "https://chat-app-fu9v.onrender.com",
-    githubUrl: "https://github.com/ManneUdayKiran/Real-Time-Chat-App.git",
-    image: "🌌",
-    category: "Full Stack Development",
-    gradient: "from-cyan-500 to-blue-500",
-  },
-  {
-    id: 2,
-    title: "Mini RAG",
-    description:
-      "Mini RAG is a modern, responsive app for Retrieval-Augmented Generation. Upload PDFs, DOCX, images (OCR), or add web URLs, then ask questions and get answers strictly from your provided content. Built with React, Ant Design, and FastAPI for rapid, user-friendly knowledge retrieval.",
-    technologies: ["React", "FastApi", "MongoDB", "LLM MOdels"],
-    liveUrl: "",
-    githubUrl: "https://github.com/ManneUdayKiran/MiniRAG-Project.git",
-    image: "🛒",
-    category: "Machine Learning",
-    gradient: "from-purple-500 to-pink-500",
-  },
-  {
-    id: 3,
-    title: "AI-Powered Dashboard",
-    description:
-      "Advanced data visualization platform with AI-driven insights, interactive charts, and predictive analytics for business intelligence.",
-    technologies: ["React", "D3.js", "Python", "FastAPI"],
-    liveUrl: "#",
-    githubUrl: "#",
-    image: "📊",
-    category: "AI & Data",
-    gradient: "from-green-500 to-emerald-500",
-  },
-  {
-    id: 4,
-    title: "Prompt-to-Product",
-    description:
-      "Prompt-to-Product is a powerful MVP platform that lets developers instantly turn prompts into usable code or insights. It combines the capabilities of AI chat and code generation in a single, intuitive interface..",
-    technologies: [
-      "React",
-      "Antd",
-      "FastApi",
-      "Firebase",
-      "LLM Models",
-      "TailWind CSS",
-    ],
-    liveUrl: "https://prompt-to-product.onrender.com",
-    githubUrl: "https://github.com/ManneUdayKiran/MVP-Platform-Project.git",
-    image: "📱",
-    category: "Full Stack Development",
-    gradient: "from-yellow-500 to-orange-500",
-  },
-  {
-    id: 5,
-    title: "Resume Analyzer",
-    description:
-      "A comprehensive resume analysis tool that helps job seekers optimize their resumes for Applicant Tracking Systems (ATS) and provides personalized improvement suggestions.",
-    technologies: [
-      "React",
-      "Material UI",
-      "FastApi",
-      "MongoDB",
-      "Machine Learning",
-      "LLM Model",
-    ],
-    liveUrl: "https://frontend-two-pi-49.vercel.app/",
-    githubUrl: "https://github.com/ManneUdayKiran/ResuScan-Resume-Analyser.git",
-    image: "💬",
-    category: "Full Stack Development",
-    gradient: "from-pink-500 to-rose-500",
-  },
-  {
-    id: 6,
-    title: "Intelligent Journaling App",
-    description:
-      "An intelligent journaling app powered by LLMs that allows users to record daily thoughts and receive AI-generated summaries, mood detection, and mental wellness suggestions.",
-    technologies: [
-      "React",
-      "MongoDB",
-      "Antd",
-      "Material UI",
-      "Node.js",
-      "Express.js",
-    ],
-    liveUrl: "https://ai-journalentry-app.onrender.com",
-    githubUrl: "https://github.com/ManneUdayKiran/AI-Journal-App.git",
-    image: "☁️",
-    category: "DevOps",
-    gradient: "from-blue-500 to-indigo-500",
-  },
-];
+import { Project, projects } from "@/data/projects";
 
 export default function ProjectsSection() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -267,34 +135,7 @@ export default function ProjectsSection() {
               Projects
             </span>
           </h2>
-
-          {/* <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            Drag to rotate • Click panels to view details
-          </p> */}
         </div>
-
-        {/* Instructions */}
-        {/* <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-black/80 backdrop-blur-md border border-cyan-500/30 rounded-lg px-6 py-3"
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-        >
-          <div className="flex items-center gap-6 text-sm text-gray-400">
-            <div className="flex items-center gap-2">
-              <span className="text-cyan-400">🖱️</span>
-              <span>Drag to rotate</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-cyan-400">👆</span>
-              <span>Click panels</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-cyan-400">🎮</span>
-              <span>Use controls</span>
-            </div>
-          </div>
-        </motion.div> */}
       </div>
       {/* Projects Grid */}
       <div
@@ -377,28 +218,37 @@ export default function ProjectsSection() {
 
                     {/* Action Buttons */}
                     <div className="flex gap-3">
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-center py-2 px-4 rounded-lg font-medium text-sm shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_25px_rgba(34,211,238,0.3)] active:scale-95"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <span className="inline-block transition-transform duration-200 hover:translate-x-0.5">
-                          Live Demo
-                        </span>
-                      </a>
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 bg-gray-800 text-white text-center py-2 px-4 rounded-lg font-medium text-sm border border-gray-600 transition-all duration-300 hover:scale-105 hover:bg-gray-700 hover:border-gray-500 hover:shadow-[0_5px_15px_rgba(0,0,0,0.3)] active:scale-95"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <span className="inline-block transition-transform duration-200 hover:translate-x-0.5">
-                          GitHub
-                        </span>
-                      </a>
+                      {project.liveUrl && project.liveUrl !== "#" ? (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-center py-2 px-4 rounded-lg font-medium text-sm shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_25px_rgba(34,211,238,0.3)] active:scale-95"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <span className="inline-block transition-transform duration-200 hover:translate-x-0.5">
+                            Live Demo
+                          </span>
+                        </a>
+                      ) : (
+                        <div className="flex-1 bg-gray-800 text-gray-500 text-center py-2 px-4 rounded-lg font-medium text-sm border border-gray-700 cursor-not-allowed">
+                          <span>Private / Pending</span>
+                        </div>
+                      )}
+                      
+                      {project.githubUrl && project.githubUrl !== "#" ? (
+                        <a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 bg-gray-800 text-white text-center py-2 px-4 rounded-lg font-medium text-sm border border-gray-600 transition-all duration-300 hover:scale-105 hover:bg-gray-700 hover:border-gray-500 hover:shadow-[0_5px_15px_rgba(0,0,0,0.3)] active:scale-95"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <span className="inline-block transition-transform duration-200 hover:translate-x-0.5">
+                            GitHub
+                          </span>
+                        </a>
+                      ) : null}
                     </div>
                   </div>
                 </div>

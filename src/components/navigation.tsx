@@ -258,11 +258,20 @@ export default function Navigation() {
                 onClick={() => scrollToSection(item.href)}
                 onMouseEnter={(e) => handleNavItemHover(e, true)}
                 onMouseLeave={(e) => handleNavItemHover(e, false)}
-                className="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                className="text-gray-700 dark:text-gray-300 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
               >
                 {item.name}
               </button>
             ))}
+
+            <a 
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 border border-cyan-500 text-cyan-400 font-medium rounded-md hover:bg-cyan-500/10 transition-colors"
+            >
+              Resume
+            </a>
 
             {/* Theme Toggle */}
             {/* <motion.button

@@ -1,16 +1,12 @@
-// "use client"
 import type { Metadata } from "next";
-// import { Inter } from "next/font/google";
-import "./styles.css";
+import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import SmoothScroll from "@/components/smooth-scroll";
 
-// const inter = Inter({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
-  title: "Developer Portfolio - Interactive 3D Experience",
+  title: "Uday Kiran | Full Stack Developer & Creative Coder",
   description:
-    "An advanced developer portfolio featuring stunning 3D visuals and smooth animations",
+    "Portfolio of Uday Kiran - Full Stack Developer specializing in high-performance web applications, modern UI/UX, and creative engineering.",
 };
 
 export default function RootLayout({

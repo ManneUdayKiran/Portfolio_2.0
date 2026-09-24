@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useInView } from "@/hooks/use-in-view";
 import { useState, useRef, useEffect } from "react";
 import { animate } from "animejs";
@@ -13,8 +14,7 @@ export default function AboutSection() {
 
   const [showContent, setShowContent] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageSrc, setImageSrc] = useState("/uk.jpg");
-  const imageRef = useRef<HTMLImageElement>(null);
+  const [imageSrc, setImageSrc] = useState("/my_profile_pic.png");
 
   // Ensure component is mounted before animations
   useEffect(() => {
@@ -194,30 +194,30 @@ export default function AboutSection() {
 
   const expertise = [
     {
-      title: "Mern Stack Development",
+      title: "Full-Stack Development",
       description:
-        "Building responsive, accessible, and performant web applications with React, Next.js, and TypeScript.",
+        "Building end-to-end, scalable web applications using React, Next.js, Node.js, and modern databases.",
       icon: "⚛️",
       color: "#61dafb",
     },
     {
-      title: "3D Visualization",
+      title: "Creative Development",
       description:
-        "Creating immersive 3D experiences using Three.js and React Three Fiber for interactive web graphics.",
+        "Crafting interactive, highly-animated frontend experiences with Framer Motion, Anime.js, and Tailwind CSS.",
       icon: "🎨",
       color: "#ff6b6b",
     },
     {
-      title: "Performance Optimization",
+      title: "Performance Architecture",
       description:
-        "Implementing advanced optimization techniques to ensure lightning-fast load times and smooth interactions.",
+        "Optimizing React rendering, reducing bundle sizes, and building fast, accessible web experiences.",
       icon: "⚡",
       color: "#ffd93d",
     },
     {
-      title: "UI/UX Design",
+      title: "Product Design",
       description:
-        "Crafting intuitive and visually stunning interfaces that prioritize user experience and accessibility.",
+        "Translating wireframes into polished, production-ready interfaces with a strong focus on UX and accessibility.",
       icon: "✨",
       color: "#a855f7",
     },
@@ -247,36 +247,24 @@ export default function AboutSection() {
                 <div className="relative w-64 h-64 sm:w-80 sm:h-80">
                   {/* Animated Border */}
                   <div className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500  p-2">
-                    <div className="w-full h-full rounded-full bg-black p-2">
-                      <img
-                        ref={imageRef}
+                    <div className="w-full h-full rounded-full bg-black p-2 relative overflow-hidden">
+                      <Image
                         src={imageSrc}
                         alt="Uday Kiran"
+                        width={320}
+                        height={320}
+                        priority
                         className="w-full h-full rounded-full object-cover"
                         onLoad={() => {
-                          console.log("Image loaded successfully");
                           setImageLoaded(true);
                         }}
-                        onError={(e) => {
+                        onError={() => {
                           console.log(
-                            "Image failed to load, trying alternatives"
+                            "Image failed to load, falling back to SVG"
                           );
-                          const img = e.currentTarget as HTMLImageElement;
-
-                          // Try different image extensions if not already tried
-                          if (imageSrc === "/uk.jpg") {
-                            setImageSrc("/uk.png");
-                          } else if (imageSrc === "/uk.png") {
-                            setImageSrc("/udaykiran.jpg");
-                          } else if (imageSrc === "/udaykiran.jpg") {
-                            setImageSrc("/udaykiran.png");
-                          } else {
-                            // Final fallback to SVG
-                            console.log("Using final SVG fallback");
-                            setImageSrc(
-                              "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%236366f1'/%3E%3Ctext x='50' y='60' font-family='Arial' font-size='30' fill='white' text-anchor='middle'%3EUK%3C/text%3E%3C/svg%3E"
-                            );
-                          }
+                          setImageSrc(
+                            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%236366f1'/%3E%3Ctext x='50' y='60' font-family='Arial' font-size='30' fill='white' text-anchor='middle'%3EUK%3C/text%3E%3C/svg%3E"
+                          );
                         }}
                       />
                     </div>
