@@ -13,7 +13,7 @@ export default function AboutSection() {
 
   const [showContent, setShowContent] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageSrc, setImageSrc] = useState("/uk.jpg");
+  const [imageSrc, setImageSrc] = useState("/my_profile_pic.png");
   const imageRef = useRef<HTMLImageElement>(null);
 
   // Ensure component is mounted before animations

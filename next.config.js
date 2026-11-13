@@ -1,6 +1,8 @@
+const path = require("path");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  turbopack: {}, // Enable Turbopack with default config
+  outputFileTracingRoot: path.join(__dirname),
   // Performance optimizations
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
@@ -8,10 +10,6 @@ const nextConfig = {
   // Optimize images
   images: {
     formats: ["image/webp", "image/avif"],
-  },
-  // Enable experimental features for performance
-  experimental: {
-    optimizeCss: true,
   },
 };
 
