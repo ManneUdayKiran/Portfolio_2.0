@@ -650,13 +650,12 @@ function ContactLink({
         }
       };
 
-      const currentLink = linkRef.current;
-      currentLink?.addEventListener("mouseenter", handleMouseEnter);
-      currentLink?.addEventListener("mouseleave", handleMouseLeave);
+      linkRef.current?.addEventListener("mouseenter", handleMouseEnter);
+      linkRef.current?.addEventListener("mouseleave", handleMouseLeave);
 
       return () => {
-        currentLink?.removeEventListener("mouseenter", handleMouseEnter);
-        currentLink?.removeEventListener("mouseleave", handleMouseLeave);
+        linkRef.current?.removeEventListener("mouseenter", handleMouseEnter);
+        linkRef.current?.removeEventListener("mouseleave", handleMouseLeave);
       };
     }
   }, []);

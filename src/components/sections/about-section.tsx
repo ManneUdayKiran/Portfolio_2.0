@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useInView } from "@/hooks/use-in-view";
 import { useState, useRef, useEffect } from "react";
 import { animate } from "animejs";
@@ -14,7 +13,8 @@ export default function AboutSection() {
 
   const [showContent, setShowContent] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageSrc, setImageSrc] = useState("/my_profile_pic.png");
+  const [imageSrc, setImageSrc] = useState("/uk.jpg");
+  const imageRef = useRef<HTMLImageElement>(null);
 
   // Ensure component is mounted before animations
   useEffect(() => {
@@ -247,24 +247,36 @@ export default function AboutSection() {
                 <div className="relative w-64 h-64 sm:w-80 sm:h-80">
                   {/* Animated Border */}
                   <div className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500  p-2">
-                    <div className="w-full h-full rounded-full bg-black p-2 relative overflow-hidden">
-                      <Image
+                    <div className="w-full h-full rounded-full bg-black p-2">
+                      <img
+                        ref={imageRef}
                         src={imageSrc}
                         alt="Uday Kiran"
-                        width={320}
-                        height={320}
-                        priority
                         className="w-full h-full rounded-full object-cover"
                         onLoad={() => {
+                          console.log("Image loaded successfully");
                           setImageLoaded(true);
                         }}
-                        onError={() => {
+                        onError={(e) => {
                           console.log(
-                            "Image failed to load, falling back to SVG"
+                            "Image failed to load, trying alternatives"
                           );
-                          setImageSrc(
-                            "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%236366f1'/%3E%3Ctext x='50' y='60' font-family='Arial' font-size='30' fill='white' text-anchor='middle'%3EUK%3C/text%3E%3C/svg%3E"
-                          );
+                          const img = e.currentTarget as HTMLImageElement;
+
+                          // Try different image extensions if not already tried
+                          if (imageSrc === "/uk.jpg") {
+                            setImageSrc("/uk.png");
+                          } else if (imageSrc === "/uk.png") {
+                            setImageSrc("/udaykiran.jpg");
+                          } else if (imageSrc === "/udaykiran.jpg") {
+                            setImageSrc("/udaykiran.png");
+                          } else {
+                            // Final fallback to SVG
+                            console.log("Using final SVG fallback");
+                            setImageSrc(
+                              "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%236366f1'/%3E%3Ctext x='50' y='60' font-family='Arial' font-size='30' fill='white' text-anchor='middle'%3EUK%3C/text%3E%3C/svg%3E"
+                            );
+                          }
                         }}
                       />
                     </div>
@@ -442,44 +454,6 @@ export default function AboutSection() {
                     );
                   })}
                 </div>
-
-                {/* Styled Resume Action Button */}
-                <div className="pt-2 flex items-center gap-4">
-                  <a
-                    href="/short_resume.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-medium shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-105 active:scale-95 transition-all duration-300 group"
-                  >
-                    <svg
-                      className="w-5 h-5 text-cyan-200 group-hover:text-white transition-colors"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                      />
-                    </svg>
-                    <span>View Resume</span>
-                    <svg
-                      className="w-4 h-4 text-cyan-200 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                      />
-                    </svg>
-                  </a>
-                </div>
               </div>
             </div>
           </div>
@@ -531,29 +505,6 @@ export default function AboutSection() {
                       className="absolute left-2 sm:left-3 md:left-4 top-0 bottom-0 w-0.5 sm:w-1 bg-gradient-to-b from-cyan-500 via-purple-500 to-pink-500 z-10"
                       style={{ transformOrigin: "top", transform: "scaleY(0)" }}
                     />
-
-                    {/* Timeline Top Indicator - Journey Continues */}
-                    <div
-                      className={`relative pl-8 sm:pl-10 md:pl-12 mb-6 sm:mb-8 ${
-                        inView
-                          ? "mobile-fallback-visible"
-                          : "mobile-fallback-hidden"
-                      }`}
-                    >
-                      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-gradient-to-br from-cyan-400 via-purple-400 to-pink-400 rounded-full shadow-lg shadow-cyan-400/50 flex items-center justify-center z-30">
-                        {isMounted ? (
-                          <div className="animate-spin-slow text-xs sm:text-sm">✨</div>
-                        ) : (
-                          <div className="text-xs sm:text-sm">✨</div>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-cyan-400 font-semibold text-sm sm:text-base tracking-wide">
-                          Journey continues...
-                        </span>
-                        <div className="h-px flex-1 bg-gradient-to-r from-cyan-500/40 to-transparent" />
-                      </div>
-                    </div>
 
                     {/* Timeline Items */}
                     <div className="space-y-4 sm:space-y-6 md:space-y-8 relative z-20">
@@ -643,6 +594,26 @@ export default function AboutSection() {
                         );
                       })}
                     </div>
+
+                    {/* Timeline End Indicator - Simplified for mobile */}
+                    <div
+                      className={`relative pl-8 sm:pl-10 md:pl-12 mt-4 sm:mt-6 md:mt-8 ${
+                        inView
+                          ? "mobile-fallback-visible"
+                          : "mobile-fallback-hidden"
+                      }`}
+                    >
+                      <div className="absolute left-0 top-0 w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 bg-gradient-to-br from-cyan-400 via-purple-400 to-pink-400 rounded-full shadow-lg shadow-purple-500/50 flex items-center justify-center z-30">
+                        {isMounted ? (
+                          <div className="animate-spin-slow">✨</div>
+                        ) : (
+                          <div>✨</div>
+                        )}
+                      </div>
+                      <div className="text-gray-500 italic">
+                        Journey continues...
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -689,55 +660,31 @@ export default function AboutSection() {
                 opportunities to bring your vision to life with cutting-edge
                 technology.
               </p>
-              <div className="flex flex-wrap items-center justify-center gap-4">
-                <button
-                  ref={ctaButtonRef}
-                  onClick={() =>
-                    document
-                      .querySelector("#contact")
-                      ?.scrollIntoView({ behavior: "smooth" })
-                  }
-                  className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-purple-500 text-white hover:from-cyan-400 hover:to-purple-400 rounded-lg font-semibold text-lg transition-all duration-300 inline-flex items-center gap-3 shadow-lg shadow-cyan-500/25 hover:scale-105 hover:-translate-y-1 active:scale-95"
+              <button
+                ref={ctaButtonRef}
+                onClick={() =>
+                  document
+                    .querySelector("#contact")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
+                className="px-10 py-4 bg-gradient-to-r from-cyan-500 to-purple-500 text-white hover:from-cyan-400 hover:to-purple-400 rounded-lg font-semibold text-lg transition-all duration-300 inline-flex items-center gap-3 shadow-lg shadow-cyan-500/25 hover:scale-105 hover:-translate-y-1 active:scale-95"
+              >
+                Start a Conversation
+                <svg
+                  ref={arrowRef}
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  Start a Conversation
-                  <svg
-                    ref={arrowRef}
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </svg>
-                </button>
-
-                <a
-                  href="/short_resume.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-8 py-4 bg-gray-900/90 hover:bg-gray-800 text-cyan-400 hover:text-white border border-cyan-500/40 hover:border-cyan-400 rounded-lg font-semibold text-lg transition-all duration-300 inline-flex items-center gap-3 shadow-lg shadow-cyan-500/10 hover:scale-105 hover:-translate-y-1 active:scale-95"
-                >
-                  <svg
-                    className="w-5 h-5 text-cyan-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                    />
-                  </svg>
-                  <span>Download Resume</span>
-                </a>
-              </div>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
         )}
